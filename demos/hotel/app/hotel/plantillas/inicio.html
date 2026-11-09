@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block estilos %}
+  .portada { background: linear-gradient(120deg, var(--verde-oscuro), var(--verde)); color: #fff; border-radius: 10px; padding: 56px 40px; margin-bottom: 36px; }
+  .portada h1 { font-size: 44px; line-height: 1.15; margin: 0 0 10px; }
+  .portada p { margin: 0; opacity: .88; max-width: 34em; }
+  .tipos { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px; }
+  .tipo { background: var(--papel); border: 1px solid var(--linea); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; }
+  .tipo h3 { font-size: 24px; margin: 0 0 4px; }
+  .tipo p { color: var(--suave); margin: 0 0 16px; flex: 1; }
+  .precio { font-size: 20px; color: var(--oro); margin-bottom: 14px; }
+  .precio small { color: var(--suave); font-size: 14px; }
+  label { display: block; font-size: 14px; color: var(--suave); margin-bottom: 12px; }
+  select { display: block; width: 100%; font: inherit; padding: 9px; margin-top: 4px; border: 1px solid var(--linea); border-radius: 6px; background: #fff; }
+  .tipo button { width: 100%; }
+  @media (max-width: 640px) { .portada { padding: 36px 24px; } .portada h1 { font-size: 32px; } }
+{% endblock %}
+{% block contenido %}
+<section class="portada">
+  <h1>Tu próxima estancia empieza aquí</h1>
+  <p>Reserva en línea en segundos, con check-in digital y Wi-Fi en todo el hotel.</p>
+</section>
+<section class="tipos">
+  {% for clave, t in tipos.items() %}
+  <form class="tipo" method="post" action="/reservar">
+    <h3>{{ t.nombre }}</h3>
+    <p>{{ t.detalle }}</p>
+    <div class="precio">${{ "{:,}".format(t.precio) }} MXN <small>por noche</small></div>
+    <input type="hidden" name="tipo" value="{{ clave }}">
+    <label>Noches
+      <select name="noches">{% for n in range(1, 8) %}<option value="{{ n }}"{% if n == 2 %} selected{% endif %}>{{ n }}</option>{% endfor %}</select>
+    </label>
+    <button>Reservar</button>
+  </form>
+  {% endfor %}
+</section>
+{% endblock %}

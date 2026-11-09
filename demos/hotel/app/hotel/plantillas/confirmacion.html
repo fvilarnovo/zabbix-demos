@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block titulo %}Reserva confirmada · Hotel Gran Zabbix 8.0{% endblock %}
+{% block estilos %}
+  .ficha { max-width: 520px; margin: 24px auto; background: var(--papel); border: 1px solid var(--linea); border-radius: 10px; padding: 36px; }
+  .ficha h1 { color: var(--verde); margin: 0 0 18px; font-size: 32px; }
+  dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; margin: 0 0 24px; }
+  dt { color: var(--suave); }
+  dd { margin: 0; text-align: right; }
+  .codigo { font-family: ui-monospace, Menlo, monospace; }
+{% endblock %}
+{% block contenido %}
+<div class="ficha">
+  <h1>Reserva confirmada</h1>
+  <dl>
+    <dt>Código</dt><dd class="codigo">{{ codigo }}</dd>
+    <dt>Habitación</dt><dd>{{ habitacion.nombre }}</dd>
+    <dt>Noches</dt><dd>{{ noches }}</dd>
+    <dt>Total</dt><dd>${{ "{:,}".format(monto) }} MXN</dd>
+  </dl>
+  <a href="/">Volver al inicio</a>
+</div>
+{% endblock %}

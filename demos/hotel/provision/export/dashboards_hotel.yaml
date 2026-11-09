@@ -1,0 +1,3211 @@
+zabbix_export:
+  version: '8.0'
+  dashboards:
+    - name: 'Hotel · Cloud Cost'
+      pages:
+        - name: 'La factura del hotel'
+          widgets:
+            - type: gauge
+              name: 'AWS · proyección vs presupuesto 2500 USD'
+              width: '18'
+              height: '4'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '270'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'AWS Cost'
+                    key: finops.month.forecast
+                - type: STRING
+                  name: max
+                  value: '3250'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '2'
+                - type: INTEGER
+                  name: show.1
+                  value: '4'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: F9A825
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '2250'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '2500'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '1'
+                - type: STRING
+                  name: value_arc_color
+                  value: 0275B8
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+            - type: item
+              name: 'AWS · acumulado del mes'
+              'y': '4'
+              width: '18'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'DE 2500 USD PRESUPUESTADOS'
+                - type: INTEGER
+                  name: desc_size
+                  value: '10'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'AWS Cost'
+                    key: finops.month.mtd
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0A466A
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 9F0000
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '2500'
+                - type: INTEGER
+                  name: units_size
+                  value: '12'
+                - type: INTEGER
+                  name: value_size
+                  value: '28'
+            - type: svggraph
+              name: 'AWS · costo diario'
+              'y': '6'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: INTEGER
+                  name: ds.0.aggregate_grouping
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.approximation
+                  value: '4'
+                - type: STRING
+                  name: ds.0.color
+                  value: 0275B8
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: 'AWS (cost)'
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '5'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'AWS Cost'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'AWS daily total service cost'
+                - type: INTEGER
+                  name: ds.0.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '2'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: INTEGER
+                  name: ds.1.aggregate_grouping
+                  value: '1'
+                - type: INTEGER
+                  name: ds.1.approximation
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: D40000
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'AWS (average)'
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '0'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'AWS Cost'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'AWS daily average cost'
+                - type: INTEGER
+                  name: ds.1.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: INTEGER
+                  name: ds.2.aggregate_grouping
+                  value: '1'
+                - type: INTEGER
+                  name: ds.2.approximation
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.axisy
+                  value: '1'
+                - type: STRING
+                  name: ds.2.color
+                  value: DEEDF6
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'AWS (service)'
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '4'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'AWS Cost'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'AWS daily service count'
+                - type: INTEGER
+                  name: ds.2.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '2'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines_mode
+                  value: '1'
+                - type: INTEGER
+                  name: legend_statistic
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-6h
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: topitems
+              name: 'AWS · servicios'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '3'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'AWS cost total'
+                - type: INTEGER
+                  name: columns.0.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.0.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.0.item_tags.0.value
+                  value: billing
+                - type: STRING
+                  name: columns.0.max
+                  value: '100000'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '15000'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '30000'
+                - type: STRING
+                  name: columns.0.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.0.thresholds.3.threshold
+                  value: '45000'
+                - type: STRING
+                  name: columns.0.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.0.thresholds.4.threshold
+                  value: '60000'
+                - type: STRING
+                  name: columns.0.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.0.thresholds.5.threshold
+                  value: '75000'
+                - type: STRING
+                  name: columns.0.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.0.thresholds.6.threshold
+                  value: '90000'
+                - type: INTEGER
+                  name: columns.1.display
+                  value: '3'
+                - type: STRING
+                  name: columns.1.items.0
+                  value: 'Service [*]: Blended daily cost'
+                - type: INTEGER
+                  name: columns.1.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.1.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.1.item_tags.0.value
+                  value: daily-service
+                - type: STRING
+                  name: columns.1.max
+                  value: '165'
+                - type: STRING
+                  name: columns.1.min
+                  value: '0'
+                - type: STRING
+                  name: columns.1.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.1.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.1.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.1.thresholds.1.threshold
+                  value: '25'
+                - type: STRING
+                  name: columns.1.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.1.thresholds.2.threshold
+                  value: '50'
+                - type: STRING
+                  name: columns.1.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.1.thresholds.3.threshold
+                  value: '75'
+                - type: STRING
+                  name: columns.1.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.1.thresholds.4.threshold
+                  value: '90'
+                - type: STRING
+                  name: columns.1.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.1.thresholds.5.threshold
+                  value: '115'
+                - type: STRING
+                  name: columns.1.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.1.thresholds.6.threshold
+                  value: '140'
+                - type: INTEGER
+                  name: columns.2.decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: columns.2.display
+                  value: '3'
+                - type: STRING
+                  name: columns.2.items.0
+                  value: 'AWS daily service count'
+                - type: INTEGER
+                  name: columns.2.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.2.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.2.item_tags.0.value
+                  value: billing
+                - type: STRING
+                  name: columns.2.max
+                  value: '47'
+                - type: STRING
+                  name: columns.2.min
+                  value: '0'
+                - type: STRING
+                  name: columns.2.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.2.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.2.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.2.thresholds.1.threshold
+                  value: '7'
+                - type: STRING
+                  name: columns.2.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.2.thresholds.2.threshold
+                  value: '14'
+                - type: STRING
+                  name: columns.2.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.2.thresholds.3.threshold
+                  value: '21'
+                - type: STRING
+                  name: columns.2.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.2.thresholds.4.threshold
+                  value: '28'
+                - type: STRING
+                  name: columns.2.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.2.thresholds.5.threshold
+                  value: '35'
+                - type: STRING
+                  name: columns.2.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.2.thresholds.6.threshold
+                  value: '42'
+                - type: INTEGER
+                  name: columns.3.display
+                  value: '3'
+                - type: STRING
+                  name: columns.3.items.0
+                  value: 'AWS daily total service cost'
+                - type: INTEGER
+                  name: columns.3.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.3.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.3.item_tags.0.value
+                  value: billing
+                - type: STRING
+                  name: columns.3.max
+                  value: '168'
+                - type: STRING
+                  name: columns.3.min
+                  value: '0'
+                - type: STRING
+                  name: columns.3.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.3.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.3.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.3.thresholds.1.threshold
+                  value: '24'
+                - type: STRING
+                  name: columns.3.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.3.thresholds.2.threshold
+                  value: '48'
+                - type: STRING
+                  name: columns.3.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.3.thresholds.3.threshold
+                  value: '72'
+                - type: STRING
+                  name: columns.3.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.3.thresholds.4.threshold
+                  value: '96'
+                - type: STRING
+                  name: columns.3.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.3.thresholds.5.threshold
+                  value: '120'
+                - type: STRING
+                  name: columns.3.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.3.thresholds.6.threshold
+                  value: '144'
+                - type: INTEGER
+                  name: columns.4.display
+                  value: '3'
+                - type: STRING
+                  name: columns.4.items.0
+                  value: 'AWS daily average cost'
+                - type: INTEGER
+                  name: columns.4.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.4.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.4.item_tags.0.value
+                  value: billing
+                - type: STRING
+                  name: columns.4.max
+                  value: '56'
+                - type: STRING
+                  name: columns.4.min
+                  value: '0'
+                - type: STRING
+                  name: columns.4.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.4.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.4.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.4.thresholds.1.threshold
+                  value: '8'
+                - type: STRING
+                  name: columns.4.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.4.thresholds.2.threshold
+                  value: '16'
+                - type: STRING
+                  name: columns.4.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.4.thresholds.3.threshold
+                  value: '24'
+                - type: STRING
+                  name: columns.4.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.4.thresholds.4.threshold
+                  value: '32'
+                - type: STRING
+                  name: columns.4.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.4.thresholds.5.threshold
+                  value: '40'
+                - type: STRING
+                  name: columns.4.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.4.thresholds.6.threshold
+                  value: '48'
+                - type: INTEGER
+                  name: host_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: host_tags.0.tag
+                  value: target
+                - type: STRING
+                  name: host_tags.0.value
+                  value: aws
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '100'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: problems
+                  value: '0'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '1'
+            - type: svggraph
+              name: 'AWS · proyección vs presupuesto 2500 USD'
+              'y': '16'
+              width: '24'
+              height: '3'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: FF9900
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'AWS Cost'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Proyección de gasto a fin de mes'
+                - type: INTEGER
+                  name: ds.0.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_max
+                  value: '3250'
+                - type: STRING
+                  name: lefty_min
+                  value: '1500'
+                - type: INTEGER
+                  name: legend
+                  value: '0'
+                - type: INTEGER
+                  name: simple_triggers
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-6h
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: gauge
+              name: 'GCP · proyección vs presupuesto 1400 USD'
+              x: '18'
+              width: '18'
+              height: '4'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '270'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Google Cloud Cost'
+                    key: finops.month.forecast
+                - type: STRING
+                  name: max
+                  value: '1820'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '2'
+                - type: INTEGER
+                  name: show.1
+                  value: '4'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: F9A825
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1260'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1400'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '1'
+                - type: STRING
+                  name: value_arc_color
+                  value: 0275B8
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+            - type: item
+              name: 'GCP · acumulado del mes'
+              x: '18'
+              'y': '4'
+              width: '18'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'DE 1400 USD PRESUPUESTADOS'
+                - type: INTEGER
+                  name: desc_size
+                  value: '10'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Google Cloud Cost'
+                    key: finops.month.mtd
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0A466A
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 9F0000
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1400'
+                - type: INTEGER
+                  name: units_size
+                  value: '12'
+                - type: INTEGER
+                  name: value_size
+                  value: '28'
+            - type: svggraph
+              name: 'GCP · costo diario'
+              x: '24'
+              'y': '6'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: INTEGER
+                  name: ds.0.aggregate_grouping
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.approximation
+                  value: '4'
+                - type: STRING
+                  name: ds.0.color
+                  value: 0275B8
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: 'GCP (cost)'
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '5'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Google Cloud Cost'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Daily cost: Yesterday'
+                - type: INTEGER
+                  name: ds.0.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: ds.0.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: ds.0.item_tags.0.value
+                  value: cost
+                - type: INTEGER
+                  name: ds.0.item_tags.1.operator
+                  value: '0'
+                - type: STRING
+                  name: ds.0.item_tags.1.tag
+                  value: target
+                - type: STRING
+                  name: ds.0.item_tags.1.value
+                  value: gcp
+                - type: INTEGER
+                  name: ds.0.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '2'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: INTEGER
+                  name: ds.1.aggregate_grouping
+                  value: '1'
+                - type: INTEGER
+                  name: ds.1.approximation
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: D40000
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'GCP (average)'
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '0'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Google Cloud Cost'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Daily avg'
+                - type: INTEGER
+                  name: ds.1.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: ds.1.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: ds.1.item_tags.0.value
+                  value: cost
+                - type: INTEGER
+                  name: ds.1.item_tags.1.operator
+                  value: '0'
+                - type: STRING
+                  name: ds.1.item_tags.1.tag
+                  value: target
+                - type: STRING
+                  name: ds.1.item_tags.1.value
+                  value: gcp
+                - type: INTEGER
+                  name: ds.1.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: INTEGER
+                  name: ds.2.aggregate_grouping
+                  value: '1'
+                - type: INTEGER
+                  name: ds.2.approximation
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.axisy
+                  value: '1'
+                - type: STRING
+                  name: ds.2.color
+                  value: DEEDF6
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'GCP (service)'
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '4'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'Google Cloud Cost'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'Service count'
+                - type: INTEGER
+                  name: ds.2.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: ds.2.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: ds.2.item_tags.0.value
+                  value: cost
+                - type: INTEGER
+                  name: ds.2.item_tags.1.operator
+                  value: '0'
+                - type: STRING
+                  name: ds.2.item_tags.1.tag
+                  value: target
+                - type: STRING
+                  name: ds.2.item_tags.1.value
+                  value: gcp
+                - type: INTEGER
+                  name: ds.2.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '2'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines_mode
+                  value: '1'
+                - type: INTEGER
+                  name: legend_statistic
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-6h
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: topitems
+              name: 'GCP · servicios'
+              x: '24'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '3'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'GCP annual cost'
+                - type: INTEGER
+                  name: columns.0.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.0.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.0.item_tags.0.value
+                  value: cost
+                - type: STRING
+                  name: columns.0.max
+                  value: '100000'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '15000'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '30000'
+                - type: STRING
+                  name: columns.0.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.0.thresholds.3.threshold
+                  value: '45000'
+                - type: STRING
+                  name: columns.0.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.0.thresholds.4.threshold
+                  value: '60000'
+                - type: STRING
+                  name: columns.0.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.0.thresholds.5.threshold
+                  value: '75000'
+                - type: STRING
+                  name: columns.0.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.0.thresholds.6.threshold
+                  value: '90000'
+                - type: INTEGER
+                  name: columns.1.display
+                  value: '3'
+                - type: STRING
+                  name: columns.1.items.0
+                  value: 'Service [*]: Daily cost'
+                - type: INTEGER
+                  name: columns.1.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.1.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.1.item_tags.0.value
+                  value: cost
+                - type: INTEGER
+                  name: columns.1.item_tags.1.operator
+                  value: '4'
+                - type: STRING
+                  name: columns.1.item_tags.1.tag
+                  value: service
+                - type: STRING
+                  name: columns.1.item_tags.1.value
+                  value: ''
+                - type: STRING
+                  name: columns.1.max
+                  value: '165'
+                - type: STRING
+                  name: columns.1.min
+                  value: '0'
+                - type: STRING
+                  name: columns.1.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.1.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.1.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.1.thresholds.1.threshold
+                  value: '25'
+                - type: STRING
+                  name: columns.1.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.1.thresholds.2.threshold
+                  value: '50'
+                - type: STRING
+                  name: columns.1.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.1.thresholds.3.threshold
+                  value: '75'
+                - type: STRING
+                  name: columns.1.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.1.thresholds.4.threshold
+                  value: '90'
+                - type: STRING
+                  name: columns.1.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.1.thresholds.5.threshold
+                  value: '115'
+                - type: STRING
+                  name: columns.1.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.1.thresholds.6.threshold
+                  value: '140'
+                - type: INTEGER
+                  name: columns.2.decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: columns.2.display
+                  value: '3'
+                - type: STRING
+                  name: columns.2.items.0
+                  value: 'Service count'
+                - type: INTEGER
+                  name: columns.2.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.2.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.2.item_tags.0.value
+                  value: cost
+                - type: STRING
+                  name: columns.2.max
+                  value: '47'
+                - type: STRING
+                  name: columns.2.min
+                  value: '0'
+                - type: STRING
+                  name: columns.2.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.2.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.2.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.2.thresholds.1.threshold
+                  value: '7'
+                - type: STRING
+                  name: columns.2.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.2.thresholds.2.threshold
+                  value: '14'
+                - type: STRING
+                  name: columns.2.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.2.thresholds.3.threshold
+                  value: '21'
+                - type: STRING
+                  name: columns.2.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.2.thresholds.4.threshold
+                  value: '28'
+                - type: STRING
+                  name: columns.2.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.2.thresholds.5.threshold
+                  value: '35'
+                - type: STRING
+                  name: columns.2.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.2.thresholds.6.threshold
+                  value: '42'
+                - type: INTEGER
+                  name: columns.3.display
+                  value: '3'
+                - type: STRING
+                  name: columns.3.items.0
+                  value: 'Daily cost: Yesterday'
+                - type: INTEGER
+                  name: columns.3.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.3.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.3.item_tags.0.value
+                  value: cost
+                - type: STRING
+                  name: columns.3.max
+                  value: '168'
+                - type: STRING
+                  name: columns.3.min
+                  value: '0'
+                - type: STRING
+                  name: columns.3.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.3.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.3.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.3.thresholds.1.threshold
+                  value: '24'
+                - type: STRING
+                  name: columns.3.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.3.thresholds.2.threshold
+                  value: '48'
+                - type: STRING
+                  name: columns.3.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.3.thresholds.3.threshold
+                  value: '72'
+                - type: STRING
+                  name: columns.3.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.3.thresholds.4.threshold
+                  value: '96'
+                - type: STRING
+                  name: columns.3.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.3.thresholds.5.threshold
+                  value: '120'
+                - type: STRING
+                  name: columns.3.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.3.thresholds.6.threshold
+                  value: '144'
+                - type: INTEGER
+                  name: columns.4.display
+                  value: '3'
+                - type: STRING
+                  name: columns.4.items.0
+                  value: 'Daily avg'
+                - type: INTEGER
+                  name: columns.4.item_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: columns.4.item_tags.0.tag
+                  value: component
+                - type: STRING
+                  name: columns.4.item_tags.0.value
+                  value: cost
+                - type: STRING
+                  name: columns.4.max
+                  value: '56'
+                - type: STRING
+                  name: columns.4.min
+                  value: '0'
+                - type: STRING
+                  name: columns.4.thresholds.0.color
+                  value: 60A9D3
+                - type: STRING
+                  name: columns.4.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.4.thresholds.1.color
+                  value: 0275B8
+                - type: STRING
+                  name: columns.4.thresholds.1.threshold
+                  value: '8'
+                - type: STRING
+                  name: columns.4.thresholds.2.color
+                  value: 0A466A
+                - type: STRING
+                  name: columns.4.thresholds.2.threshold
+                  value: '16'
+                - type: STRING
+                  name: columns.4.thresholds.3.color
+                  value: '360000'
+                - type: STRING
+                  name: columns.4.thresholds.3.threshold
+                  value: '24'
+                - type: STRING
+                  name: columns.4.thresholds.4.color
+                  value: '500000'
+                - type: STRING
+                  name: columns.4.thresholds.4.threshold
+                  value: '32'
+                - type: STRING
+                  name: columns.4.thresholds.5.color
+                  value: 9F0000
+                - type: STRING
+                  name: columns.4.thresholds.5.threshold
+                  value: '40'
+                - type: STRING
+                  name: columns.4.thresholds.6.color
+                  value: D40000
+                - type: STRING
+                  name: columns.4.thresholds.6.threshold
+                  value: '48'
+                - type: INTEGER
+                  name: host_tags.0.operator
+                  value: '0'
+                - type: STRING
+                  name: host_tags.0.tag
+                  value: target
+                - type: STRING
+                  name: host_tags.0.value
+                  value: gcp
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '100'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: problems
+                  value: '0'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '1'
+            - type: svggraph
+              name: 'GCP · proyección vs presupuesto 1400 USD'
+              x: '24'
+              'y': '16'
+              width: '24'
+              height: '3'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 34A853
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Google Cloud Cost'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Proyección de gasto a fin de mes'
+                - type: INTEGER
+                  name: ds.0.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_max
+                  value: '1820'
+                - type: STRING
+                  name: lefty_min
+                  value: '840'
+                - type: INTEGER
+                  name: legend
+                  value: '0'
+                - type: INTEGER
+                  name: simple_triggers
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-6h
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Costo por reserva'
+              x: '36'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Costo por reserva'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - FinOps'
+                    key: hotel.finops.costo_por_reserva
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 607D8B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '28'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Reservas en 24 horas'
+              x: '36'
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Reservas en 24 horas'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[reservas_24h]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 607D8B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '28'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: topitems
+              name: 'Costo diario por aplicación'
+              x: '48'
+              'y': '6'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '1'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'Hotel: Costo diario de * en AWS'
+                - type: INTEGER
+                  name: columns.1.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.1.display
+                  value: '1'
+                - type: STRING
+                  name: columns.1.items.0
+                  value: 'Hotel: Costo diario de * en GCP'
+                - type: HOST
+                  name: hostids.0
+                  value:
+                    host: 'Hotel Gran Forum - FinOps'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '1'
+            - type: svggraph
+              name: 'Costo por reserva'
+              x: '48'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 1E88E5
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Hotel Gran Forum - FinOps'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Hotel: Costo por reserva'
+                - type: INTEGER
+                  name: ds.0.missingdatafunc
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: INTEGER
+                  name: legend
+                  value: '0'
+                - type: STRING
+                  name: time_period.from
+                  value: now-6h
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: problems
+              name: 'Problemas de costo'
+              x: '48'
+              'y': '16'
+              width: '24'
+              height: '3'
+              fields:
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Hotel/Cloud
+                - type: INTEGER
+                  name: highlight_row
+                  value: '1'
+                - type: INTEGER
+                  name: show
+                  value: '3'
+                - type: INTEGER
+                  name: show_lines
+                  value: '6'
+                - type: INTEGER
+                  name: show_opdata
+                  value: '1'
+                - type: INTEGER
+                  name: show_tags
+                  value: '0'
+            - type: problemsbysv
+              name: 'Problemas de costo por severidad'
+              x: '54'
+              width: '18'
+              height: '6'
+              fields:
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Hotel/Cloud
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_type
+                  value: '1'
+    - name: 'Hotel · Negocio'
+      pages:
+        - name: Negocio
+          widgets:
+            - type: item
+              name: 'Visitas hoy'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 1F4D46
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '24'
+                - type: STRING
+                  name: description
+                  value: 'Visitas hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[visitas_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '24'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: Ocupación
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 1F4D46
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '24'
+                - type: STRING
+                  name: description
+                  value: Ocupación
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[ocupacion_pct]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '24'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Reservas y visitas de hoy (última hora)'
+              'y': '6'
+              width: '36'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 1E88E5
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '1'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Hotel Gran Forum - Negocio'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Hotel: Visitas hoy'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: 2E7D32
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '1'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Hotel Gran Forum - Negocio'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Hotel: Reservas hoy'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-1h
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: problems
+              name: 'Qué está pasando ahora'
+              'y': '12'
+              width: '72'
+              height: '5'
+              fields:
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications/APM/hotel
+                - type: GROUP
+                  name: groupids.1
+                  value:
+                    name: Hotel/Negocio
+                - type: INTEGER
+                  name: highlight_row
+                  value: '1'
+                - type: INTEGER
+                  name: show
+                  value: '3'
+                - type: INTEGER
+                  name: show_lines
+                  value: '8'
+                - type: INTEGER
+                  name: show_tags
+                  value: '0'
+                - type: INTEGER
+                  name: show_timeline
+                  value: '0'
+                - type: INTEGER
+                  name: sort_triggers
+                  value: '4'
+            - type: item
+              name: 'Reservas hoy'
+              x: '18'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 1F4D46
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '24'
+                - type: STRING
+                  name: description
+                  value: 'Reservas hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[reservas_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '24'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Reservas fallidas (15 min)'
+              x: '18'
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '24'
+                - type: STRING
+                  name: description
+                  value: 'Reservas fallidas (15 min)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[reservas_fallidas_15m]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '24'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Ingresos hoy'
+              x: '36'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 1F4D46
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '24'
+                - type: STRING
+                  name: description
+                  value: 'Ingresos hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[ingresos_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '24'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Error de pagos (2 min)'
+              x: '36'
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '24'
+                - type: STRING
+                  name: description
+                  value: 'Error de pagos (2 min)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[pagos_error_pct]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: F9A825
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '10'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '24'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Salud de pagos (última hora)'
+              x: '36'
+              'y': '6'
+              width: '36'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: C62828
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '1'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Hotel Gran Forum - Negocio'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Hotel: Tasa de error de pagos'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: F9A825
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '1'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Hotel Gran Forum - Negocio'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Hotel: Latencia p95 de pagos'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-1h
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Habitaciones ocupadas (de 320)'
+              x: '54'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 1F4D46
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '24'
+                - type: STRING
+                  name: description
+                  value: 'Habitaciones ocupadas (de 320)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[habitaciones_ocupadas]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '24'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Latencia p95 de pagos (2 min)'
+              x: '54'
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '24'
+                - type: STRING
+                  name: description
+                  value: 'Latencia p95 de pagos (2 min)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - Negocio'
+                    key: 'hotel.kpi[pagos_p95_s]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: F9A825
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1.5'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '24'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+    - name: 'Hotel · Operación'
+      pages:
+        - name: Operación
+          widgets:
+            - type: item
+              name: 'Red eléctrica'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Red eléctrica'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: hotel.grid.state
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Elevador 1'
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Elevador 1'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: 'hotel.elev.state[1]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: problems
+              name: 'Qué está pasando ahora'
+              'y': '6'
+              width: '44'
+              height: '7'
+              fields:
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Hotel/OT
+                - type: INTEGER
+                  name: highlight_row
+                  value: '1'
+                - type: INTEGER
+                  name: show
+                  value: '3'
+                - type: INTEGER
+                  name: show_lines
+                  value: '12'
+                - type: INTEGER
+                  name: show_tags
+                  value: '0'
+                - type: INTEGER
+                  name: show_timeline
+                  value: '0'
+                - type: INTEGER
+                  name: sort_triggers
+                  value: '4'
+            - type: item
+              name: 'Origen de la UPS'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Origen de la UPS'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: hotel.ups.on_battery
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Elevador 2'
+              x: '18'
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Elevador 2'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: 'hotel.elev.state[2]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Autonomía de la UPS'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Autonomía de la UPS'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: hotel.ups.runtime_min
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: F9A825
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '10'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '30'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: Generador
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: Generador
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: hotel.gen.state
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: F9A825
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '2'
+                - type: STRING
+                  name: thresholds.3.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.3.threshold
+                  value: '3'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Elevador 3'
+              x: '36'
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Elevador 3'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: 'hotel.elev.state[3]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Autonomía y temperatura (últimos 15 min)'
+              x: '44'
+              'y': '6'
+              width: '28'
+              height: '7'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 1E88E5
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '0'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Hotel Gran Forum - OT'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Hotel: Autonomía de la UPS en minutos'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: INTEGER
+                  name: ds.1.axisy
+                  value: '1'
+                - type: STRING
+                  name: ds.1.color
+                  value: E53935
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '0'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Hotel Gran Forum - OT'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Hotel: Temperatura del lobby'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '3'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: INTEGER
+                  name: righty
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-15m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: Chiller
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: Chiller
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: hotel.hvac.chiller_state
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Puntos de acceso Wi-Fi'
+              x: '54'
+              'y': '3'
+              width: '18'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Puntos de acceso Wi-Fi'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: hotel.wifi.aps_up
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: F9A825
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '24'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '48'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Temperatura del lobby'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 607D8B
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Temperatura del lobby'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '14'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Hotel Gran Forum - OT'
+                    key: hotel.hvac.lobby_temp
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 2E7D32
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: C62828
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '26'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'

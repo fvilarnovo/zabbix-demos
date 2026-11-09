@@ -1,0 +1,224 @@
+[
+  {
+    "cep_ruleid": "9",
+    "name": "Hotel: incidente eléctrico",
+    "stop": "0",
+    "sortorder": "11",
+    "description": "Sin red y con al menos dos servicios caídos en el circuito principal: un solo incidente de máxima severidad.",
+    "status": "0",
+    "window_type": "4",
+    "error": "",
+    "filter": {
+      "evaltype": "0",
+      "eval_formula": "A or B",
+      "formula": "",
+      "conditions": [
+        {
+          "type": "26",
+          "operator": "0",
+          "event_name": "",
+          "tag": "circuito",
+          "tag_value": "principal",
+          "severity": "0",
+          "host_name": "",
+          "host_group_name": "",
+          "time_period": "",
+          "formulaid": "A"
+        },
+        {
+          "type": "26",
+          "operator": "0",
+          "event_name": "",
+          "tag": "sitio",
+          "tag_value": "gran-forum",
+          "severity": "0",
+          "host_name": "",
+          "host_group_name": "",
+          "time_period": "",
+          "formulaid": "B"
+        }
+      ]
+    },
+    "window": {
+      "duration": "1h",
+      "capacity": "0",
+      "group_by_host_group": "0",
+      "group_by_host": "0",
+      "group_by_tags": "1",
+      "tags": [
+        "circuito"
+      ],
+      "event_count_tag": "",
+      "script": "\nvar ev = cep_get_events();\nfunction tiene(e, tag, value) {\n    for (var i = 0; i < e.tags.length; i++) {\n        if (e.tags[i].tag === tag && e.tags[i].value === value) { return true; }\n    }\n    return false;\n}\nvar energia = false, servicios = 0;\nfor (var i = 0; i < ev.length; i++) {\n    if (ev[i].is_copied || !ev[i].is_open) { continue; }\n    if (tiene(ev[i], 'recurso', 'red')) { energia = true; }\n    if (tiene(ev[i], 'capa', 'servicio')) { servicios++; }\n}\nreturn energia && servicios >= 2;\n"
+    },
+    "operations": [
+      {
+        "sortorder": "1",
+        "execute_when": "4",
+        "type": "1",
+        "event_name": "Incidente eléctrico: el hotel perdió el suministro de red",
+        "severity": "0",
+        "suppress_duration": "0",
+        "tag": "",
+        "new_tag": "",
+        "tag_value": "",
+        "scope": "2",
+        "filter": {
+          "evaltype": "0",
+          "eval_formula": "",
+          "formula": "",
+          "conditions": []
+        },
+        "scope_filter": {
+          "evaltype": "0",
+          "eval_formula": "A and B and C",
+          "formula": "",
+          "conditions": [
+            {
+              "type": "26",
+              "operator": "0",
+              "tag": "recurso",
+              "tag_value": "red",
+              "formulaid": "A"
+            },
+            {
+              "type": "30",
+              "operator": "10",
+              "tag": "",
+              "tag_value": "",
+              "formulaid": "B"
+            },
+            {
+              "type": "34",
+              "operator": "11",
+              "tag": "",
+              "tag_value": "",
+              "formulaid": "C"
+            }
+          ]
+        }
+      },
+      {
+        "sortorder": "2",
+        "execute_when": "4",
+        "type": "4",
+        "event_name": "",
+        "severity": "5",
+        "suppress_duration": "0",
+        "tag": "",
+        "new_tag": "",
+        "tag_value": "",
+        "scope": "2",
+        "filter": {
+          "evaltype": "0",
+          "eval_formula": "",
+          "formula": "",
+          "conditions": []
+        },
+        "scope_filter": {
+          "evaltype": "0",
+          "eval_formula": "A and B and C",
+          "formula": "",
+          "conditions": [
+            {
+              "type": "26",
+              "operator": "0",
+              "tag": "recurso",
+              "tag_value": "red",
+              "formulaid": "A"
+            },
+            {
+              "type": "30",
+              "operator": "10",
+              "tag": "",
+              "tag_value": "",
+              "formulaid": "B"
+            },
+            {
+              "type": "34",
+              "operator": "11",
+              "tag": "",
+              "tag_value": "",
+              "formulaid": "C"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "cep_ruleid": "8",
+    "name": "Hotel: causa y síntomas de energía",
+    "stop": "0",
+    "sortorder": "10",
+    "description": "El primer evento del circuito es la causa; los siguientes, sus síntomas, hasta que un evento de control cierre la ventana.",
+    "status": "0",
+    "window_type": "2",
+    "error": "",
+    "filter": {
+      "evaltype": "0",
+      "eval_formula": "A",
+      "formula": "",
+      "conditions": [
+        {
+          "type": "26",
+          "operator": "0",
+          "event_name": "",
+          "tag": "sitio",
+          "tag_value": "gran-forum",
+          "severity": "0",
+          "host_name": "",
+          "host_group_name": "",
+          "time_period": "",
+          "formulaid": "A"
+        }
+      ]
+    },
+    "window": {
+      "duration": "1h",
+      "capacity": "0",
+      "group_by_host_group": "0",
+      "group_by_host": "0",
+      "group_by_tags": "1",
+      "tags": [
+        "circuito"
+      ],
+      "event_count_tag": "eventos_correlacionados",
+      "script": ""
+    },
+    "operations": [
+      {
+        "sortorder": "1",
+        "execute_when": "1",
+        "type": "18",
+        "event_name": "",
+        "severity": "0",
+        "suppress_duration": "0",
+        "tag": "",
+        "new_tag": "",
+        "tag_value": "",
+        "scope": "0",
+        "filter": {
+          "evaltype": "0",
+          "eval_formula": "A",
+          "formula": "",
+          "conditions": [
+            {
+              "type": "26",
+              "operator": "0",
+              "tag": "recurso",
+              "tag_value": "reinicio",
+              "formulaid": "A"
+            }
+          ]
+        },
+        "scope_filter": {
+          "evaltype": "0",
+          "eval_formula": "",
+          "formula": "",
+          "conditions": []
+        }
+      }
+    ]
+  }
+]

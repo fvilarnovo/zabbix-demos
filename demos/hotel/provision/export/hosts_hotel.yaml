@@ -1,0 +1,1394 @@
+zabbix_export:
+  version: '8.0'
+  host_groups:
+    - uuid: ea5789db2dca44b1aebf12a03921945e
+      name: APM
+    - uuid: 47b68031ca7743a8af713b4f188df6ee
+      name: 'Cloud / FinOps'
+    - uuid: a301615d05c248489e5e19c6193e5a8b
+      name: Hotel/Cloud
+    - uuid: 038e68e7466c44888ca21a82c2a910d0
+      name: Hotel/Negocio
+    - uuid: 9e0177a138b040efb2987356215ff593
+      name: Hotel/OT
+  hosts:
+    - host: apm-discovery-test
+      name: apm-discovery-test
+      description: 'Host de prueba del discovery v3. Ventanas de 24 h y usuario default: temporales.'
+      templates:
+        - name: 'APM applications discovery by ClickHouse HTTP v3'
+      groups:
+        - name: APM
+      macros:
+        - macro: '{$APM.DISCOVERY.WINDOW}'
+          value: '60'
+        - macro: '{$APM.NAMESPACE.MATCHES}'
+          value: ^hotel$
+        - macro: '{$APM.WINDOW}'
+          value: '5'
+        - macro: '{$CH.USER}'
+          value: default
+    - host: 'AWS Cost'
+      name: 'AWS Cost'
+      groups:
+        - name: 'Cloud / FinOps'
+        - name: Hotel/Cloud
+      interfaces:
+        - interface_ref: if1
+      items:
+        - name: 'Account [111122223333]: Total yearly cost'
+          type: TRAP
+          key: 'aws.account.yearly.total.cost["111122223333"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: yearly-account
+            - tag: yearly-account
+              value: '111122223333'
+        - name: 'Account [444455556666]: Total yearly cost'
+          type: TRAP
+          key: 'aws.account.yearly.total.cost["444455556666"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: yearly-account
+            - tag: yearly-account
+              value: '444455556666'
+        - name: 'Account [777788889999]: Total yearly cost'
+          type: TRAP
+          key: 'aws.account.yearly.total.cost["777788889999"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: yearly-account
+            - tag: yearly-account
+              value: '777788889999'
+        - name: 'AWS cost total'
+          type: TRAP
+          key: aws.cost.total
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: component
+              value: cost
+        - name: 'AWS daily average cost'
+          type: TRAP
+          key: aws.daily.average.cost
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+        - name: 'Service [Amazon CloudFront]: Blended daily cost'
+          type: TRAP
+          key: 'aws.daily.service.cost["Amazon CloudFront"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: component
+              value: daily-service
+            - tag: service
+              value: 'Amazon CloudFront'
+        - name: 'Service [Amazon DynamoDB]: Blended daily cost'
+          type: TRAP
+          key: 'aws.daily.service.cost["Amazon DynamoDB"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: component
+              value: daily-service
+            - tag: service
+              value: 'Amazon DynamoDB'
+        - name: 'Service [Amazon EC2]: Blended daily cost'
+          type: TRAP
+          key: 'aws.daily.service.cost["Amazon EC2"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: component
+              value: daily-service
+            - tag: service
+              value: 'Amazon EC2'
+        - name: 'Service [Amazon EKS]: Blended daily cost'
+          type: TRAP
+          key: 'aws.daily.service.cost["Amazon EKS"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: component
+              value: daily-service
+            - tag: service
+              value: 'Amazon EKS'
+        - name: 'Service [Amazon RDS]: Blended daily cost'
+          type: TRAP
+          key: 'aws.daily.service.cost["Amazon RDS"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: component
+              value: daily-service
+            - tag: service
+              value: 'Amazon RDS'
+        - name: 'Service [Amazon S3]: Blended daily cost'
+          type: TRAP
+          key: 'aws.daily.service.cost["Amazon S3"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: component
+              value: daily-service
+            - tag: service
+              value: 'Amazon S3'
+        - name: 'Service [AWS Lambda]: Blended daily cost'
+          type: TRAP
+          key: 'aws.daily.service.cost["AWS Lambda"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: component
+              value: daily-service
+            - tag: service
+              value: 'AWS Lambda'
+        - name: 'AWS daily service count'
+          type: TRAP
+          key: aws.daily.service.count
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!services'
+          tags:
+            - tag: component
+              value: billing
+        - name: 'AWS daily total service cost'
+          type: TRAP
+          key: aws.daily.service.total.cost
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+          triggers:
+            - expression: 'last(/AWS Cost/aws.daily.service.total.cost)>=140'
+              name: 'AWS: Daily service cost high'
+              priority: HIGH
+              tags:
+                - tag: component
+                  value: billing
+                - tag: target
+                  value: aws
+            - expression: 'last(/AWS Cost/aws.daily.service.total.cost)>=100'
+              name: 'AWS: Daily service cost warning'
+              priority: WARNING
+              tags:
+                - tag: component
+                  value: billing
+                - tag: target
+                  value: aws
+        - name: '[2026-01]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-01"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-01
+        - name: '[2026-02]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-02"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-02
+        - name: '[2026-03]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-03"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-03
+        - name: '[2026-04]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-04"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-04
+        - name: '[2026-05]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-05"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-05
+        - name: '[2026-06]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-06"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-06
+        - name: '[2026-07]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-07"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-07
+        - name: '[2026-08]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-08"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-08
+        - name: '[2026-09]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-09"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-09
+        - name: '[2026-10]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-10"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-10
+        - name: '[2026-11]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-11"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-11
+        - name: '[2026-12]: Blended cost per month'
+          type: TRAP
+          key: 'aws.monthly.cost["2026-12"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: billing
+            - tag: month
+              value: 2026-12
+        - name: 'Region [eu-west-1]: Total daily cost'
+          type: TRAP
+          key: 'aws.region.daily.cost["eu-west-1"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: daily-region
+            - tag: target
+              value: aws
+        - name: 'Region [sa-east-1]: Total daily cost'
+          type: TRAP
+          key: 'aws.region.daily.cost["sa-east-1"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: daily-region
+            - tag: target
+              value: aws
+        - name: 'Region [us-east-1]: Total daily cost'
+          type: TRAP
+          key: 'aws.region.daily.cost["us-east-1"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: daily-region
+            - tag: target
+              value: aws
+        - name: 'Region [us-west-2]: Total daily cost'
+          type: TRAP
+          key: 'aws.region.daily.cost["us-west-2"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: daily-region
+            - tag: target
+              value: aws
+        - name: 'Acumulado del mes reportado por la facturación'
+          type: TRAP
+          key: finops.month.acumulado
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: aws
+        - name: 'Proyección sobre el presupuesto'
+          type: CALCULATED
+          key: finops.month.budget.pct
+          history: 90d
+          value_type: FLOAT
+          units: '%'
+          params: '100 * last(/AWS Cost/finops.month.forecast) / {$BUDGET.MONTH}'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: aws
+        - name: 'Días que faltan para terminar el mes'
+          type: TRAP
+          key: finops.month.dias_restantes
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: aws
+        - name: 'Proyección de gasto a fin de mes'
+          type: CALCULATED
+          key: finops.month.forecast
+          history: 90d
+          value_type: FLOAT
+          units: '!USD'
+          params: 'last(/AWS Cost/finops.month.acumulado) + avg(/AWS Cost/aws.daily.service.total.cost,7d) * last(/AWS Cost/finops.month.dias_restantes)'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: aws
+          triggers:
+            - expression: 'last(/AWS Cost/finops.month.forecast)>{$BUDGET.MONTH}'
+              name: 'AWS: la proyección del mes supera el presupuesto'
+              opdata: 'Proyección {ITEM.LASTVALUE1} de {$BUDGET.MONTH} USD'
+              priority: AVERAGE
+              manual_close: 'YES'
+              tags:
+                - tag: component
+                  value: budget
+                - tag: scope
+                  value: forecast
+                - tag: target
+                  value: aws
+        - name: 'Gasto acumulado del mes'
+          type: CALCULATED
+          key: finops.month.mtd
+          history: 90d
+          value_type: FLOAT
+          units: '!USD'
+          params: 'last(/AWS Cost/finops.month.acumulado)'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: aws
+          triggers:
+            - expression: 'last(/AWS Cost/finops.month.mtd)>0.8*{$BUDGET.MONTH} and dayofmonth()<20'
+              name: 'AWS: el 80% del presupuesto se consumió antes del día 20'
+              opdata: 'Acumulado {ITEM.LASTVALUE1} de {$BUDGET.MONTH} USD'
+              priority: WARNING
+              manual_close: 'YES'
+              tags:
+                - tag: component
+                  value: budget
+                - tag: scope
+                  value: budget
+                - tag: target
+                  value: aws
+      tags:
+        - tag: target
+          value: aws
+      macros:
+        - macro: '{$BUDGET.MONTH}'
+          value: '2500'
+    - host: 'Google Cloud Cost'
+      name: 'Google Cloud Cost'
+      groups:
+        - name: 'Cloud / FinOps'
+        - name: Hotel/Cloud
+      interfaces:
+        - interface_ref: if1
+      items:
+        - name: 'Acumulado del mes reportado por la facturación'
+          type: TRAP
+          key: finops.month.acumulado
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: gcp
+        - name: 'Proyección sobre el presupuesto'
+          type: CALCULATED
+          key: finops.month.budget.pct
+          history: 90d
+          value_type: FLOAT
+          units: '%'
+          params: '100 * last(/Google Cloud Cost/finops.month.forecast) / {$BUDGET.MONTH}'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: gcp
+        - name: 'Días que faltan para terminar el mes'
+          type: TRAP
+          key: finops.month.dias_restantes
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: gcp
+        - name: 'Proyección de gasto a fin de mes'
+          type: CALCULATED
+          key: finops.month.forecast
+          history: 90d
+          value_type: FLOAT
+          units: '!USD'
+          params: 'last(/Google Cloud Cost/finops.month.acumulado) + avg(/Google Cloud Cost/gcp.cost.daily.summary.yesterday,7d) * last(/Google Cloud Cost/finops.month.dias_restantes)'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: gcp
+          triggers:
+            - expression: 'last(/Google Cloud Cost/finops.month.forecast)>{$BUDGET.MONTH}'
+              name: 'GCP: la proyección del mes supera el presupuesto'
+              opdata: 'Proyección {ITEM.LASTVALUE1} de {$BUDGET.MONTH} USD'
+              priority: AVERAGE
+              manual_close: 'YES'
+              tags:
+                - tag: component
+                  value: budget
+                - tag: scope
+                  value: forecast
+                - tag: target
+                  value: gcp
+        - name: 'Gasto acumulado del mes'
+          type: CALCULATED
+          key: finops.month.mtd
+          history: 90d
+          value_type: FLOAT
+          units: '!USD'
+          params: 'last(/Google Cloud Cost/finops.month.acumulado)'
+          tags:
+            - tag: component
+              value: budget
+            - tag: target
+              value: gcp
+          triggers:
+            - expression: 'last(/Google Cloud Cost/finops.month.mtd)>0.8*{$BUDGET.MONTH} and dayofmonth()<20'
+              name: 'GCP: el 80% del presupuesto se consumió antes del día 20'
+              opdata: 'Acumulado {ITEM.LASTVALUE1} de {$BUDGET.MONTH} USD'
+              priority: WARNING
+              manual_close: 'YES'
+              tags:
+                - tag: component
+                  value: budget
+                - tag: scope
+                  value: budget
+                - tag: target
+                  value: gcp
+        - name: 'GCP annual cost'
+          type: TRAP
+          key: gcp.annual.cost
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+        - name: 'Daily avg'
+          type: TRAP
+          key: gcp.cost.daily.avg
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: target
+              value: gcp
+        - name: 'Region [europe-west1]: Daily cost'
+          type: TRAP
+          key: 'gcp.cost.daily.region["europe-west1"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: region
+              value: europe-west1
+            - tag: target
+              value: gcp
+        - name: 'Region [southamerica-east1]: Daily cost'
+          type: TRAP
+          key: 'gcp.cost.daily.region["southamerica-east1"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: region
+              value: southamerica-east1
+            - tag: target
+              value: gcp
+        - name: 'Region [us-central1]: Daily cost'
+          type: TRAP
+          key: 'gcp.cost.daily.region["us-central1"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: region
+              value: us-central1
+            - tag: target
+              value: gcp
+        - name: 'Service [BigQuery]: Daily cost'
+          type: TRAP
+          key: 'gcp.cost.daily.service["BigQuery"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: service
+              value: BigQuery
+        - name: 'Service [Cloud SQL]: Daily cost'
+          type: TRAP
+          key: 'gcp.cost.daily.service["Cloud SQL"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: service
+              value: 'Cloud SQL'
+        - name: 'Service [Cloud Storage]: Daily cost'
+          type: TRAP
+          key: 'gcp.cost.daily.service["Cloud Storage"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: service
+              value: 'Cloud Storage'
+        - name: 'Service [Compute Engine]: Daily cost'
+          type: TRAP
+          key: 'gcp.cost.daily.service["Compute Engine"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: service
+              value: 'Compute Engine'
+        - name: 'Service [Kubernetes Engine]: Daily cost'
+          type: TRAP
+          key: 'gcp.cost.daily.service["Kubernetes Engine"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: service
+              value: 'Kubernetes Engine'
+        - name: 'Daily cost: Yesterday'
+          type: TRAP
+          key: gcp.cost.daily.summary.yesterday
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: target
+              value: gcp
+          triggers:
+            - expression: 'last(/Google Cloud Cost/gcp.cost.daily.summary.yesterday)>=120'
+              name: 'GCP: Daily cost yesterday high'
+              priority: HIGH
+              tags:
+                - tag: component
+                  value: cost
+                - tag: target
+                  value: gcp
+        - name: 'Month ["2026-01"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-01"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-01
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-02"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-02"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-02
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-03"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-03"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-03
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-04"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-04"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-04
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-05"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-05"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-05
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-06"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-06"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-06
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-07"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-07"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-07
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-08"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-08"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-08
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-09"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-09"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-09
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-10"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-10"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-10
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-11"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-11"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-11
+            - tag: target
+              value: gcp
+        - name: 'Month ["2026-12"] total cost'
+          type: TRAP
+          key: 'gcp.cost.monthly["2026-12"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: month
+              value: 2026-12
+            - tag: target
+              value: gcp
+        - name: 'Project [prj-data-warehouse]: Month [2026-10] cost'
+          type: TRAP
+          key: 'gcp.cost.project.monthly["prj-data-warehouse","2026-10"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: project
+              value: prj-data-warehouse
+        - name: 'Project [prj-ml-platform]: Month [2026-10] cost'
+          type: TRAP
+          key: 'gcp.cost.project.monthly["prj-ml-platform","2026-10"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: project
+              value: prj-ml-platform
+        - name: 'Project [prj-prod-frontend]: Month [2026-10] cost'
+          type: TRAP
+          key: 'gcp.cost.project.monthly["prj-prod-frontend","2026-10"]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: component
+              value: cost
+            - tag: project
+              value: prj-prod-frontend
+        - name: 'Service count'
+          type: TRAP
+          key: gcp.cost.service.count
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!services'
+          tags:
+            - tag: component
+              value: cost
+            - tag: target
+              value: gcp
+      tags:
+        - tag: target
+          value: gcp
+      macros:
+        - macro: '{$BUDGET.MONTH}'
+          value: '1400'
+    - host: 'Hotel Gran Forum - FinOps'
+      name: 'Hotel Gran Forum - FinOps'
+      groups:
+        - name: Hotel/Cloud
+      items:
+        - name: 'Hotel: Costo diario de analitica en AWS'
+          type: TRAP
+          key: 'hotel.finops.costo[analitica,aws]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: aplicacion
+              value: analitica
+            - tag: proveedor
+              value: aws
+            - tag: sitio
+              value: gran-forum
+        - name: 'Hotel: Costo diario de analitica en GCP'
+          type: TRAP
+          key: 'hotel.finops.costo[analitica,gcp]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: aplicacion
+              value: analitica
+            - tag: proveedor
+              value: gcp
+            - tag: sitio
+              value: gran-forum
+        - name: 'Hotel: Costo diario de pms en AWS'
+          type: TRAP
+          key: 'hotel.finops.costo[pms,aws]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: aplicacion
+              value: pms
+            - tag: proveedor
+              value: aws
+            - tag: sitio
+              value: gran-forum
+        - name: 'Hotel: Costo diario de pms en GCP'
+          type: TRAP
+          key: 'hotel.finops.costo[pms,gcp]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: aplicacion
+              value: pms
+            - tag: proveedor
+              value: gcp
+            - tag: sitio
+              value: gran-forum
+        - name: 'Hotel: Costo diario de portal-wifi en AWS'
+          type: TRAP
+          key: 'hotel.finops.costo[portal-wifi,aws]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: aplicacion
+              value: portal-wifi
+            - tag: proveedor
+              value: aws
+            - tag: sitio
+              value: gran-forum
+        - name: 'Hotel: Costo diario de portal-wifi en GCP'
+          type: TRAP
+          key: 'hotel.finops.costo[portal-wifi,gcp]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: aplicacion
+              value: portal-wifi
+            - tag: proveedor
+              value: gcp
+            - tag: sitio
+              value: gran-forum
+        - name: 'Hotel: Costo diario de reservas-web en AWS'
+          type: TRAP
+          key: 'hotel.finops.costo[reservas-web,aws]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: aplicacion
+              value: reservas-web
+            - tag: proveedor
+              value: aws
+            - tag: sitio
+              value: gran-forum
+        - name: 'Hotel: Costo diario de reservas-web en GCP'
+          type: TRAP
+          key: 'hotel.finops.costo[reservas-web,gcp]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!USD'
+          tags:
+            - tag: aplicacion
+              value: reservas-web
+            - tag: proveedor
+              value: gcp
+            - tag: sitio
+              value: gran-forum
+        - name: 'Hotel: Costo por reserva'
+          type: CALCULATED
+          key: hotel.finops.costo_por_reserva
+          delay: 30s
+          value_type: FLOAT
+          units: '!USD'
+          params: '(last(/AWS Cost/aws.daily.service.total.cost) + last(/Google Cloud Cost/gcp.cost.daily.summary.yesterday)) * (last(/Hotel Gran Forum - Negocio/hotel.kpi[reservas_24h])>0) / max(last(/Hotel Gran Forum - Negocio/hotel.kpi[reservas_24h]),1)'
+          tags:
+            - tag: capa
+              value: negocio
+            - tag: sitio
+              value: gran-forum
+      tags:
+        - tag: sitio
+          value: gran-forum
+    - host: 'Hotel Gran Forum - Negocio'
+      name: 'Hotel Gran Forum - Negocio'
+      templates:
+        - name: 'Hotel KPIs by ClickHouse'
+      groups:
+        - name: Hotel/Negocio
+      tags:
+        - tag: sitio
+          value: gran-forum
+    - host: 'Hotel Gran Forum - OT'
+      name: 'Hotel Gran Forum - OT'
+      groups:
+        - name: Hotel/OT
+      items:
+        - name: 'Control: reinicio de ventanas CEP'
+          type: TRAP
+          key: hotel.cep.reinicio
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: recurso
+              value: reinicio
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.cep.reinicio)=1'
+              name: 'Control: reinicio de ventana de emergencia'
+              tags:
+                - tag: capa
+                  value: control
+                - tag: circuito
+                  value: emergencia
+                - tag: recurso
+                  value: reinicio
+                - tag: sitio
+                  value: gran-forum
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.cep.reinicio)=1'
+              name: 'Control: reinicio de ventana principal'
+              tags:
+                - tag: capa
+                  value: control
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: reinicio
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Elevador 1 (1=en servicio)'
+          type: TRAP
+          key: 'hotel.elev.state[1]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          valuemap:
+            name: 'Hotel: elevador'
+          tags:
+            - tag: recurso
+              value: elevador
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.elev.state[1])=0'
+              name: 'Elevador 1 fuera de servicio'
+              priority: AVERAGE
+              tags:
+                - tag: capa
+                  value: servicio
+                - tag: circuito
+                  value: emergencia
+                - tag: recurso
+                  value: elevador
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Elevador 2 (1=en servicio)'
+          type: TRAP
+          key: 'hotel.elev.state[2]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          valuemap:
+            name: 'Hotel: elevador'
+          tags:
+            - tag: recurso
+              value: elevador
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.elev.state[2])=0'
+              name: 'Elevador 2 fuera de servicio'
+              priority: AVERAGE
+              tags:
+                - tag: capa
+                  value: servicio
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: elevador
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Elevador 3 (1=en servicio)'
+          type: TRAP
+          key: 'hotel.elev.state[3]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          valuemap:
+            name: 'Hotel: elevador'
+          tags:
+            - tag: recurso
+              value: elevador
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.elev.state[3])=0'
+              name: 'Elevador 3 fuera de servicio'
+              priority: AVERAGE
+              tags:
+                - tag: capa
+                  value: servicio
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: elevador
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Combustible del generador'
+          type: TRAP
+          key: hotel.gen.fuel_pct
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: recurso
+              value: generador
+        - name: 'Hotel: Batería de arranque del generador (mínimo 11.5 V)'
+          type: TRAP
+          key: hotel.gen.start_battery_v
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: V
+          tags:
+            - tag: recurso
+              value: generador
+        - name: 'Hotel: Generador (0=parado, 1=arrancando, 2=en marcha, 3=falla)'
+          type: TRAP
+          key: hotel.gen.state
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          valuemap:
+            name: 'Hotel: generador'
+          tags:
+            - tag: recurso
+              value: generador
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.gen.state)=3'
+              name: 'Generador: falla de arranque'
+              priority: HIGH
+              tags:
+                - tag: capa
+                  value: energia
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: generador
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Red eléctrica (1=ok)'
+          type: TRAP
+          key: hotel.grid.state
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          valuemap:
+            name: 'Hotel: red'
+          tags:
+            - tag: recurso
+              value: red
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.grid.state)=0'
+              name: 'Red eléctrica: sin suministro'
+              priority: HIGH
+              tags:
+                - tag: capa
+                  value: energia
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: red
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Tensión de red'
+          type: TRAP
+          key: hotel.grid.voltage
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: V
+          tags:
+            - tag: recurso
+              value: red
+        - name: 'Hotel: Chiller (1=en marcha)'
+          type: TRAP
+          key: hotel.hvac.chiller_state
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          valuemap:
+            name: 'Hotel: chiller'
+          tags:
+            - tag: recurso
+              value: hvac
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.hvac.chiller_state)=0'
+              name: 'Aire acondicionado: chiller detenido'
+              priority: HIGH
+              tags:
+                - tag: capa
+                  value: servicio
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: hvac
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Temperatura del lobby'
+          type: TRAP
+          key: hotel.hvac.lobby_temp
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: °C
+          tags:
+            - tag: recurso
+              value: hvac
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.hvac.lobby_temp)>26'
+              name: 'Lobby: temperatura alta'
+              priority: WARNING
+              tags:
+                - tag: capa
+                  value: servicio
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: hvac
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Temperatura de agua del chiller'
+          type: TRAP
+          key: hotel.hvac.supply_temp
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: °C
+          tags:
+            - tag: recurso
+              value: hvac
+        - name: 'Hotel: Carga de batería de la UPS'
+          type: TRAP
+          key: hotel.ups.battery_pct
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: recurso
+              value: ups
+        - name: 'Hotel: Carga de salida de la UPS'
+          type: TRAP
+          key: hotel.ups.load_pct
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: recurso
+              value: ups
+        - name: 'Hotel: UPS en batería (1=sí)'
+          type: TRAP
+          key: hotel.ups.on_battery
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          valuemap:
+            name: 'Hotel: origen'
+          tags:
+            - tag: recurso
+              value: ups
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.ups.on_battery)=1'
+              name: 'UPS en batería'
+              priority: AVERAGE
+              tags:
+                - tag: capa
+                  value: energia
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: ups
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Autonomía de la UPS en minutos'
+          type: TRAP
+          key: hotel.ups.runtime_min
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: min
+          tags:
+            - tag: recurso
+              value: ups
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.ups.runtime_min)<10'
+              name: 'UPS: autonomía baja'
+              priority: HIGH
+              tags:
+                - tag: capa
+                  value: energia
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: ups
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Puntos de acceso Wi-Fi activos (de 48)'
+          type: TRAP
+          key: hotel.wifi.aps_up
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: recurso
+              value: wifi
+          triggers:
+            - expression: 'last(/Hotel Gran Forum - OT/hotel.wifi.aps_up)<24'
+              name: 'Wi-Fi: la mayoría de los puntos de acceso caídos'
+              priority: HIGH
+              tags:
+                - tag: capa
+                  value: servicio
+                - tag: circuito
+                  value: principal
+                - tag: recurso
+                  value: wifi
+                - tag: sitio
+                  value: gran-forum
+        - name: 'Hotel: Clientes Wi-Fi conectados'
+          type: TRAP
+          key: hotel.wifi.clients
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: recurso
+              value: wifi
+      tags:
+        - tag: sitio
+          value: gran-forum
+      valuemaps:
+        - name: 'Hotel: chiller'
+          mappings:
+            - value: '0'
+              newvalue: Detenido
+            - value: '1'
+              newvalue: 'En marcha'
+        - name: 'Hotel: elevador'
+          mappings:
+            - value: '0'
+              newvalue: 'Fuera de servicio'
+            - value: '1'
+              newvalue: 'En servicio'
+        - name: 'Hotel: generador'
+          mappings:
+            - value: '0'
+              newvalue: Parado
+            - value: '1'
+              newvalue: Arrancando
+            - value: '2'
+              newvalue: 'En marcha'
+            - value: '3'
+              newvalue: Falla
+        - name: 'Hotel: origen'
+          mappings:
+            - value: '0'
+              newvalue: Red
+            - value: '1'
+              newvalue: Batería
+        - name: 'Hotel: red'
+          mappings:
+            - value: '0'
+              newvalue: 'Sin suministro'
+            - value: '1'
+              newvalue: 'Con suministro'

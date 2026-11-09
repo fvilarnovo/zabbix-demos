@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}No se pudo completar · Hotel Gran Zabbix 8.0{% endblock %}
+{% block estilos %}
+  .ficha { max-width: 520px; margin: 24px auto; background: var(--papel); border: 1px solid var(--linea); border-top: 4px solid var(--rojo); border-radius: 10px; padding: 36px; }
+  .ficha h1 { color: var(--rojo); margin: 0 0 12px; font-size: 30px; }
+{% endblock %}
+{% block contenido %}
+<div class="ficha">
+  <h1>No se pudo completar tu reserva</h1>
+  <p>{{ mensaje }}</p>
+  <a href="/">Intentar de nuevo</a>
+</div>
+{% endblock %}

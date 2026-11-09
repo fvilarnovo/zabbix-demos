@@ -1,0 +1,49 @@
+# Demo "Hotel Gran Zabbix 8.0" para Dokploy: UN solo contenedor con la webapp, los simuladores, la vista pixel,
+# el servicio de control y el provisioning de Zabbix. Se une a la red del stack de Zabbix 8.0 (ZABBIX_NETWORK)
+# y usa sus nombres de servicio: zabbix-proxy-apm (OTLP/gRPC 4317), zabbix-web (API), zabbix-server (10051).
+# Variables en Dokploy → Environment (ver .env.example). La imagen se construye desde este repositorio.
+
+services:
+  hotel-demo:
+    build: .
+    image: hotel-demo
+    restart: unless-stopped
+    stop_grace_period: 20s
+    ports:
+      - "${HOTEL_PORT:-8088}:8000"
+      - "${PIXEL_PORT:-8090}:8090"
+      - "${CONTROL_PORT:-8091}:8091"
+    environment:
+      # trazas
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:?definir en Dokploy → Environment}
+      OTEL_EXPORTER_OTLP_PROTOCOL: ${OTEL_EXPORTER_OTLP_PROTOCOL:-grpc}
+      OTEL_SERVICE_NAMESPACE: ${OTEL_SERVICE_NAMESPACE:-hotel}
+      OTEL_DEPLOYMENT_ENVIRONMENT: ${OTEL_DEPLOYMENT_ENVIRONMENT:-production}
+      # trappers de los simuladores
+      ZABBIX_TRAPPER_HOST: ${ZABBIX_TRAPPER_HOST:-zabbix-server}
+      ZABBIX_TRAPPER_PORT: ${ZABBIX_TRAPPER_PORT:-10051}
+      # API de Zabbix: provisioning y check
+      ZABBIX_URL: ${ZABBIX_URL:?definir en Dokploy → Environment}
+      ZABBIX_API_TOKEN: ${ZABBIX_API_TOKEN:?definir en Dokploy → Environment}
+      PROVISION: ${PROVISION:-1}
+      PROVISION_MCP_USER: ${PROVISION_MCP_USER:-0}
+      CH_URL: ${CH_URL:-http://clickhouse:8123/}
+      CH_USER: ${CH_USER:-zabbix}
+      CH_PASSWORD: ${CH_PASSWORD:-}
+      TRAPPER_ALLOWED: ${TRAPPER_ALLOWED:-10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+      # controles
+      CONTROL_TOKEN: ${CONTROL_TOKEN:?definir en Dokploy → Environment}
+      PIXEL_CONTROLES: ${PIXEL_CONTROLES:-1}
+      FINOPS_HISTORIA_DIAS: ${FINOPS_HISTORIA_DIAS:-7}
+    volumes:
+      - estado:/estado
+      - salida:/salida
+
+volumes:
+  estado:
+  salida:
+
+networks:
+  default:
+    name: ${ZABBIX_NETWORK:?definir en Dokploy → Environment}
+    external: true
