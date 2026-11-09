@@ -35,6 +35,7 @@ services:
       CONTROL_TOKEN: ${CONTROL_TOKEN:?definir en Dokploy → Environment}
       PIXEL_CONTROLES: ${PIXEL_CONTROLES:-1}
       FINOPS_HISTORIA_DIAS: ${FINOPS_HISTORIA_DIAS:-7}
+      FINOPS_NUBES: ${FINOPS_NUBES:-aws,gcp}
     volumes:
       - estado:/estado
       - salida:/salida

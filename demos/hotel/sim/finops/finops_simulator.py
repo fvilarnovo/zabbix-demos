@@ -80,6 +80,11 @@ NUBES = {
     },
 }
 
+# Nubes que se envían. El provisioning de la demo del hotel solo crea los hosts AWS Cost y Google Cloud Cost, y
+# hotel_finops necesita aws y gcp. Para la charla de FinOps completa: FINOPS_NUBES=aws,azure,gcp,oci
+NUBES_ACTIVAS = {n.strip() for n in os.environ.get("FINOPS_NUBES", "aws,gcp").split(",") if n.strip()} | {"aws", "gcp"}
+NUBES = {k: v for k, v in NUBES.items() if k in NUBES_ACTIVAS}
+
 AWS_CUENTAS = {"111122223333": 0.65, "444455556666": 0.25, "777788889999": 0.10}
 AZURE_SUSCRIPCIONES = {"sub-prod-enterprise": 0.60, "sub-dev-sandbox": 0.25, "sub-core-infra": 0.15}
 OCI_COMPARTIMENTOS = {"Production": 0.55, "Analytics": 0.30, "Database": 0.15}

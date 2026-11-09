@@ -112,6 +112,7 @@ Como el stack no publica 10051 ni 8123, la demo se une a su red Docker (`network
 | `TRAPPER_ALLOWED` | `10.0.0.0/8,172.16.0.0/12,192.168.0.0/16` | Subredes que pueden enviar a los ítems trapper |
 | `PIXEL_CONTROLES` | `1` | `1` = la barra de la vista pixel dispara los actos; `0` = solo mirar |
 | `FINOPS_HISTORIA_DIAS` | `7` | Días de historia FinOps que se cargan la primera vez |
+| `FINOPS_NUBES` | `aws,gcp` | Nubes que simula FinOps; `azure` y `oci` solo si esos hosts existen en Zabbix. |
 | `HOTEL_PORT` | `8088` | Puerto del host para la webapp |
 | `PIXEL_PORT` | `8090` | Puerto del host para la vista pixel |
 | `CONTROL_PORT` | `8091` | Puerto del host para el control |
