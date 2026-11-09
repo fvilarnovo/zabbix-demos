@@ -8,7 +8,13 @@ Cada demo vive en `demos/<nombre>/` y trae:
 - `.env.example`: las variables, para pegar en Dokploy → Environment.
 - `README.md`: la guía de despliegue de esa demo.
 
-Las demos no incluyen Zabbix. Se unen a la red Docker de un stack de Zabbix 8.0 ya desplegado: server, frontend, proxy con colector APM, ClickHouse y MCP server.
+Las demos no incluyen Zabbix. Se unen a la red Docker de un stack de Zabbix 8.0 ya desplegado: server, frontend, proxy con colector APM, ClickHouse y MCP server. Cada demo es un solo contenedor: un supervisor provisiona Zabbix al arrancar y lanza los procesos de la demo.
+
+Además del catálogo de demos, el repositorio trae:
+
+- `docs/DESPLIEGUE-DOKPLOY.md`: el procedimiento de despliegue en Dokploy paso a paso, con los errores conocidos.
+- `comun/`: las piezas genéricas (supervisor, cliente trapper, cliente de API, provisioning e exportación de Zabbix).
+- `demos/_plantilla/` y `nueva_demo.sh`: el punto de partida para una demo nueva.
 
 ## Demos disponibles
 
@@ -18,7 +24,13 @@ Las demos no incluyen Zabbix. Se unen a la red Docker de un stack de Zabbix 8.0 
 
 ## Agregar otra demo
 
-1. Crea `demos/<nombre>/` con `docker-compose.yml`, `.env.example` y `README.md`.
-2. En el Compose, usa `networks.default.external` con el nombre de red en la variable `ZABBIX_NETWORK`.
-3. Documenta en el README los pasos de Dokploy, las variables y la verificación.
-4. Agrega la demo a la tabla de arriba.
+```bash
+./nueva_demo.sh <nombre>
+```
+
+Crea `demos/<nombre>/` desde la plantilla, con las piezas de `comun/` en su versión actual y una app mínima instrumentada que ya envía trazas. Después:
+
+1. Reemplaza la app de ejemplo por la de la demo y ajusta `procesos.json` (un proceso por servicio o simulador).
+2. Exporta su configuración de Zabbix con `comun/exportar_zabbix.py` a `provision/export/`; los pasos propios (macros, reglas CEP, usuarios) van en `provision/post_provision.py`.
+3. Completa `.env.example` y el `README.md` de la demo.
+4. Despliega siguiendo `docs/DESPLIEGUE-DOKPLOY.md` y agrega la demo a la tabla de arriba.
