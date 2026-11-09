@@ -1,0 +1,11 @@
+[
+  {"nombre": "kiosco", "cmd": ["python3", "-m", "uvicorn", "app.aeropuerto.kiosco:app", "--host", "127.0.0.1", "--port", "8101", "--no-access-log"]},
+  {"nombre": "reservas", "cmd": ["python3", "-m", "uvicorn", "app.aeropuerto.reservas:app", "--host", "127.0.0.1", "--port", "8102", "--no-access-log"]},
+  {"nombre": "pasajes", "cmd": ["python3", "-m", "uvicorn", "app.aeropuerto.pasajes:app", "--host", "127.0.0.1", "--port", "8103", "--no-access-log"]},
+  {"nombre": "equipaje", "cmd": ["python3", "-m", "uvicorn", "app.aeropuerto.equipaje:app", "--host", "127.0.0.1", "--port", "8104", "--no-access-log"]},
+  {"nombre": "simulador", "cmd": ["python3", "-u", "sim/simulador.py"]},
+  {"nombre": "carga", "cmd": ["python3", "-m", "app.aeropuerto.carga"]},
+  {"nombre": "control", "cmd": ["python3", "-u", "control/control.py"]},
+  {"nombre": "discovery", "cmd": ["python3", "-u", "provision/disparar_discovery.py"]},
+  {"nombre": "web", "cmd": ["python3", "-m", "uvicorn", "web.servidor:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]}
+]

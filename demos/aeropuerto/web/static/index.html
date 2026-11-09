@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aeropuerto Forum · Zabbix 8.0</title>
+<link rel="stylesheet" href="/static/css/hud.css">
+<script type="importmap">
+{ "imports": { "three": "/static/vendor/three.module.js", "three/addons/": "/static/vendor/addons/" } }
+</script>
+</head>
+<body>
+<div id="escena"></div>
+<div id="etiquetas"></div>
+
+<header id="kpis">
+  <div class="marca"><b>ZABBIX</b> 8.0<small id="conexion">conectando…</small></div>
+  <div class="kpi" data-k="pasajeros"><span>Pasajeros en terminal</span><strong>—</strong></div>
+  <div class="kpi" data-k="cola_checkin"><span>Cola de check-in</span><strong>—</strong></div>
+  <div class="kpi" data-k="valijas_h"><span>Valijas / h</span><strong>—</strong></div>
+  <div class="kpi" data-k="vuelos_demorados"><span>Vuelos demorados</span><strong>—</strong></div>
+  <div class="kpi" data-k="latencia_ms"><span>Latencia check-in p95</span><strong>—</strong></div>
+</header>
+
+<aside id="problemas" class="panel">
+  <h2>Problemas en Zabbix <em id="n-problemas">0</em></h2>
+  <ul id="lista-problemas"></ul>
+</aside>
+
+<aside id="bitacora" class="panel">
+  <h2>Bitácora</h2>
+  <ul id="lista-bitacora"></ul>
+</aside>
+
+<div id="aviso"></div>
+
+<footer id="barra">
+  <div class="grupo" id="escenarios"><b>DEMO</b></div>
+  <div class="grupo derecha">
+    <div id="vista">
+      <button data-vista="tour" title="Recorrido automático">Recorrido</button>
+      <button data-vista="general" title="Vista general">General</button>
+      <button data-dia="auto" title="Ciclo día y noche">Ciclo</button>
+      <button data-dia="noche">Noche</button>
+    </div>
+    <div id="velocidad"></div>
+  </div>
+</footer>
+<script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

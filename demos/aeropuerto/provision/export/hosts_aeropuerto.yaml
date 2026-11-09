@@ -1,0 +1,119 @@
+zabbix_export:
+  version: '8.0'
+  host_groups:
+    - uuid: ae674b2261da4ddeafcf61bbcc297242
+      name: Aeropuerto/APM
+    - uuid: e4d713e74c4e453a8c3163c9660385c7
+      name: Aeropuerto/Negocio
+    - uuid: 0f900f640df04a4aaf9fe56a3731819e
+      name: Aeropuerto/OT
+  hosts:
+    - host: 'Aeropuerto - APM discovery'
+      name: 'Aeropuerto - APM discovery'
+      templates:
+        - name: 'APM applications discovery by ClickHouse HTTP v3'
+      groups:
+        - name: Aeropuerto/APM
+      tags:
+        - tag: demo
+          value: aeropuerto
+      macros:
+        - macro: '{$APM.NAMESPACE.MATCHES}'
+          value: ^aeropuerto$
+        - macro: '{$CH.PASSWORD}'
+          type: SECRET_TEXT
+        - macro: '{$CH.URL}'
+          value: 'http://clickhouse:8123/'
+        - macro: '{$CH.USER}'
+          value: zabbix
+    - host: 'Aeropuerto - Cinta 1'
+      name: 'Aeropuerto - Cinta 1'
+      templates:
+        - name: 'Aeropuerto OT Cinta'
+      groups:
+        - name: Aeropuerto/OT
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - Manga 1'
+      name: 'Aeropuerto - Manga 1'
+      templates:
+        - name: 'Aeropuerto OT Manga'
+      groups:
+        - name: Aeropuerto/OT
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - Manga 2'
+      name: 'Aeropuerto - Manga 2'
+      templates:
+        - name: 'Aeropuerto OT Manga'
+      groups:
+        - name: Aeropuerto/OT
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - Manga 3'
+      name: 'Aeropuerto - Manga 3'
+      templates:
+        - name: 'Aeropuerto OT Manga'
+      groups:
+        - name: Aeropuerto/OT
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - Negocio'
+      name: 'Aeropuerto - Negocio'
+      templates:
+        - name: 'Aeropuerto APM by Telemetry query'
+        - name: 'Aeropuerto KPIs by ClickHouse'
+      groups:
+        - name: Aeropuerto/Negocio
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - Scanner 1'
+      name: 'Aeropuerto - Scanner 1'
+      templates:
+        - name: 'Aeropuerto OT Scanner'
+      groups:
+        - name: Aeropuerto/OT
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - Scanner 2'
+      name: 'Aeropuerto - Scanner 2'
+      templates:
+        - name: 'Aeropuerto OT Scanner'
+      groups:
+        - name: Aeropuerto/OT
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - Scanner 3'
+      name: 'Aeropuerto - Scanner 3'
+      templates:
+        - name: 'Aeropuerto OT Scanner'
+      groups:
+        - name: Aeropuerto/OT
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - Terminal'
+      name: 'Aeropuerto - Terminal'
+      templates:
+        - name: 'Aeropuerto Operacion'
+      groups:
+        - name: Aeropuerto/Negocio
+      tags:
+        - tag: demo
+          value: aeropuerto
+    - host: 'Aeropuerto - UPS T1'
+      name: 'Aeropuerto - UPS T1'
+      templates:
+        - name: 'Aeropuerto OT UPS'
+      groups:
+        - name: Aeropuerto/OT
+      tags:
+        - tag: demo
+          value: aeropuerto
