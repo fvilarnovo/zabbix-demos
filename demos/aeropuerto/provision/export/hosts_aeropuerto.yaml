@@ -1,6 +1,8 @@
 zabbix_export:
   version: '8.0'
   host_groups:
+    - uuid: de654be9fb684cc6a57595c4270bf0c1
+      name: Applications/APM/aeropuerto
     - uuid: ae674b2261da4ddeafcf61bbcc297242
       name: Aeropuerto/APM
     - uuid: e4d713e74c4e453a8c3163c9660385c7

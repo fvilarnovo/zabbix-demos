@@ -7,7 +7,7 @@ zabbix_export:
           widgets:
             - type: item
               name: 'Pasajeros en terminal'
-              width: '18'
+              width: '12'
               height: '3'
               hide_header: 'YES'
               fields:
@@ -34,7 +34,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -48,6 +48,24 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
                   value: '2'
                 - type: STRING
                   name: thresholds.0.color
@@ -72,22 +90,22 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
             - type: svggraph
               name: Colas
               'y': '3'
-              width: '36'
-              height: '7'
+              width: '30'
+              height: '6'
               fields:
                 - type: STRING
                   name: ds.0.color
-                  value: 1E88E5
+                  value: 2A78D6
                 - type: INTEGER
                   name: ds.0.fill
-                  value: '1'
+                  value: '2'
                 - type: STRING
                   name: ds.0.hosts.0
                   value: 'Aeropuerto - Terminal'
@@ -95,17 +113,23 @@ zabbix_export:
                   name: ds.0.items.0
                   value: 'Terminal: cola de check-in'
                 - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
                   name: ds.0.type
                   value: '0'
                 - type: INTEGER
                   name: ds.0.width
-                  value: '3'
+                  value: '2'
                 - type: STRING
                   name: ds.1.color
-                  value: FB8C00
+                  value: EB6834
                 - type: INTEGER
                   name: ds.1.fill
-                  value: '0'
+                  value: '2'
                 - type: STRING
                   name: ds.1.hosts.0
                   value: 'Aeropuerto - Terminal'
@@ -113,11 +137,20 @@ zabbix_export:
                   name: ds.1.items.0
                   value: 'Terminal: cola de seguridad'
                 - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
                   name: ds.1.type
                   value: '0'
                 - type: INTEGER
                   name: ds.1.width
                   value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
                 - type: INTEGER
                   name: legend
                   value: '1'
@@ -128,15 +161,21 @@ zabbix_export:
                   name: legend_lines
                   value: '1'
                 - type: STRING
+                  name: problemhosts.0
+                  value: 'Aeropuerto - Terminal'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
                   name: time_period.from
-                  value: now-15m
+                  value: now-30m
                 - type: STRING
                   name: time_period.to
                   value: now
             - type: problems
               name: 'Problemas de la terminal'
-              'y': '10'
-              width: '72'
+              'y': '9'
+              width: '52'
               height: '6'
               fields:
                 - type: INTEGER
@@ -145,6 +184,18 @@ zabbix_export:
                 - type: INTEGER
                   name: highlight_row
                   value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
                 - type: INTEGER
                   name: show
                   value: '3'
@@ -173,9 +224,111 @@ zabbix_export:
                   name: tag_name_format
                   value: '0'
             - type: item
+              name: 'Cola de check-in'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Cola de check-in'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Terminal'
+                    key: aero.cola.checkin
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '80'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '100'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
               name: 'Cola de seguridad'
-              x: '18'
-              width: '18'
+              x: '24'
+              width: '12'
               height: '3'
               hide_header: 'YES'
               fields:
@@ -202,7 +355,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -217,21 +370,39 @@ zabbix_export:
                 - type: INTEGER
                   name: show.1
                   value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
                 - type: STRING
                   name: thresholds.0.color
-                  value: 2E7D32
+                  value: 0CA30C
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
                   value: '60'
                 - type: STRING
                   name: thresholds.2.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.2.threshold
                   value: '80'
@@ -252,14 +423,174 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Valijas por hora'
+              x: '30'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.aggregate_grouping
+                  value: '0'
+                - type: STRING
+                  name: ds.0.aggregate_interval
+                  value: 1m
+                - type: STRING
+                  name: ds.0.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '6'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Aeropuerto - Terminal'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Equipaje: valijas por hora'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Valijas por hora'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Valijas por hora'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Terminal'
+                    key: aero.equipaje.valijas_h
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '600'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1000'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
             - type: item
               name: 'Equipaje acumulado'
-              x: '36'
-              width: '18'
+              x: '48'
+              width: '12'
               height: '3'
               hide_header: 'YES'
               fields:
@@ -286,7 +617,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -301,21 +632,39 @@ zabbix_export:
                 - type: INTEGER
                   name: show.1
                   value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
                 - type: STRING
                   name: thresholds.0.color
-                  value: 2E7D32
+                  value: 0CA30C
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
                   value: '60'
                 - type: STRING
                   name: thresholds.2.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.2.threshold
                   value: '100'
@@ -336,72 +685,156 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
-            - type: svggraph
-              name: Equipaje
-              x: '36'
+            - type: piechart
+              name: 'Pasajeros por scanner (por minuto)'
+              x: '52'
               'y': '3'
-              width: '36'
-              height: '7'
+              width: '20'
+              height: '6'
               fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: draw_type
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
                 - type: STRING
                   name: ds.0.color
-                  value: 43A047
+                  value: 2A78D6
                 - type: INTEGER
-                  name: ds.0.fill
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
                   value: '1'
                 - type: STRING
+                  name: ds.0.data_set_label
+                  value: 'Scanner 1'
+                - type: STRING
                   name: ds.0.hosts.0
-                  value: 'Aeropuerto - Terminal'
+                  value: 'Aeropuerto - Scanner 1'
                 - type: STRING
                   name: ds.0.items.0
-                  value: 'Equipaje: valijas por hora'
+                  value: 'Scanner: pasajeros por minuto'
                 - type: INTEGER
-                  name: ds.0.type
-                  value: '0'
-                - type: INTEGER
-                  name: ds.0.width
-                  value: '3'
+                  name: ds.1.aggregate_function
+                  value: '7'
                 - type: STRING
                   name: ds.1.color
-                  value: E53935
+                  value: EB6834
                 - type: INTEGER
-                  name: ds.1.fill
+                  name: ds.1.dataset_aggregation
                   value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Scanner 2'
                 - type: STRING
                   name: ds.1.hosts.0
-                  value: 'Aeropuerto - Terminal'
+                  value: 'Aeropuerto - Scanner 2'
                 - type: STRING
                   name: ds.1.items.0
-                  value: 'Equipaje: acumulación'
+                  value: 'Scanner: pasajeros por minuto'
                 - type: INTEGER
-                  name: ds.1.type
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.dataset_aggregation
                   value: '0'
                 - type: INTEGER
-                  name: ds.1.width
-                  value: '2'
+                  name: ds.2.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'Scanner 3'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'Aeropuerto - Scanner 3'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'Scanner: pasajeros por minuto'
                 - type: INTEGER
                   name: legend
                   value: '1'
                 - type: INTEGER
                   name: legend_columns
-                  value: '3'
+                  value: '2'
                 - type: INTEGER
                   name: legend_lines
-                  value: '1'
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
                 - type: STRING
                   name: time_period.from
-                  value: now-15m
+                  value: now-5m
                 - type: STRING
                   name: time_period.to
                   value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: ''
+                - type: INTEGER
+                  name: units_show
+                  value: '0'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
+            - type: problemsbysv
+              name: 'Por severidad'
+              x: '52'
+              'y': '9'
+              width: '20'
+              height: '6'
+              fields:
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Aeropuerto/OT
+                - type: GROUP
+                  name: groupids.1
+                  value:
+                    name: Aeropuerto/Negocio
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
+                - type: INTEGER
+                  name: show_type
+                  value: '1'
             - type: item
-              name: 'Autonomía UPS (min)'
-              x: '54'
-              width: '18'
+              name: 'Vuelos demorados'
+              x: '60'
+              width: '12'
               height: '3'
               hide_header: 'YES'
               fields:
@@ -416,7 +849,7 @@ zabbix_export:
                   value: '20'
                 - type: STRING
                   name: description
-                  value: 'Autonomía UPS (min)'
+                  value: 'Vuelos demorados'
                 - type: INTEGER
                   name: desc_bold
                   value: '1'
@@ -428,15 +861,218 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
                 - type: ITEM
                   name: itemid.0
                   value:
-                    host: 'Aeropuerto - UPS T1'
-                    key: aero.ups.autonomia_min
+                    host: 'Aeropuerto - Terminal'
+                    key: aero.vuelos.demorados
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '2'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+        - name: 'Equipos e infraestructura'
+          widgets:
+            - type: gauge
+              name: 'Cinta: corriente'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: STRING
+                  name: description
+                  value: 'Cinta: corriente'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Cinta 1'
+                    key: aero.cinta.corriente
+                - type: STRING
+                  name: max
+                  value: '45'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '24'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '28'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: honeycomb
+              name: 'Estado de los equipos'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Aeropuerto/OT
+                - type: STRING
+                  name: items.0
+                  value: 'Scanner: en servicio*'
+                - type: STRING
+                  name: items.1
+                  value: 'Manga: conectada*'
+                - type: STRING
+                  name: items.2
+                  value: 'Cinta: en marcha*'
+                - type: STRING
+                  name: primary_label
+                  value: '{HOST.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
                 - type: INTEGER
                   name: show.0
                   value: '1'
@@ -445,19 +1081,1119 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: thresholds.0.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+            - type: topitems
+              name: 'Scanners: pasajeros por minuto'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'Scanner: pasajeros por minuto'
+                - type: STRING
+                  name: columns.0.max
+                  value: '12'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '5'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '7'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Aeropuerto/OT
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: gauge
+              name: 'Cinta: motor'
+              x: '12'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'Cinta: motor'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Cinta 1'
+                    key: aero.cinta.temp_motor
+                - type: STRING
+                  name: max
+                  value: '100'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '60'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '70'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: gauge
+              name: 'UPS: batería'
+              x: '24'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'UPS: batería'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - UPS T1'
+                    key: aero.ups.bateria_pct
+                - type: STRING
+                  name: max
+                  value: '100'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '30'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '60'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: svggraph
+              name: 'Cinta: corriente del motor'
+              x: '24'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Aeropuerto - Cinta 1'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Cinta: corriente del motor'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Aeropuerto - Cinta 1'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: topitems
+              name: 'Scanners: temperatura del tubo'
+              x: '24'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'Scanner: temperatura del tubo'
+                - type: STRING
+                  name: columns.0.max
+                  value: '60'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '45'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '50'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Aeropuerto/OT
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: gauge
+              name: 'UPS: autonomía'
+              x: '36'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'UPS: autonomía'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - UPS T1'
+                    key: aero.ups.autonomia_min
+                - type: STRING
+                  name: max
+                  value: '60'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
                   value: '10'
                 - type: STRING
                   name: thresholds.2.color
-                  value: 2E7D32
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '20'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: gauge
+              name: 'UPS: carga'
+              x: '48'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'UPS: carga'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - UPS T1'
+                    key: aero.ups.carga_pct
+                - type: STRING
+                  name: max
+                  value: '100'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '70'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '90'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: svggraph
+              name: 'Cinta: temperatura del motor'
+              x: '48'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Aeropuerto - Cinta 1'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Cinta: temperatura del motor'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: svggraph
+              name: 'Mangas: presión hidráulica'
+              x: '48'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Aeropuerto - Manga 1'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Manga: presión hidráulica'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Aeropuerto - Manga 2'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Manga: presión hidráulica'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'Aeropuerto - Manga 3'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'Manga: presión hidráulica'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: gauge
+              name: 'UPS: entrada'
+              x: '60'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'UPS: entrada'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - UPS T1'
+                    key: aero.ups.tension_entrada
+                - type: STRING
+                  name: max
+                  value: '150'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '110'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+        - name: 'Servicios y APM'
+          widgets:
+            - type: item
+              name: 'Check-ins hoy'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Check-ins hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Negocio'
+                    key: 'aero.kpi[checkins_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Latencia p95 por servicio'
+              'y': '3'
+              width: '30'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM kiosco: Latency p95'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM reservas: Latency p95'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM pasajes: Latency p95'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'APM equipaje: Latency p95'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: topitems
+              name: 'Latencia p95'
+              'y': '9'
+              width: '26'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'APM kiosco: Latency p95'
+                - type: STRING
+                  name: columns.0.items.1
+                  value: 'APM reservas: Latency p95'
+                - type: STRING
+                  name: columns.0.items.2
+                  value: 'APM pasajes: Latency p95'
+                - type: STRING
+                  name: columns.0.items.3
+                  value: 'APM equipaje: Latency p95'
+                - type: STRING
+                  name: columns.0.max
+                  value: '4'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '1.5'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '3'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications/APM/aeropuerto
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: item
+              name: 'Fallidos (15 min)'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Fallidos (15 min)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Negocio'
+                    key: 'aero.kpi[checkins_fallidos_15m]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.2.threshold
                   value: '20'
@@ -478,7 +2214,781 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Valijas (última hora)'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Valijas (última hora)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Negocio'
+                    key: 'aero.kpi[valijas_1h]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: topitems
+              name: Apdex
+              x: '26'
+              'y': '9'
+              width: '26'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'APM kiosco: Apdex'
+                - type: STRING
+                  name: columns.0.items.1
+                  value: 'APM reservas: Apdex'
+                - type: STRING
+                  name: columns.0.items.2
+                  value: 'APM pasajes: Apdex'
+                - type: STRING
+                  name: columns.0.items.3
+                  value: 'APM equipaje: Apdex'
+                - type: STRING
+                  name: columns.0.max
+                  value: '1'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '0.7'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '0.85'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications/APM/aeropuerto
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: svggraph
+              name: 'Tasa de errores por servicio'
+              x: '30'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM kiosco: Error rate'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM reservas: Error rate'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM pasajes: Error rate'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'APM equipaje: Error rate'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Check-in p95'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Check-in p95'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Negocio'
+                    key: aero.apm.checkin.p95
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1.5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '3'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Pasajes p95'
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Pasajes p95'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Negocio'
+                    key: aero.apm.pasajes.p95
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1.5'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: honeycomb
+              name: 'Salud de los servicios'
+              x: '52'
+              'y': '3'
+              width: '20'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications/APM/aeropuerto
+                - type: STRING
+                  name: items.0
+                  value: 'APM kiosco: Health'
+                - type: STRING
+                  name: items.1
+                  value: 'APM reservas: Health'
+                - type: STRING
+                  name: items.2
+                  value: 'APM pasajes: Health'
+                - type: STRING
+                  name: items.3
+                  value: 'APM equipaje: Health'
+                - type: STRING
+                  name: primary_label
+                  value: '{ITEM.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '2'
+            - type: piechart
+              name: '¿Dónde se va el tiempo del check-in?'
+              x: '52'
+              'y': '9'
+              width: '20'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: draw_type
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: Kiosco
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM kiosco POST /checkin: Time in own code'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Otros servicios'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM kiosco POST /checkin: Time in other services'
+                - type: INTEGER
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'Bases de datos'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM kiosco POST /checkin: Time in databases'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
+                - type: STRING
+                  name: time_period.from
+                  value: now-5m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: '%'
+                - type: INTEGER
+                  name: units_show
+                  value: '1'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
+            - type: item
+              name: 'Errores en pasajes'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Errores en pasajes'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Aeropuerto - Negocio'
+                    key: aero.apm.pasajes.error_pct
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '20'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
@@ -515,7 +3025,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -529,6 +3039,24 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
                   value: '2'
                 - type: STRING
                   name: thresholds.0.color
@@ -553,7 +3081,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
@@ -621,7 +3149,7 @@ zabbix_export:
             - type: problems
               name: 'Qué está pasando: causa y síntomas'
               'y': '9'
-              width: '48'
+              width: '38'
               height: '6'
               fields:
                 - type: INTEGER
@@ -630,6 +3158,18 @@ zabbix_export:
                 - type: INTEGER
                   name: highlight_row
                   value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
                 - type: INTEGER
                   name: show
                   value: '3'
@@ -687,7 +3227,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -702,21 +3242,39 @@ zabbix_export:
                 - type: INTEGER
                   name: show.1
                   value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
                 - type: STRING
                   name: thresholds.0.color
-                  value: 2E7D32
+                  value: 0CA30C
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
                   value: '80'
                 - type: STRING
                   name: thresholds.2.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.2.threshold
                   value: '100'
@@ -737,7 +3295,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
@@ -771,7 +3329,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -786,21 +3344,39 @@ zabbix_export:
                 - type: INTEGER
                   name: show.1
                   value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
                 - type: STRING
                   name: thresholds.0.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
                   value: '600'
                 - type: STRING
                   name: thresholds.2.color
-                  value: 2E7D32
+                  value: 0CA30C
                 - type: STRING
                   name: thresholds.2.threshold
                   value: '1000'
@@ -821,53 +3397,116 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
             - type: svggraph
-              name: 'APM: check-in y pasajes (p95)'
+              name: 'Latencia p95 por servicio'
               x: '24'
               'y': '3'
-              width: '24'
+              width: '26'
               height: '6'
               fields:
                 - type: STRING
                   name: ds.0.color
-                  value: 1E88E5
+                  value: 2A78D6
                 - type: INTEGER
                   name: ds.0.fill
-                  value: '1'
+                  value: '2'
                 - type: STRING
                   name: ds.0.hosts.0
-                  value: 'Aeropuerto - Negocio'
+                  value: 'apm-aeropuerto-*'
                 - type: STRING
                   name: ds.0.items.0
-                  value: 'APM check-in: p95'
+                  value: 'APM kiosco: Latency p95'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
                 - type: INTEGER
                   name: ds.0.type
                   value: '0'
                 - type: INTEGER
                   name: ds.0.width
-                  value: '3'
+                  value: '2'
                 - type: STRING
                   name: ds.1.color
-                  value: E53935
+                  value: EB6834
                 - type: INTEGER
                   name: ds.1.fill
-                  value: '0'
+                  value: '2'
                 - type: STRING
                   name: ds.1.hosts.0
-                  value: 'Aeropuerto - Negocio'
+                  value: 'apm-aeropuerto-*'
                 - type: STRING
                   name: ds.1.items.0
-                  value: 'APM pasajes: p95'
+                  value: 'APM reservas: Latency p95'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
                 - type: INTEGER
                   name: ds.1.type
                   value: '0'
                 - type: INTEGER
                   name: ds.1.width
                   value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM pasajes: Latency p95'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'APM equipaje: Latency p95'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
                 - type: INTEGER
                   name: legend
                   value: '1'
@@ -879,7 +3518,7 @@ zabbix_export:
                   value: '1'
                 - type: STRING
                   name: time_period.from
-                  value: now-15m
+                  value: now-30m
                 - type: STRING
                   name: time_period.to
                   value: now
@@ -913,7 +3552,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -928,21 +3567,39 @@ zabbix_export:
                 - type: INTEGER
                   name: show.1
                   value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
                 - type: STRING
                   name: thresholds.0.color
-                  value: 2E7D32
+                  value: 0CA30C
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
                   value: '1'
                 - type: STRING
                   name: thresholds.2.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.2.threshold
                   value: '2'
@@ -963,9 +3620,42 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
+                  value: '1'
+            - type: problemsbysv
+              name: 'Por severidad'
+              x: '38'
+              'y': '9'
+              width: '12'
+              height: '6'
+              fields:
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Aeropuerto/OT
+                - type: GROUP
+                  name: groupids.1
+                  value:
+                    name: Aeropuerto/Negocio
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
+                - type: INTEGER
+                  name: show_type
                   value: '1'
             - type: item
               name: 'Check-in p95'
@@ -997,7 +3687,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -1012,21 +3702,39 @@ zabbix_export:
                 - type: INTEGER
                   name: show.1
                   value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
                 - type: STRING
                   name: thresholds.0.color
-                  value: 2E7D32
+                  value: 0CA30C
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
                   value: '1.5'
                 - type: STRING
                   name: thresholds.2.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.2.threshold
                   value: '3'
@@ -1047,138 +3755,199 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
-            - type: svggraph
-              name: 'OT: corriente de la cinta'
-              x: '48'
+            - type: honeycomb
+              name: 'Salud de los servicios'
+              x: '50'
               'y': '3'
-              width: '24'
+              width: '22'
               height: '6'
               fields:
                 - type: STRING
-                  name: ds.0.color
-                  value: E53935
-                - type: INTEGER
-                  name: ds.0.fill
-                  value: '2'
-                - type: STRING
-                  name: ds.0.hosts.0
-                  value: 'Aeropuerto - Cinta 1'
-                - type: STRING
-                  name: ds.0.items.0
-                  value: 'Cinta: corriente del motor'
-                - type: INTEGER
-                  name: ds.0.type
-                  value: '0'
-                - type: INTEGER
-                  name: ds.0.width
-                  value: '3'
-                - type: INTEGER
-                  name: legend
-                  value: '1'
-                - type: INTEGER
-                  name: legend_columns
-                  value: '3'
-                - type: INTEGER
-                  name: legend_lines
-                  value: '1'
-                - type: STRING
-                  name: time_period.from
-                  value: now-15m
-                - type: STRING
-                  name: time_period.to
-                  value: now
-            - type: gauge
-              name: 'Cinta (A)'
-              x: '48'
-              'y': '9'
-              width: '12'
-              height: '6'
-              hide_header: 'YES'
-              fields:
-                - type: INTEGER
-                  name: angle
-                  value: '180'
-                - type: INTEGER
-                  name: decimal_places
-                  value: '1'
-                - type: STRING
-                  name: description
-                  value: 'Cinta (A)'
-                - type: INTEGER
-                  name: desc_bold
-                  value: '1'
-                - type: INTEGER
-                  name: desc_size
-                  value: '12'
-                - type: ITEM
-                  name: itemid.0
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
                   value:
-                    host: 'Aeropuerto - Cinta 1'
-                    key: aero.cinta.corriente
+                    name: Applications/APM/aeropuerto
                 - type: STRING
-                  name: max
-                  value: '45'
+                  name: items.0
+                  value: 'APM kiosco: Health'
                 - type: STRING
-                  name: min
+                  name: items.1
+                  value: 'APM reservas: Health'
+                - type: STRING
+                  name: items.2
+                  value: 'APM pasajes: Health'
+                - type: STRING
+                  name: items.3
+                  value: 'APM equipaje: Health'
+                - type: STRING
+                  name: primary_label
+                  value: '{ITEM.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
                   value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
                 - type: INTEGER
                   name: show.0
                   value: '1'
                 - type: INTEGER
                   name: show.1
                   value: '2'
-                - type: INTEGER
-                  name: show.2
-                  value: '3'
-                - type: INTEGER
-                  name: show.3
-                  value: '4'
-                - type: INTEGER
-                  name: show.4
-                  value: '5'
                 - type: STRING
                   name: thresholds.0.color
-                  value: 2E7D32
+                  value: 0CA30C
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
-                  value: '24'
+                  value: '1'
                 - type: STRING
                   name: thresholds.2.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.2.threshold
-                  value: '28'
+                  value: '2'
+            - type: piechart
+              name: '¿Dónde se va el tiempo del check-in?'
+              x: '50'
+              'y': '9'
+              width: '22'
+              height: '6'
+              fields:
                 - type: INTEGER
-                  name: th_arc_size
-                  value: '8'
-                - type: INTEGER
-                  name: th_show_arc
-                  value: '1'
-                - type: INTEGER
-                  name: th_show_labels
+                  name: decimal_places
                   value: '0'
                 - type: INTEGER
-                  name: units_size
-                  value: '16'
-                - type: INTEGER
-                  name: value_arc_size
-                  value: '20'
-                - type: INTEGER
-                  name: value_bold
+                  name: draw_type
                   value: '1'
                 - type: INTEGER
-                  name: value_size
-                  value: '22'
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: Kiosco
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM kiosco POST /checkin: Time in own code'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Otros servicios'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM kiosco POST /checkin: Time in other services'
+                - type: INTEGER
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'Bases de datos'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'apm-aeropuerto-*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM kiosco POST /checkin: Time in databases'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
+                - type: STRING
+                  name: time_period.from
+                  value: now-5m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: '%'
+                - type: INTEGER
+                  name: units_show
+                  value: '1'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
             - type: item
               name: 'Errores en pasajes'
               x: '60'
@@ -1209,7 +3978,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: desc_size
-                  value: '14'
+                  value: '13'
                 - type: INTEGER
                   name: desc_v_pos
                   value: '0'
@@ -1224,21 +3993,39 @@ zabbix_export:
                 - type: INTEGER
                   name: show.1
                   value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
                 - type: STRING
                   name: thresholds.0.color
-                  value: 2E7D32
+                  value: 0CA30C
                 - type: STRING
                   name: thresholds.0.threshold
                   value: '0'
                 - type: STRING
                   name: thresholds.1.color
-                  value: F9A825
+                  value: FAB219
                 - type: STRING
                   name: thresholds.1.threshold
                   value: '5'
                 - type: STRING
                   name: thresholds.2.color
-                  value: C62828
+                  value: D03B3B
                 - type: STRING
                   name: thresholds.2.threshold
                   value: '20'
@@ -1259,95 +4046,7 @@ zabbix_export:
                   value: '1'
                 - type: INTEGER
                   name: value_size
-                  value: '28'
+                  value: '30'
                 - type: INTEGER
                   name: value_v_pos
                   value: '1'
-            - type: gauge
-              name: 'UPS (%)'
-              x: '60'
-              'y': '9'
-              width: '12'
-              height: '6'
-              hide_header: 'YES'
-              fields:
-                - type: INTEGER
-                  name: angle
-                  value: '180'
-                - type: INTEGER
-                  name: decimal_places
-                  value: '0'
-                - type: STRING
-                  name: description
-                  value: 'UPS (%)'
-                - type: INTEGER
-                  name: desc_bold
-                  value: '1'
-                - type: INTEGER
-                  name: desc_size
-                  value: '12'
-                - type: ITEM
-                  name: itemid.0
-                  value:
-                    host: 'Aeropuerto - UPS T1'
-                    key: aero.ups.bateria_pct
-                - type: STRING
-                  name: max
-                  value: '100'
-                - type: STRING
-                  name: min
-                  value: '0'
-                - type: INTEGER
-                  name: show.0
-                  value: '1'
-                - type: INTEGER
-                  name: show.1
-                  value: '2'
-                - type: INTEGER
-                  name: show.2
-                  value: '3'
-                - type: INTEGER
-                  name: show.3
-                  value: '4'
-                - type: INTEGER
-                  name: show.4
-                  value: '5'
-                - type: STRING
-                  name: thresholds.0.color
-                  value: C62828
-                - type: STRING
-                  name: thresholds.0.threshold
-                  value: '0'
-                - type: STRING
-                  name: thresholds.1.color
-                  value: F9A825
-                - type: STRING
-                  name: thresholds.1.threshold
-                  value: '30'
-                - type: STRING
-                  name: thresholds.2.color
-                  value: 2E7D32
-                - type: STRING
-                  name: thresholds.2.threshold
-                  value: '60'
-                - type: INTEGER
-                  name: th_arc_size
-                  value: '8'
-                - type: INTEGER
-                  name: th_show_arc
-                  value: '1'
-                - type: INTEGER
-                  name: th_show_labels
-                  value: '0'
-                - type: INTEGER
-                  name: units_size
-                  value: '16'
-                - type: INTEGER
-                  name: value_arc_size
-                  value: '20'
-                - type: INTEGER
-                  name: value_bold
-                  value: '1'
-                - type: INTEGER
-                  name: value_size
-                  value: '22'

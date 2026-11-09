@@ -39,6 +39,7 @@ La escena no pide contraseña y puede provocar fallas. Con `AEROPUERTO_CONTROLES
 - `apm-<namespace>-<entorno>` lo crea el discovery cuando llegan trazas. Nada depende de ese host para arrancar.
 - KPIs desde las trazas en "Aeropuerto KPIs by ClickHouse"; p95 y errores en "Aeropuerto APM by Telemetry query".
 - Tres reglas CEP con prefijo `Aeropuerto:`, creadas por `provision/post_provision.py`.
+- Dashboards: "Tablero ejecutivo · Aeropuerto" y "Aeropuerto · Terminal" (páginas Operación, Equipos e infraestructura, Servicios y APM). Las vistas por servicio asumen `OTEL_SERVICE_NAMESPACE=aeropuerto` y se llenan cuando aparece el host APM.
 
 Los eventos llevan `demo=aeropuerto` y tags propios, para no entrar en las reglas de otras demos.
 
