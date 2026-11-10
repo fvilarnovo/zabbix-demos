@@ -1,8 +1,6 @@
 zabbix_export:
   version: '8.0'
   host_groups:
-    - uuid: 882e03f665c240ba9dba8a424bacc0c2
-      name: Applications/APM/tormenta
     - uuid: eba0e6229c004d7895093e135731aaf8
       name: Tormenta/APM
     - uuid: 11e58eefa0e3450098b15f7dce66c0fd

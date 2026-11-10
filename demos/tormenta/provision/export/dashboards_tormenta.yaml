@@ -3015,7 +3015,7 @@ zabbix_export:
                 - type: GROUP
                   name: groupids.0
                   value:
-                    name: Applications/APM/tormenta
+                    name: Applications
                 - type: INTEGER
                   name: item_ordering_limit
                   value: '10'
@@ -3272,7 +3272,7 @@ zabbix_export:
                 - type: GROUP
                   name: groupids.0
                   value:
-                    name: Applications/APM/tormenta
+                    name: Applications
                 - type: INTEGER
                   name: item_ordering_limit
                   value: '10'
@@ -3602,7 +3602,7 @@ zabbix_export:
                 - type: GROUP
                   name: groupids.0
                   value:
-                    name: Applications/APM/tormenta
+                    name: Applications
                 - type: STRING
                   name: items.0
                   value: 'APM estacion: Health'
