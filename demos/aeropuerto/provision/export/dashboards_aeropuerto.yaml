@@ -1943,7 +1943,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.0.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.0.items.0
                   value: 'APM kiosco: Latency p95'
@@ -1967,7 +1967,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.1.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.1.items.0
                   value: 'APM reservas: Latency p95'
@@ -1991,7 +1991,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.2.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.2.items.0
                   value: 'APM pasajes: Latency p95'
@@ -2015,7 +2015,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.3.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.3.items.0
                   value: 'APM equipaje: Latency p95'
@@ -2391,7 +2391,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.0.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.0.items.0
                   value: 'APM kiosco: Error rate'
@@ -2415,7 +2415,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.1.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.1.items.0
                   value: 'APM reservas: Error rate'
@@ -2439,7 +2439,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.2.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.2.items.0
                   value: 'APM pasajes: Error rate'
@@ -2463,7 +2463,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.3.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.3.items.0
                   value: 'APM equipaje: Error rate'
@@ -2811,7 +2811,7 @@ zabbix_export:
                   value: Kiosco
                 - type: STRING
                   name: ds.0.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.0.items.0
                   value: 'APM kiosco POST /checkin: Time in own code'
@@ -2832,7 +2832,7 @@ zabbix_export:
                   value: 'Otros servicios'
                 - type: STRING
                   name: ds.1.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.1.items.0
                   value: 'APM kiosco POST /checkin: Time in other services'
@@ -2853,7 +2853,7 @@ zabbix_export:
                   value: 'Bases de datos'
                 - type: STRING
                   name: ds.2.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.2.items.0
                   value: 'APM kiosco POST /checkin: Time in databases'
@@ -3416,7 +3416,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.0.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.0.items.0
                   value: 'APM kiosco: Latency p95'
@@ -3440,7 +3440,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.1.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.1.items.0
                   value: 'APM reservas: Latency p95'
@@ -3464,7 +3464,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.2.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.2.items.0
                   value: 'APM pasajes: Latency p95'
@@ -3488,7 +3488,7 @@ zabbix_export:
                   value: '2'
                 - type: STRING
                   name: ds.3.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.3.items.0
                   value: 'APM equipaje: Latency p95'
@@ -3869,7 +3869,7 @@ zabbix_export:
                   value: Kiosco
                 - type: STRING
                   name: ds.0.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.0.items.0
                   value: 'APM kiosco POST /checkin: Time in own code'
@@ -3890,7 +3890,7 @@ zabbix_export:
                   value: 'Otros servicios'
                 - type: STRING
                   name: ds.1.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.1.items.0
                   value: 'APM kiosco POST /checkin: Time in other services'
@@ -3911,7 +3911,7 @@ zabbix_export:
                   value: 'Bases de datos'
                 - type: STRING
                   name: ds.2.hosts.0
-                  value: 'apm-aeropuerto-*'
+                  value: 'APM aeropuerto*'
                 - type: STRING
                   name: ds.2.items.0
                   value: 'APM kiosco POST /checkin: Time in databases'
