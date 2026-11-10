@@ -22,6 +22,7 @@ Además del catálogo de demos, el repositorio trae:
 |---|---|
 | [`demos/hotel/`](demos/hotel/README.md) | Hotel Gran Zabbix 8.0, en un solo contenedor: webapp instrumentada (APM y KPI), simuladores OT con correlación CEP, FinOps, vista pixel art y controles de los actos |
 | [`demos/aeropuerto/`](demos/aeropuerto/README.md) | Aeropuerto Forum: terminal aérea en 3D donde se provocan fallas para ver OT, CEP y APM de Zabbix 8.0 sobre datos simulados y trazas reales |
+| [`demos/tormenta/`](demos/tormenta/README.md) | Tormenta solar: central nucleoeléctrica y satélite en pixel art, por pisos; CEP encuentra la causa común entre el satélite, la red eléctrica, el reactor y el APM |
 
 ## Agregar otra demo
 

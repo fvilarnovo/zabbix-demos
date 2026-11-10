@@ -1,0 +1,106 @@
+zabbix_export:
+  version: '8.0'
+  host_groups:
+    - uuid: 882e03f665c240ba9dba8a424bacc0c2
+      name: Applications/APM/tormenta
+    - uuid: eba0e6229c004d7895093e135731aaf8
+      name: Tormenta/APM
+    - uuid: 11e58eefa0e3450098b15f7dce66c0fd
+      name: Tormenta/Negocio
+    - uuid: e215142ec6f94da892556571aa6c6749
+      name: Tormenta/Planta
+    - uuid: 6dbef79e67554d25a8b094c2a7e982e5
+      name: Tormenta/Satelite
+  hosts:
+    - host: 'Tormenta - APM discovery'
+      name: 'Tormenta - APM discovery'
+      templates:
+        - name: 'APM applications discovery by ClickHouse HTTP v3'
+      groups:
+        - name: Tormenta/APM
+      tags:
+        - tag: demo
+          value: tormenta
+      macros:
+        - macro: '{$APM.NAMESPACE.MATCHES}'
+          value: ^tormenta$
+        - macro: '{$CH.PASSWORD}'
+          type: SECRET_TEXT
+        - macro: '{$CH.URL}'
+          value: 'http://clickhouse:8123/'
+        - macro: '{$CH.USER}'
+          value: zabbix
+    - host: 'Tormenta - Clima espacial'
+      name: 'Tormenta - Clima espacial'
+      templates:
+        - name: 'Tormenta Clima espacial'
+      groups:
+        - name: Tormenta/Satelite
+      tags:
+        - tag: demo
+          value: tormenta
+    - host: 'Tormenta - Estacion terrena'
+      name: 'Tormenta - Estación terrena'
+      templates:
+        - name: 'Tormenta Estacion terrena'
+      groups:
+        - name: Tormenta/Satelite
+      tags:
+        - tag: demo
+          value: tormenta
+    - host: 'Tormenta - Negocio'
+      name: 'Tormenta - Negocio'
+      templates:
+        - name: 'Tormenta APM by Telemetry query'
+        - name: 'Tormenta KPIs by ClickHouse'
+        - name: 'Tormenta Negocio'
+      groups:
+        - name: Tormenta/Negocio
+      tags:
+        - tag: demo
+          value: tormenta
+    - host: 'Tormenta - Planta electrica'
+      name: 'Tormenta - Planta eléctrica'
+      templates:
+        - name: 'Tormenta Planta electrica'
+      groups:
+        - name: Tormenta/Planta
+      tags:
+        - tag: demo
+          value: tormenta
+    - host: 'Tormenta - Planta piscina'
+      name: 'Tormenta - Planta piscina'
+      templates:
+        - name: 'Tormenta Planta piscina'
+      groups:
+        - name: Tormenta/Planta
+      tags:
+        - tag: demo
+          value: tormenta
+    - host: 'Tormenta - Planta reactor'
+      name: 'Tormenta - Planta reactor'
+      templates:
+        - name: 'Tormenta Planta reactor'
+      groups:
+        - name: Tormenta/Planta
+      tags:
+        - tag: demo
+          value: tormenta
+    - host: 'Tormenta - Planta TI'
+      name: 'Tormenta - Planta TI'
+      templates:
+        - name: 'Tormenta Planta TI'
+      groups:
+        - name: Tormenta/Planta
+      tags:
+        - tag: demo
+          value: tormenta
+    - host: 'Tormenta - ZABBIXSAT-1'
+      name: 'Tormenta - ZABBIXSAT-1'
+      templates:
+        - name: 'Tormenta Satelite'
+      groups:
+        - name: Tormenta/Satelite
+      tags:
+        - tag: demo
+          value: tormenta

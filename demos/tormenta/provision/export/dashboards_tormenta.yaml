@@ -1,0 +1,3867 @@
+zabbix_export:
+  version: '8.0'
+  dashboards:
+    - name: 'Tablero ejecutivo · Tormenta'
+      pages:
+        - name: 'Negocio, planta, satélite y APM'
+          widgets:
+            - type: item
+              name: 'Energía a la red'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Energía a la red'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: tor.negocio.mw
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '544'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '646'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: scatterplot
+              name: 'Índice Kp vs. corriente inducida'
+              'y': '3'
+              width: '24'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '2'
+                - type: STRING
+                  name: ds.0.aggregate_interval
+                  value: 30s
+                - type: INTEGER
+                  name: ds.0.color_palette
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.marker
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.marker_size
+                  value: '2'
+                - type: STRING
+                  name: ds.0.timeshift
+                  value: ''
+                - type: ITEM
+                  name: ds.0.x_axis_itemids.0
+                  value:
+                    host: 'Tormenta - Clima espacial'
+                    key: tor.kp
+                - type: STRING
+                  name: ds.0.x_axis_references.0
+                  value: ''
+                - type: ITEM
+                  name: ds.0.y_axis_itemids.0
+                  value:
+                    host: 'Tormenta - Planta electrica'
+                    key: tor.electrica.gic
+                - type: STRING
+                  name: ds.0.y_axis_references.0
+                  value: ''
+                - type: STRING
+                  name: time_period.from
+                  value: now-1h
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: STRING
+                  name: x_axis_static_units
+                  value: Kp
+                - type: INTEGER
+                  name: x_axis_units
+                  value: '1'
+                - type: STRING
+                  name: y_axis_static_units
+                  value: A
+                - type: INTEGER
+                  name: y_axis_units
+                  value: '1'
+            - type: problems
+              name: 'Qué está pasando: causa y síntomas'
+              'y': '9'
+              width: '38'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: evaltype
+                  value: '0'
+                - type: INTEGER
+                  name: highlight_row
+                  value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
+                - type: INTEGER
+                  name: show
+                  value: '3'
+                - type: INTEGER
+                  name: show_lines
+                  value: '12'
+                - type: INTEGER
+                  name: show_tags
+                  value: '3'
+                - type: INTEGER
+                  name: show_timeline
+                  value: '1'
+                - type: INTEGER
+                  name: sort_triggers
+                  value: '4'
+                - type: INTEGER
+                  name: tags.0.operator
+                  value: '1'
+                - type: STRING
+                  name: tags.0.tag
+                  value: demo
+                - type: STRING
+                  name: tags.0.value
+                  value: tormenta
+                - type: INTEGER
+                  name: tag_name_format
+                  value: '0'
+            - type: item
+              name: 'Ingresos por hora'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Ingresos por hora'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: tor.negocio.ingresos_h
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Potencia del reactor'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Potencia del reactor'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Planta reactor'
+                    key: tor.reactor.potencia
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '80'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '95'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Potencia del reactor'
+              x: '24'
+              'y': '3'
+              width: '26'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Planta reactor'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Reactor: potencia térmica'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Tormenta - Planta reactor'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Índice Kp'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Índice Kp'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Clima espacial'
+                    key: tor.kp
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '7'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: problemsbysv
+              name: 'Por severidad'
+              x: '38'
+              'y': '9'
+              width: '12'
+              height: '6'
+              fields:
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Tormenta/Planta
+                - type: GROUP
+                  name: groupids.1
+                  value:
+                    name: Tormenta/Satelite
+                - type: GROUP
+                  name: groupids.2
+                  value:
+                    name: Tormenta/Negocio
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
+                - type: INTEGER
+                  name: show_type
+                  value: '1'
+            - type: item
+              name: 'Imágenes entregadas hoy'
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Imágenes entregadas hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: 'tor.kpi[imagenes_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: honeycomb
+              name: 'Estado de los equipos'
+              x: '50'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Tormenta/Planta
+                - type: GROUP
+                  name: groupids.1
+                  value:
+                    name: Tormenta/Satelite
+                - type: STRING
+                  name: items.0
+                  value: 'Piscina: bomba de enfriamiento*'
+                - type: STRING
+                  name: items.1
+                  value: 'ZABBIXSAT-1: sensor de estrellas enganchado'
+                - type: STRING
+                  name: items.2
+                  value: 'TI: diodo de datos operativo'
+                - type: STRING
+                  name: items.3
+                  value: 'Red externa disponible'
+                - type: STRING
+                  name: primary_label
+                  value: '{ITEM.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+            - type: piechart
+              name: '¿Dónde se va el tiempo del pedido de imagen?'
+              x: '50'
+              'y': '9'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: draw_type
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: Estación
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM estacion POST /imagen: Time in own code'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Otros servicios'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM estacion POST /imagen: Time in other services'
+                - type: INTEGER
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'Bases de datos'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM estacion POST /imagen: Time in databases'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
+                - type: STRING
+                  name: time_period.from
+                  value: now-5m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: '%'
+                - type: INTEGER
+                  name: units_show
+                  value: '1'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
+            - type: item
+              name: 'Enlace de bajada'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Enlace de bajada'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Estacion terrena'
+                    key: tor.estacion.snr
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '6'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '9'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+    - name: 'Tormenta · Planta y satélite'
+      pages:
+        - name: Planta
+          widgets:
+            - type: gauge
+              name: 'Reactor: potencia'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: STRING
+                  name: description
+                  value: 'Reactor: potencia'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Planta reactor'
+                    key: tor.reactor.potencia
+                - type: STRING
+                  name: max
+                  value: '110'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '80'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '95'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: svggraph
+              name: 'Generador: MW a la red'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Planta eléctrica'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Generador: potencia eléctrica'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Tormenta - Planta eléctrica'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: svggraph
+              name: 'Barras de control insertadas'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Planta reactor'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Reactor: barras de control insertadas'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: gauge
+              name: 'Barras insertadas'
+              x: '12'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'Barras insertadas'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Planta reactor'
+                    key: tor.reactor.barras
+                - type: STRING
+                  name: max
+                  value: '100'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '20'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '50'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: gauge
+              name: 'Presión del domo'
+              x: '24'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: STRING
+                  name: description
+                  value: 'Presión del domo'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Planta reactor'
+                    key: tor.reactor.presion
+                - type: STRING
+                  name: max
+                  value: '9'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '6.5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '7.5'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: svggraph
+              name: 'Transformador: corriente inducida'
+              x: '24'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Planta eléctrica'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Transformador principal: corriente inducida (GIC)'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: svggraph
+              name: 'Desfase de la hora GPS'
+              x: '24'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: E87BA4
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Planta TI'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'TI: desfase de la hora GPS'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: gauge
+              name: 'Corriente inducida'
+              x: '36'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'Corriente inducida'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Planta electrica'
+                    key: tor.electrica.gic
+                - type: STRING
+                  name: max
+                  value: '60'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '20'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '30'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: gauge
+              name: 'Aceite del transformador'
+              x: '48'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'Aceite del transformador'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Planta electrica'
+                    key: tor.electrica.temp_trafo
+                - type: STRING
+                  name: max
+                  value: '110'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '75'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '80'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: svggraph
+              name: 'Piscina: temperatura del agua'
+              x: '48'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Planta piscina'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Piscina: temperatura del agua'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Tormenta - Planta piscina'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: honeycomb
+              name: 'Estado de los equipos'
+              x: '48'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Tormenta/Planta
+                - type: GROUP
+                  name: groupids.1
+                  value:
+                    name: Tormenta/Satelite
+                - type: STRING
+                  name: items.0
+                  value: 'Piscina: bomba de enfriamiento*'
+                - type: STRING
+                  name: items.1
+                  value: 'ZABBIXSAT-1: sensor de estrellas enganchado'
+                - type: STRING
+                  name: items.2
+                  value: 'TI: diodo de datos operativo'
+                - type: STRING
+                  name: items.3
+                  value: 'Red externa disponible'
+                - type: STRING
+                  name: primary_label
+                  value: '{ITEM.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+            - type: gauge
+              name: 'Piscina de combustible'
+              x: '60'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: STRING
+                  name: description
+                  value: 'Piscina de combustible'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Planta piscina'
+                    key: tor.piscina.temperatura
+                - type: STRING
+                  name: max
+                  value: '60'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '34'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '36'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+        - name: 'Satélite y clima espacial'
+          widgets:
+            - type: item
+              name: 'Índice Kp'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Índice Kp'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Clima espacial'
+                    key: tor.kp
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '7'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Índice Kp'
+              'y': '3'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Clima espacial'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Clima espacial: índice Kp'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Tormenta - Clima espacial'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: topitems
+              name: 'Ruedas de reacción'
+              'y': '9'
+              width: '24'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'ZABBIXSAT-1: rueda de reacción*'
+                - type: STRING
+                  name: columns.0.max
+                  value: '6000'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '4000'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '5000'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Tormenta/Satelite
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: item
+              name: 'Flujo de protones'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Flujo de protones'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Clima espacial'
+                    key: tor.protones
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '10'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '100'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Errores por radiación'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Errores por radiación'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - ZABBIXSAT-1'
+                    key: tor.sat.seu
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '3'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '5'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Errores por radiación (SEU)'
+              x: '24'
+              'y': '3'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: E87BA4
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - ZABBIXSAT-1'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'ZABBIXSAT-1: errores por radiación (SEU)'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Tormenta - ZABBIXSAT-1'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: svggraph
+              name: 'Altitud de la órbita'
+              x: '24'
+              'y': '9'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - ZABBIXSAT-1'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'ZABBIXSAT-1: altitud'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Error de apuntado'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Error de apuntado'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - ZABBIXSAT-1'
+                    key: tor.sat.apuntado
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '0.5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: Batería
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: Batería
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - ZABBIXSAT-1'
+                    key: tor.sat.bateria
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '40'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '60'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Enlace de bajada (SNR)'
+              x: '48'
+              'y': '3'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Estación terrena'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Estación terrena: relación señal/ruido'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Tormenta - Estación terrena'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: svggraph
+              name: 'Imágenes por hora'
+              x: '48'
+              'y': '9'
+              width: '24'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.aggregate_grouping
+                  value: '0'
+                - type: STRING
+                  name: ds.0.aggregate_interval
+                  value: 1m
+                - type: STRING
+                  name: ds.0.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '6'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Tormenta - Estación terrena'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Estación terrena: imágenes por hora'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Enlace de bajada'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Enlace de bajada'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Estacion terrena'
+                    key: tor.estacion.snr
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '6'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '9'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+        - name: 'Servicios y APM'
+          widgets:
+            - type: item
+              name: 'Imágenes hoy'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Imágenes hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: 'tor.kpi[imagenes_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Latencia p95 por servicio'
+              'y': '3'
+              width: '30'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM estacion: Latency p95'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM planificador: Latency p95'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM archivo: Latency p95'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: topitems
+              name: 'Latencia p95'
+              'y': '9'
+              width: '26'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'APM estacion: Latency p95'
+                - type: STRING
+                  name: columns.0.items.1
+                  value: 'APM planificador: Latency p95'
+                - type: STRING
+                  name: columns.0.items.2
+                  value: 'APM archivo: Latency p95'
+                - type: STRING
+                  name: columns.0.max
+                  value: '3'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '2'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications/APM/tormenta
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: item
+              name: 'Fallidas (15 min)'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Fallidas (15 min)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: 'tor.kpi[imagenes_fallidas_15m]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '20'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Datos entregados hoy'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Datos entregados hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: 'tor.kpi[gigas_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: topitems
+              name: Apdex
+              x: '26'
+              'y': '9'
+              width: '26'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'APM estacion: Apdex'
+                - type: STRING
+                  name: columns.0.items.1
+                  value: 'APM planificador: Apdex'
+                - type: STRING
+                  name: columns.0.items.2
+                  value: 'APM archivo: Apdex'
+                - type: STRING
+                  name: columns.0.max
+                  value: '1'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '0.7'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '0.85'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications/APM/tormenta
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: svggraph
+              name: 'Tasa de errores por servicio'
+              x: '30'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM estacion: Error rate'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM planificador: Error rate'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM archivo: Error rate'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Pedido de imagen p95'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Pedido de imagen p95'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: tor.apm.imagen.p95
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '2'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Errores en planificador'
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Errores en planificador'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: tor.apm.planificador.error_pct
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '20'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: honeycomb
+              name: 'Salud de los servicios'
+              x: '52'
+              'y': '3'
+              width: '20'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications/APM/tormenta
+                - type: STRING
+                  name: items.0
+                  value: 'APM estacion: Health'
+                - type: STRING
+                  name: items.1
+                  value: 'APM planificador: Health'
+                - type: STRING
+                  name: items.2
+                  value: 'APM archivo: Health'
+                - type: STRING
+                  name: primary_label
+                  value: '{ITEM.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '2'
+            - type: piechart
+              name: '¿Dónde se va el tiempo del pedido de imagen?'
+              x: '52'
+              'y': '9'
+              width: '20'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: draw_type
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: Estación
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM estacion POST /imagen: Time in own code'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Otros servicios'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM estacion POST /imagen: Time in other services'
+                - type: INTEGER
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'Bases de datos'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'APM tormenta*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM estacion POST /imagen: Time in databases'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
+                - type: STRING
+                  name: time_period.from
+                  value: now-5m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: '%'
+                - type: INTEGER
+                  name: units_show
+                  value: '1'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
+            - type: item
+              name: 'Imágenes (15 min)'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Imágenes (15 min)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Tormenta - Negocio'
+                    key: 'tor.kpi[imagenes_15m]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
