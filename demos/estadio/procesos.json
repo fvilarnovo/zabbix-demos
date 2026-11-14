@@ -1,0 +1,11 @@
+[
+  {"nombre": "boleteria", "cmd": ["python3", "-m", "uvicorn", "app.estadio.boleteria:app", "--host", "127.0.0.1", "--port", "8201", "--no-access-log"]},
+  {"nombre": "accesos", "cmd": ["python3", "-m", "uvicorn", "app.estadio.accesos:app", "--host", "127.0.0.1", "--port", "8202", "--no-access-log"]},
+  {"nombre": "tienda", "cmd": ["python3", "-m", "uvicorn", "app.estadio.tienda:app", "--host", "127.0.0.1", "--port", "8203", "--no-access-log"]},
+  {"nombre": "cobros", "cmd": ["python3", "-m", "uvicorn", "app.estadio.cobros:app", "--host", "127.0.0.1", "--port", "8204", "--no-access-log"]},
+  {"nombre": "simulador", "cmd": ["python3", "-u", "sim/simulador.py"]},
+  {"nombre": "carga", "cmd": ["python3", "-m", "app.estadio.carga"]},
+  {"nombre": "control", "cmd": ["python3", "-u", "control/control.py"]},
+  {"nombre": "discovery", "cmd": ["python3", "-u", "provision/disparar_discovery.py"]},
+  {"nombre": "web", "cmd": ["python3", "-m", "uvicorn", "web.servidor:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]}
+]

@@ -1,0 +1,104 @@
+zabbix_export:
+  version: '8.0'
+  host_groups:
+    - uuid: 464005b642fd465d948399eba402ec55
+      name: Estadio/APM
+    - uuid: b9bb9b4186674be5bc8d342787e9b655
+      name: Estadio/Infraestructura
+    - uuid: 659a6114a9cc46e595e7d07fe61f3a19
+      name: Estadio/Negocio
+    - uuid: 4c7fbba99d2e48488cf91eee3a5840cb
+      name: Estadio/Operacion
+  hosts:
+    - host: 'Estadio - Accesos'
+      name: 'Estadio - Accesos'
+      templates:
+        - name: 'Estadio Accesos'
+      groups:
+        - name: Estadio/Operacion
+      tags:
+        - tag: demo
+          value: estadio
+    - host: 'Estadio - APM discovery'
+      name: 'Estadio - APM discovery'
+      templates:
+        - name: 'APM applications discovery by ClickHouse HTTP v3'
+      groups:
+        - name: Estadio/APM
+      tags:
+        - tag: demo
+          value: estadio
+      macros:
+        - macro: '{$APM.NAMESPACE.MATCHES}'
+          value: ^estadio$
+        - macro: '{$CH.PASSWORD}'
+          type: SECRET_TEXT
+        - macro: '{$CH.URL}'
+          value: 'http://clickhouse:8123/'
+        - macro: '{$CH.USER}'
+          value: zabbix
+    - host: 'Estadio - Boleteria'
+      name: 'Estadio - Boletería'
+      templates:
+        - name: 'Estadio Boleteria'
+      groups:
+        - name: Estadio/Operacion
+      tags:
+        - tag: demo
+          value: estadio
+    - host: 'Estadio - Energia'
+      name: 'Estadio - Energía'
+      templates:
+        - name: 'Estadio Energia'
+      groups:
+        - name: Estadio/Infraestructura
+      tags:
+        - tag: demo
+          value: estadio
+    - host: 'Estadio - Iluminacion'
+      name: 'Estadio - Iluminación'
+      templates:
+        - name: 'Estadio Iluminacion'
+      groups:
+        - name: Estadio/Infraestructura
+      tags:
+        - tag: demo
+          value: estadio
+    - host: 'Estadio - Negocio'
+      name: 'Estadio - Negocio'
+      templates:
+        - name: 'Estadio APM by Telemetry query'
+        - name: 'Estadio KPIs by ClickHouse'
+        - name: 'Estadio Negocio'
+      groups:
+        - name: Estadio/Negocio
+      tags:
+        - tag: demo
+          value: estadio
+    - host: 'Estadio - Pantallas'
+      name: 'Estadio - Pantallas'
+      templates:
+        - name: 'Estadio Pantallas'
+      groups:
+        - name: Estadio/Infraestructura
+      tags:
+        - tag: demo
+          value: estadio
+    - host: 'Estadio - Tableros'
+      name: 'Estadio - Tableros'
+      templates:
+        - name: 'Estadio Tableros'
+      groups:
+        - name: Estadio/Infraestructura
+      tags:
+        - tag: demo
+          value: estadio
+    - host: 'Estadio - Tienda'
+      name: 'Estadio - Tienda'
+      templates:
+        - name: 'Estadio Tienda'
+      groups:
+        - name: Estadio/Operacion
+      tags:
+        - tag: demo
+          value: estadio

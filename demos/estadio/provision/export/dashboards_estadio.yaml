@@ -1,0 +1,5390 @@
+zabbix_export:
+  version: '8.0'
+  dashboards:
+    - name: 'Estadio · Operación e infraestructura'
+      pages:
+        - name: 'Público y accesos'
+          widgets:
+            - type: item
+              name: Asistencia
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: Asistencia
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.publico.asistencia
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Ingresos por minuto, por puerta'
+              'y': '3'
+              width: '28'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Puerta norte: ingresos por minuto'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Puerta sur: ingresos por minuto'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'Puerta este: ingresos por minuto'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'Puerta oeste: ingresos por minuto'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Estadio - Accesos'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: scatterplot
+              name: 'Espera en la fila vs. latencia del molinete (p95)'
+              'y': '9'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '2'
+                - type: STRING
+                  name: ds.0.aggregate_interval
+                  value: 30s
+                - type: INTEGER
+                  name: ds.0.color_palette
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.marker
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.marker_size
+                  value: '2'
+                - type: STRING
+                  name: ds.0.timeshift
+                  value: ''
+                - type: ITEM
+                  name: ds.0.x_axis_itemids.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.acceso.fila_min
+                - type: STRING
+                  name: ds.0.x_axis_references.0
+                  value: ''
+                - type: ITEM
+                  name: ds.0.y_axis_itemids.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: est.apm.accesos.p95
+                - type: STRING
+                  name: ds.0.y_axis_references.0
+                  value: ''
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: STRING
+                  name: x_axis_static_units
+                  value: min
+                - type: INTEGER
+                  name: x_axis_units
+                  value: '1'
+                - type: STRING
+                  name: y_axis_static_units
+                  value: s
+                - type: INTEGER
+                  name: y_axis_units
+                  value: '1'
+            - type: item
+              name: Ocupación
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: Ocupación
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.publico.ocupacion_pct
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Espera en la fila'
+              x: '22'
+              'y': '9'
+              width: '28'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Accesos: espera en la fila'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Estadio - Accesos'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Ingresos por minuto'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Ingresos por minuto'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.acceso.total_min
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '80'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '150'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Validaciones de molinete por minuto'
+              x: '28'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.aggregate_grouping
+                  value: '0'
+                - type: STRING
+                  name: ds.0.aggregate_interval
+                  value: 1m
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '6'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Negocio'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM accesos: operaciones por minuto'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Entradas rechazadas'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Entradas rechazadas'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.acceso.rechazo_pct
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '10'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '30'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Espera en la fila'
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Espera en la fila'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.acceso.fila_min
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '6'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '10'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: piechart
+              name: 'Ingreso por puerta (por minuto)'
+              x: '50'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: draw_type
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: 'Puerta norte'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Puerta norte: ingresos por minuto'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Puerta sur'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Puerta sur: ingresos por minuto'
+                - type: INTEGER
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'Puerta este'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'Puerta este: ingresos por minuto'
+                - type: INTEGER
+                  name: ds.3.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.3.data_set_label
+                  value: 'Puerta oeste'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'Estadio - Accesos'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'Puerta oeste: ingresos por minuto'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
+                - type: STRING
+                  name: time_period.from
+                  value: now-5m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: ''
+                - type: INTEGER
+                  name: units_show
+                  value: '0'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
+            - type: problems
+              name: 'Problemas del ingreso'
+              x: '50'
+              'y': '9'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: evaltype
+                  value: '0'
+                - type: INTEGER
+                  name: highlight_row
+                  value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
+                - type: INTEGER
+                  name: show
+                  value: '3'
+                - type: INTEGER
+                  name: show_lines
+                  value: '12'
+                - type: INTEGER
+                  name: show_tags
+                  value: '3'
+                - type: INTEGER
+                  name: show_timeline
+                  value: '1'
+                - type: INTEGER
+                  name: sort_triggers
+                  value: '4'
+                - type: INTEGER
+                  name: tags.0.operator
+                  value: '1'
+                - type: STRING
+                  name: tags.0.tag
+                  value: demo
+                - type: STRING
+                  name: tags.0.value
+                  value: estadio
+                - type: INTEGER
+                  name: tag_name_format
+                  value: '0'
+            - type: item
+              name: 'Base de entradas'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Base de entradas'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Boleteria'
+                    key: est.boleteria.bd
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+        - name: 'Energía e iluminación'
+          widgets:
+            - type: gauge
+              name: 'UPS: batería'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'UPS: batería'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Energia'
+                    key: est.ups.bateria_pct
+                - type: STRING
+                  name: max
+                  value: '100'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '30'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '60'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: honeycomb
+              name: 'Estado eléctrico'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Estadio/Infraestructura
+                - type: STRING
+                  name: items.0
+                  value: 'Energía: suministro de la red externa'
+                - type: STRING
+                  name: items.1
+                  value: 'Tablero *: interruptor cerrado'
+                - type: STRING
+                  name: items.2
+                  value: 'Pantalla gigante: encendida'
+                - type: STRING
+                  name: primary_label
+                  value: '{ITEM.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+            - type: topitems
+              name: 'Tableros: corriente'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'Tablero *: corriente'
+                - type: STRING
+                  name: columns.0.max
+                  value: '450'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Estadio/Infraestructura
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: gauge
+              name: 'UPS: autonomía'
+              x: '12'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'UPS: autonomía'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Energia'
+                    key: est.ups.autonomia_min
+                - type: STRING
+                  name: max
+                  value: '25'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '8'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '15'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: gauge
+              name: 'UPS: carga'
+              x: '24'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'UPS: carga'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Energia'
+                    key: est.ups.carga_pct
+                - type: STRING
+                  name: max
+                  value: '100'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '70'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '90'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: svggraph
+              name: 'Corriente por tablero'
+              x: '24'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Tableros'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Tablero iluminación: corriente'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Tableros'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Tablero pantallas: corriente'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'Estadio - Tableros'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'Tablero comercial: corriente'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'Estadio - Tableros'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'Tablero servicios: corriente'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Estadio - *'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: topitems
+              name: 'Tableros: temperatura'
+              x: '24'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'Tablero *: temperatura'
+                - type: STRING
+                  name: columns.0.max
+                  value: '60'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '40'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '50'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Estadio/Infraestructura
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: gauge
+              name: 'Generador: combustible'
+              x: '36'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'Generador: combustible'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Energia'
+                    key: est.gen.combustible_pct
+                - type: STRING
+                  name: max
+                  value: '100'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '25'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '50'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: gauge
+              name: Acometida
+              x: '48'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: STRING
+                  name: description
+                  value: Acometida
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Energia'
+                    key: est.energia.tension
+                - type: STRING
+                  name: max
+                  value: '15'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '12'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: svggraph
+              name: 'Iluminancia por torre'
+              x: '48'
+              'y': '5'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Iluminacion'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Torre 1: iluminancia'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Iluminacion'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Torre 2: iluminancia'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'Estadio - Iluminacion'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'Torre 3: iluminancia'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'Estadio - Iluminacion'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'Torre 4: iluminancia'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Estadio - Iluminacion'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: svggraph
+              name: 'Potencia consumida'
+              x: '48'
+              'y': '11'
+              width: '24'
+              height: '5'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: E87BA4
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Energia'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Energía: potencia consumida'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: gauge
+              name: 'Luz en la cancha'
+              x: '60'
+              width: '12'
+              height: '5'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'Luz en la cancha'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Iluminacion'
+                    key: est.luz.cancha
+                - type: STRING
+                  name: max
+                  value: '1600'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '800'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1200'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+        - name: 'Pantallas y tienda'
+          widgets:
+            - type: item
+              name: 'Segmentos LED encendidos'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Segmentos LED encendidos'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Pantallas'
+                    key: est.led.segmentos_ok
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '40'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '48'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Ingresos por hora'
+              'y': '3'
+              width: '28'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Pantallas'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Publicidad: ingresos por hora'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Tienda'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Tienda: ventas por hora'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Estadio - *'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: svggraph
+              name: 'Pantallas en servicio'
+              'y': '9'
+              width: '26'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Pantallas'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Cartelería LED: segmentos encendidos'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Pantallas'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'TVs: en línea'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Estadio - Pantallas'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'TVs en línea'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'TVs en línea'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Pantallas'
+                    key: est.tv.en_linea
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '50'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '64'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Publicidad por hora'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Publicidad por hora'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Pantallas'
+                    key: est.pub.ingresos_h
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '10000'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '150000'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: gauge
+              name: 'Brillo de la cartelería'
+              x: '26'
+              'y': '9'
+              width: '12'
+              height: '6'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'Brillo de la cartelería'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Pantallas'
+                    key: est.led.brillo
+                - type: STRING
+                  name: max
+                  value: '100'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '40'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: svggraph
+              name: 'Ventas de la tienda por minuto'
+              x: '28'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.aggregate_grouping
+                  value: '0'
+                - type: STRING
+                  name: ds.0.aggregate_interval
+                  value: 1m
+                - type: STRING
+                  name: ds.0.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '6'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Negocio'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM tienda: operaciones por minuto'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Terminales de cobro'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Terminales de cobro'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Tienda'
+                    key: est.tienda.pos_ok
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '3'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '6'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: gauge
+              name: 'Clientes en la tienda'
+              x: '38'
+              'y': '9'
+              width: '12'
+              height: '6'
+              hide_header: 'YES'
+              fields:
+                - type: INTEGER
+                  name: angle
+                  value: '180'
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: STRING
+                  name: description
+                  value: 'Clientes en la tienda'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '12'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Tienda'
+                    key: est.tienda.clientes
+                - type: STRING
+                  name: max
+                  value: '60'
+                - type: STRING
+                  name: min
+                  value: '0'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '3'
+                - type: INTEGER
+                  name: show.3
+                  value: '4'
+                - type: INTEGER
+                  name: show.4
+                  value: '5'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: INTEGER
+                  name: th_arc_size
+                  value: '8'
+                - type: INTEGER
+                  name: th_show_arc
+                  value: '1'
+                - type: INTEGER
+                  name: th_show_labels
+                  value: '0'
+                - type: INTEGER
+                  name: units_size
+                  value: '14'
+                - type: INTEGER
+                  name: value_arc_size
+                  value: '20'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '22'
+            - type: item
+              name: 'Ventas de la tienda por hora'
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Ventas de la tienda por hora'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Tienda'
+                    key: est.tienda.ventas_h
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '20000'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '60000'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: piechart
+              name: '¿De dónde vienen los ingresos? (MXN/h)'
+              x: '50'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: draw_type
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: Publicidad
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Pantallas'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Publicidad: ingresos por hora'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Tienda oficial'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Tienda'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Tienda: ventas por hora'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
+                - type: STRING
+                  name: time_period.from
+                  value: now-5m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: ''
+                - type: INTEGER
+                  name: units_show
+                  value: '0'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
+            - type: problems
+              name: 'Problemas de pantallas y tienda'
+              x: '50'
+              'y': '9'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: evaltype
+                  value: '0'
+                - type: INTEGER
+                  name: highlight_row
+                  value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
+                - type: INTEGER
+                  name: show
+                  value: '3'
+                - type: INTEGER
+                  name: show_lines
+                  value: '12'
+                - type: INTEGER
+                  name: show_tags
+                  value: '3'
+                - type: INTEGER
+                  name: show_timeline
+                  value: '1'
+                - type: INTEGER
+                  name: sort_triggers
+                  value: '4'
+                - type: INTEGER
+                  name: tags.0.operator
+                  value: '1'
+                - type: STRING
+                  name: tags.0.tag
+                  value: demo
+                - type: STRING
+                  name: tags.0.value
+                  value: estadio
+                - type: INTEGER
+                  name: tag_name_format
+                  value: '0'
+            - type: item
+              name: 'Recaudación de la tienda hoy'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Recaudación de la tienda hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: 'est.kpi[recaudacion_tienda_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+        - name: 'Servicios y APM'
+          widgets:
+            - type: item
+              name: 'Entradas vendidas hoy'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Entradas vendidas hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: 'est.kpi[entradas_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Latencia p95 por servicio'
+              'y': '3'
+              width: '30'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM accesos: Latency p95'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM boleteria: Latency p95'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM tienda: Latency p95'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'APM cobros: Latency p95'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: topitems
+              name: 'Latencia p95'
+              'y': '9'
+              width: '26'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'APM accesos: Latency p95'
+                - type: STRING
+                  name: columns.0.items.1
+                  value: 'APM boleteria: Latency p95'
+                - type: STRING
+                  name: columns.0.items.2
+                  value: 'APM tienda: Latency p95'
+                - type: STRING
+                  name: columns.0.items.3
+                  value: 'APM cobros: Latency p95'
+                - type: STRING
+                  name: columns.0.max
+                  value: '2'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '0.5'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '1'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: item
+              name: 'Recaudación de boletería hoy'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Recaudación de boletería hoy'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: 'est.kpi[recaudacion_entradas_hoy]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Ingresos rechazados (15 min)'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Ingresos rechazados (15 min)'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: 'est.kpi[accesos_rechazados_15m]'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '20'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: topitems
+              name: Apdex
+              x: '26'
+              'y': '9'
+              width: '26'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: columns.0.decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: columns.0.display
+                  value: '2'
+                - type: STRING
+                  name: columns.0.items.0
+                  value: 'APM accesos: Apdex'
+                - type: STRING
+                  name: columns.0.items.1
+                  value: 'APM boleteria: Apdex'
+                - type: STRING
+                  name: columns.0.items.2
+                  value: 'APM tienda: Apdex'
+                - type: STRING
+                  name: columns.0.items.3
+                  value: 'APM cobros: Apdex'
+                - type: STRING
+                  name: columns.0.max
+                  value: '1'
+                - type: STRING
+                  name: columns.0.min
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: columns.0.thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: columns.0.thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: columns.0.thresholds.1.threshold
+                  value: '0.7'
+                - type: STRING
+                  name: columns.0.thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: columns.0.thresholds.2.threshold
+                  value: '0.85'
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications
+                - type: INTEGER
+                  name: item_ordering_limit
+                  value: '10'
+                - type: INTEGER
+                  name: item_ordering_order
+                  value: '2'
+                - type: INTEGER
+                  name: item_ordering_order_by
+                  value: '2'
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: show_column_header
+                  value: '0'
+            - type: svggraph
+              name: 'Tasa de errores por servicio'
+              x: '30'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM accesos: Error rate'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM boleteria: Error rate'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM tienda: Error rate'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'APM cobros: Error rate'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Molinete p95'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Molinete p95'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: est.apm.accesos.p95
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '0.5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Venta de la tienda p95'
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '2'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Venta de la tienda p95'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: est.apm.tienda.p95
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '0.5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: honeycomb
+              name: 'Salud de los servicios'
+              x: '52'
+              'y': '3'
+              width: '20'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications
+                - type: STRING
+                  name: items.0
+                  value: 'APM accesos: Health'
+                - type: STRING
+                  name: items.1
+                  value: 'APM boleteria: Health'
+                - type: STRING
+                  name: items.2
+                  value: 'APM tienda: Health'
+                - type: STRING
+                  name: items.3
+                  value: 'APM cobros: Health'
+                - type: STRING
+                  name: primary_label
+                  value: '{ITEM.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '2'
+            - type: piechart
+              name: '¿Dónde se va el tiempo de la venta de una entrada?'
+              x: '52'
+              'y': '9'
+              width: '20'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: draw_type
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: Boletería
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM boleteria POST /entrada: Time in own code'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Otros servicios'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM boleteria POST /entrada: Time in other services'
+                - type: INTEGER
+                  name: ds.2.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.2.data_set_label
+                  value: 'Bases de datos'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM boleteria POST /entrada: Time in databases'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
+                - type: STRING
+                  name: time_period.from
+                  value: now-5m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: '%'
+                - type: INTEGER
+                  name: units_show
+                  value: '1'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
+            - type: item
+              name: 'Errores en la tienda'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Errores en la tienda'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: est.apm.tienda.error_pct
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '20'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+    - name: 'Tablero ejecutivo · Estadio'
+      pages:
+        - name: 'Negocio, operación y APM'
+          widgets:
+            - type: item
+              name: Asistencia
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: Asistencia
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.publico.asistencia
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 37474F
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Ingresos por hora'
+              'y': '3'
+              width: '26'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Pantallas'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Publicidad: ingresos por hora'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Tienda'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Tienda: ventas por hora'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: problemhosts.0
+                  value: 'Estadio - *'
+                - type: INTEGER
+                  name: show_problems
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: problems
+              name: 'Qué está pasando: causa y síntomas'
+              'y': '9'
+              width: '38'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: evaltype
+                  value: '0'
+                - type: INTEGER
+                  name: highlight_row
+                  value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
+                - type: INTEGER
+                  name: show
+                  value: '3'
+                - type: INTEGER
+                  name: show_lines
+                  value: '12'
+                - type: INTEGER
+                  name: show_tags
+                  value: '3'
+                - type: INTEGER
+                  name: show_timeline
+                  value: '1'
+                - type: INTEGER
+                  name: sort_triggers
+                  value: '4'
+                - type: INTEGER
+                  name: tags.0.operator
+                  value: '1'
+                - type: STRING
+                  name: tags.0.tag
+                  value: demo
+                - type: STRING
+                  name: tags.0.value
+                  value: estadio
+                - type: INTEGER
+                  name: tag_name_format
+                  value: '0'
+            - type: item
+              name: 'Ingresos por hora'
+              x: '12'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Ingresos por hora'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: est.negocio.ingresos_h
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '100000'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '200000'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: item
+              name: 'Ingresos por minuto'
+              x: '24'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Ingresos por minuto'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.acceso.total_min
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '80'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '150'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: svggraph
+              name: 'Latencia p95 por servicio'
+              x: '26'
+              'y': '3'
+              width: '24'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'APM accesos: Latency p95'
+                - type: INTEGER
+                  name: ds.0.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.0.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.0.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.width
+                  value: '2'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'APM boleteria: Latency p95'
+                - type: INTEGER
+                  name: ds.1.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.1.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.1.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.width
+                  value: '2'
+                - type: STRING
+                  name: ds.2.color
+                  value: 1BAF7A
+                - type: INTEGER
+                  name: ds.2.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.2.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.2.items.0
+                  value: 'APM tienda: Latency p95'
+                - type: INTEGER
+                  name: ds.2.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.2.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.2.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.2.width
+                  value: '2'
+                - type: STRING
+                  name: ds.3.color
+                  value: EDA100
+                - type: INTEGER
+                  name: ds.3.fill
+                  value: '2'
+                - type: STRING
+                  name: ds.3.hosts.0
+                  value: 'APM estadio*'
+                - type: STRING
+                  name: ds.3.items.0
+                  value: 'APM cobros: Latency p95'
+                - type: INTEGER
+                  name: ds.3.pointsize
+                  value: '3'
+                - type: INTEGER
+                  name: ds.3.transparency
+                  value: '4'
+                - type: INTEGER
+                  name: ds.3.type
+                  value: '0'
+                - type: INTEGER
+                  name: ds.3.width
+                  value: '2'
+                - type: STRING
+                  name: lefty_min
+                  value: '0'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '3'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '1'
+                - type: STRING
+                  name: time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+            - type: item
+              name: 'Espera en la fila'
+              x: '36'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Espera en la fila'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Accesos'
+                    key: est.acceso.fila_min
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '6'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '10'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: problemsbysv
+              name: 'Por severidad'
+              x: '38'
+              'y': '9'
+              width: '12'
+              height: '6'
+              fields:
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Estadio/Infraestructura
+                - type: GROUP
+                  name: groupids.1
+                  value:
+                    name: Estadio/Operacion
+                - type: GROUP
+                  name: groupids.2
+                  value:
+                    name: Estadio/Negocio
+                - type: INTEGER
+                  name: layout
+                  value: '1'
+                - type: INTEGER
+                  name: severities.0
+                  value: '2'
+                - type: INTEGER
+                  name: severities.1
+                  value: '3'
+                - type: INTEGER
+                  name: severities.2
+                  value: '4'
+                - type: INTEGER
+                  name: severities.3
+                  value: '5'
+                - type: INTEGER
+                  name: show_type
+                  value: '1'
+            - type: item
+              name: 'Luz en la cancha'
+              x: '48'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Luz en la cancha'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Iluminacion'
+                    key: est.luz.cancha
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '800'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '1200'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'
+            - type: honeycomb
+              name: 'Salud de los servicios'
+              x: '50'
+              'y': '3'
+              width: '22'
+              height: '6'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: GROUP
+                  name: groupids.0
+                  value:
+                    name: Applications
+                - type: STRING
+                  name: items.0
+                  value: 'APM accesos: Health'
+                - type: STRING
+                  name: items.1
+                  value: 'APM boleteria: Health'
+                - type: STRING
+                  name: items.2
+                  value: 'APM tienda: Health'
+                - type: STRING
+                  name: items.3
+                  value: 'APM cobros: Health'
+                - type: STRING
+                  name: primary_label
+                  value: '{ITEM.NAME}'
+                - type: INTEGER
+                  name: primary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: primary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: primary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: primary_label_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_bold
+                  value: '1'
+                - type: STRING
+                  name: secondary_label_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: secondary_label_decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: secondary_label_type
+                  value: '1'
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '1'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '2'
+            - type: piechart
+              name: '¿De dónde vienen los ingresos? (MXN/h)'
+              x: '50'
+              'y': '9'
+              width: '22'
+              height: '6'
+              fields:
+                - type: INTEGER
+                  name: decimal_places
+                  value: '0'
+                - type: INTEGER
+                  name: draw_type
+                  value: '1'
+                - type: INTEGER
+                  name: ds.0.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.0.color
+                  value: 2A78D6
+                - type: INTEGER
+                  name: ds.0.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.0.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.0.data_set_label
+                  value: Publicidad
+                - type: STRING
+                  name: ds.0.hosts.0
+                  value: 'Estadio - Pantallas'
+                - type: STRING
+                  name: ds.0.items.0
+                  value: 'Publicidad: ingresos por hora'
+                - type: INTEGER
+                  name: ds.1.aggregate_function
+                  value: '7'
+                - type: STRING
+                  name: ds.1.color
+                  value: EB6834
+                - type: INTEGER
+                  name: ds.1.dataset_aggregation
+                  value: '0'
+                - type: INTEGER
+                  name: ds.1.dataset_type
+                  value: '1'
+                - type: STRING
+                  name: ds.1.data_set_label
+                  value: 'Tienda oficial'
+                - type: STRING
+                  name: ds.1.hosts.0
+                  value: 'Estadio - Tienda'
+                - type: STRING
+                  name: ds.1.items.0
+                  value: 'Tienda: ventas por hora'
+                - type: INTEGER
+                  name: legend
+                  value: '1'
+                - type: INTEGER
+                  name: legend_columns
+                  value: '2'
+                - type: INTEGER
+                  name: legend_lines
+                  value: '2'
+                - type: INTEGER
+                  name: space
+                  value: '2'
+                - type: STRING
+                  name: time_period.from
+                  value: now-5m
+                - type: STRING
+                  name: time_period.to
+                  value: now
+                - type: INTEGER
+                  name: total_show
+                  value: '1'
+                - type: STRING
+                  name: units
+                  value: ''
+                - type: INTEGER
+                  name: units_show
+                  value: '0'
+                - type: INTEGER
+                  name: value_size_type
+                  value: '0'
+                - type: INTEGER
+                  name: width
+                  value: '40'
+            - type: item
+              name: 'Errores en molinetes'
+              x: '60'
+              width: '12'
+              height: '3'
+              hide_header: 'YES'
+              fields:
+                - type: STRING
+                  name: bg_color
+                  value: 37474F
+                - type: INTEGER
+                  name: decimal_places
+                  value: '1'
+                - type: INTEGER
+                  name: decimal_size
+                  value: '20'
+                - type: STRING
+                  name: description
+                  value: 'Errores en molinetes'
+                - type: INTEGER
+                  name: desc_bold
+                  value: '1'
+                - type: STRING
+                  name: desc_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: desc_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: desc_size
+                  value: '13'
+                - type: INTEGER
+                  name: desc_v_pos
+                  value: '0'
+                - type: ITEM
+                  name: itemid.0
+                  value:
+                    host: 'Estadio - Negocio'
+                    key: est.apm.accesos.error_pct
+                - type: INTEGER
+                  name: show.0
+                  value: '1'
+                - type: INTEGER
+                  name: show.1
+                  value: '2'
+                - type: INTEGER
+                  name: show.2
+                  value: '5'
+                - type: STRING
+                  name: sparkline.color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: sparkline.fill
+                  value: '2'
+                - type: STRING
+                  name: sparkline.time_period.from
+                  value: now-30m
+                - type: STRING
+                  name: sparkline.time_period.to
+                  value: now
+                - type: INTEGER
+                  name: sparkline.width
+                  value: '2'
+                - type: STRING
+                  name: thresholds.0.color
+                  value: 0CA30C
+                - type: STRING
+                  name: thresholds.0.threshold
+                  value: '0'
+                - type: STRING
+                  name: thresholds.1.color
+                  value: FAB219
+                - type: STRING
+                  name: thresholds.1.threshold
+                  value: '5'
+                - type: STRING
+                  name: thresholds.2.color
+                  value: D03B3B
+                - type: STRING
+                  name: thresholds.2.threshold
+                  value: '20'
+                - type: STRING
+                  name: units_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: units_size
+                  value: '16'
+                - type: INTEGER
+                  name: value_bold
+                  value: '1'
+                - type: STRING
+                  name: value_color
+                  value: FFFFFF
+                - type: INTEGER
+                  name: value_h_pos
+                  value: '1'
+                - type: INTEGER
+                  name: value_size
+                  value: '30'
+                - type: INTEGER
+                  name: value_v_pos
+                  value: '1'

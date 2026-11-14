@@ -1,0 +1,2980 @@
+zabbix_export:
+  version: '8.0'
+  template_groups:
+    - uuid: 9d9b1911c05b4f8db5931564f780fa71
+      name: Templates/Applications
+    - uuid: e7c56577eb5d4cbcb922395816b7c90e
+      name: Templates/Estadio
+  host_groups:
+    - uuid: b7f8225e7c0548c582f19f53b0e5f40c
+      name: Applications
+  templates:
+    - uuid: 76bb1716f272424d8b0c6c2a07a5b565
+      template: 'APM application by ClickHouse HTTP v3'
+      name: 'APM application by ClickHouse HTTP v3'
+      description: |
+        Version 3. Monitors one application and environment (one service.namespace and deployment.environment.name): services, jobs, endpoints and outgoing connections.
+        
+        Do not link it by hand: "APM applications discovery by ClickHouse HTTP v3" creates one host per application and environment and sets its macros.
+        A request is an entry span (SpanKind Server or Consumer). Root spans of other kinds are jobs, not user traffic.
+        Set {$CH.PASSWORD} in this template if the ClickHouse user has a password.
+        Author: fvilarnovo. License: MIT.
+      groups:
+        - name: Templates/Applications
+      items:
+        - uuid: 0d972a47e39642478dd97d48984dac13
+          name: 'APM: Get connections'
+          type: HTTP_AGENT
+          key: apm.connections.get
+          history: '0'
+          value_type: TEXT
+          description: 'One row per outgoing edge.'
+          timeout: 20s
+          url: '{$CH.URL}'
+          query_fields:
+            - name: param_db
+              value: '{$CH.DB}'
+            - name: param_tbl
+              value: '{$CH.TABLE}'
+            - name: param_window
+              value: '{$APM.WINDOW}'
+            - name: param_limit
+              value: '{$APM.CONN.LIMIT}'
+            - name: param_ns
+              value: '{$APM.NAMESPACE}'
+            - name: param_env
+              value: '{$APM.ENV}'
+          posts: |
+            SELECT
+                src, dst, dst_ns, type,
+                count() AS calls,
+                round(calls / {window:UInt32}, 3) AS cpm,
+                round(countIf(is_error) / calls * 100, 3) AS error_rate,
+                round(quantile(0.95)(dur)  / 1e6, 3) AS p95_ms
+            FROM
+            (
+                -- Usuarios -> servicio: solo spans de entrada raíz (un cron no es un usuario).
+                SELECT 'users' AS src, ServiceName AS dst, {ns:String} AS dst_ns, 'user'  AS type, Duration AS dur, StatusCode = 'Error' AS is_error
+                FROM {db:Identifier}.{tbl:Identifier}
+                WHERE Timestamp > now() - toIntervalMinute({window:UInt32})
+                  AND ServiceName !=  ''
+                  AND ParentSpanId = '' AND SpanKind IN ('Server', 'Consumer')
+                  AND ResourceAttributes['service.namespace'] = {ns:String} AND if(ResourceAttributes['deployment.environment.name']  != '', ResourceAttributes['deployment.environment.name'], ResourceAttributes['deployment.environment']) = {env:String}
+            
+                UNION ALL
+            
+                -- Servicio -> base de datos o cola.
+                SELECT  ServiceName, multiIf(SpanAttributes['db.system.name'] != '', SpanAttributes['db.system.name'], SpanAttributes['db.system'] != '', SpanAttributes['db.system'], SpanAttributes['messaging.system']),  '', 'database', Duration, StatusCode = 'Error'
+                FROM {db:Identifier}.{tbl:Identifier}
+                WHERE Timestamp > now() - toIntervalMinute({window:UInt32})
+                  AND ServiceName != ''
+                  AND  multiIf(SpanAttributes['db.system.name'] != '', SpanAttributes['db.system.name'], SpanAttributes['db.system'] != '', SpanAttributes['db.system'], SpanAttributes['messaging.system']) != ''
+                   AND ResourceAttributes['service.namespace'] = {ns:String} AND if(ResourceAttributes['deployment.environment.name'] != '', ResourceAttributes['deployment.environment.name'], ResourceAttributes['deployment.environment'])  = {env:String}
+            
+                UNION ALL
+            
+                -- Servicio -> servicio, aunque esté en otro namespace, o -> externo. Medido del lado de quien llama.
+                SELECT p.ServiceName,
+                       if(c.ServiceName  != '', c.ServiceName, p.peer),
+                       if(c.ServiceName != '', c.namespace, ''),
+                       if(c.ServiceName != '', 'service', 'external'),
+                       p.Duration, p.StatusCode = 'Error'
+                 FROM
+                (
+                    SELECT TraceId, SpanId, ServiceName, Duration, StatusCode,
+                           multiIf(SpanAttributes['peer.service'] != '', SpanAttributes['peer.service'],
+                                    SpanAttributes['server.address'] != '', SpanAttributes['server.address'],
+                                   SpanAttributes['net.peer.name'] != '', SpanAttributes['net.peer.name'],
+                                    SpanAttributes['http.host']) AS peer
+                    FROM {db:Identifier}.{tbl:Identifier}
+                    WHERE Timestamp > now() - toIntervalMinute({window:UInt32})
+                      AND ServiceName !=  ''
+                      AND SpanKind IN ('Client', 'Producer') AND multiIf(SpanAttributes['db.system.name'] != '', SpanAttributes['db.system.name'], SpanAttributes['db.system'] != '', SpanAttributes['db.system'],  SpanAttributes['messaging.system']) = ''
+                      AND ResourceAttributes['service.namespace'] = {ns:String} AND if(ResourceAttributes['deployment.environment.name'] != '', ResourceAttributes['deployment.environment.name'],  ResourceAttributes['deployment.environment']) = {env:String}
+                ) AS p
+                LEFT JOIN
+                (
+                    SELECT TraceId, ParentSpanId, any(ServiceName) AS ServiceName, any(ResourceAttributes['service.namespace'])  AS namespace
+                    FROM {db:Identifier}.{tbl:Identifier}
+                    WHERE Timestamp > now() - toIntervalMinute({window:UInt32} + 1)
+                      AND SpanKind IN ('Server', 'Consumer') AND ParentSpanId  != ''
+                    GROUP BY TraceId, ParentSpanId
+                ) AS c ON c.TraceId = p.TraceId AND c.ParentSpanId = p.SpanId
+                WHERE (c.ServiceName != '' AND (c.ServiceName != p.ServiceName OR c.namespace  != {ns:String}))
+                   OR (c.ServiceName = '' AND p.peer != '')
+            )
+            GROUP BY src, dst, dst_ns, type
+            ORDER BY calls DESC
+            LIMIT {limit:UInt32}
+            FORMAT JSON
+            SETTINGS output_format_json_quote_64bit_integers  = 0, max_execution_time = 15, max_threads = 2
+          headers:
+            - name: X-ClickHouse-User
+              value: '{$CH.USER}'
+            - name: X-ClickHouse-Key
+              value: '{$CH.PASSWORD}'
+          request_method: POST
+          tags:
+            - tag: component
+              value: apm
+            - tag: component
+              value: raw
+        - uuid: ef32af4769af44db80f3b9de1bc4cffa
+          name: 'APM: Get endpoints'
+          type: HTTP_AGENT
+          key: apm.endpoints.get
+          history: '0'
+          value_type: TEXT
+          description: 'One row per endpoint, with the time breakdown.'
+          timeout: 20s
+          url: '{$CH.URL}'
+          query_fields:
+            - name: param_db
+              value: '{$CH.DB}'
+            - name: param_tbl
+              value: '{$CH.TABLE}'
+            - name: param_window
+              value: '{$APM.WINDOW}'
+            - name: param_dwindow
+              value: '{$APM.DISCOVERY.WINDOW}'
+            - name: param_apdex_t
+              value: '{$APM.APDEX.T}'
+            - name: param_limit
+              value: '{$APM.ENDPOINT.LIMIT}'
+            - name: param_ns
+              value: '{$APM.NAMESPACE}'
+            - name: param_env
+              value: '{$APM.ENV}'
+          posts: |
+            WITH
+                Timestamp > now() - toIntervalMinute({window:UInt32}) AS recent,
+                toUInt64({apdex_t:UInt32}) * 1000000 AS t_ns
+            SELECT
+                e.ServiceName AS service,
+                e.SpanName AS endpoint,
+                 count() AS hits,
+                countIf(recent) AS requests,
+                countIf(recent AND e.StatusCode = 'Error') AS errors,
+                if(requests = 0, 0, round(errors / requests * 100, 3)) AS error_rate,
+                 round(requests / {window:UInt32}, 3) AS rpm,
+                if(requests = 0, -1, round(avgIf(e.Duration, recent) / 1e6, 3)) AS avg_ms,
+                if(requests = 0, -1, round(quantileIf(0.95)(e.Duration, recent)  / 1e6, 3)) AS p95_ms,
+                countIf(recent AND e.StatusCode != 'Error' AND e.Duration <= t_ns) AS apdex_satisfied,
+                countIf(recent AND e.StatusCode != 'Error' AND e.Duration > t_ns AND e.Duration  <= 4 * t_ns) AS apdex_tolerated,
+                if(requests = 0, -1, round((apdex_satisfied + apdex_tolerated / 2) / requests, 3)) AS apdex,
+                sumIf(e.Duration, recent) AS total_ns,
+                sumIf(least(k.db_ns,  e.Duration), recent) AS db_ns,
+                sumIf(least(k.ext_ns, e.Duration - least(k.db_ns, e.Duration)), recent) AS ext_ns,
+                if(total_ns = 0, -1, round(db_ns / total_ns * 100, 1)) AS time_db_pct,
+                 if(total_ns = 0, -1, round(ext_ns / total_ns * 100, 1)) AS time_ext_pct,
+                if(total_ns = 0, -1, round(100 - time_db_pct - time_ext_pct, 1)) AS time_self_pct
+            FROM
+            (
+                SELECT Timestamp,  TraceId, SpanId, ServiceName, SpanName, Duration, StatusCode
+                FROM {db:Identifier}.{tbl:Identifier}
+                WHERE Timestamp > now() - toIntervalMinute({dwindow:UInt32})
+                  AND ServiceName  != ''
+                  AND SpanKind IN ('Server', 'Consumer')
+                  AND ResourceAttributes['service.namespace'] = {ns:String}
+                  AND if(ResourceAttributes['deployment.environment.name'] != '', ResourceAttributes['deployment.environment.name'],  ResourceAttributes['deployment.environment']) = {env:String}
+            ) AS e
+            LEFT JOIN
+            (
+                -- Hijos directos del span de entrada: bases de datos y colas por un lado, otras llamadas salientes por  otro.
+                SELECT TraceId, ParentSpanId,
+                    sumIf(Duration, multiIf(SpanAttributes['db.system.name'] != '', SpanAttributes['db.system.name'], SpanAttributes['db.system'] != '', SpanAttributes['db.system'],  SpanAttributes['messaging.system']) != '') AS db_ns,
+                    sumIf(Duration, multiIf(SpanAttributes['db.system.name'] != '', SpanAttributes['db.system.name'], SpanAttributes['db.system'] != '',  SpanAttributes['db.system'], SpanAttributes['messaging.system']) = '' AND SpanKind IN ('Client', 'Producer')) AS ext_ns
+                FROM {db:Identifier}.{tbl:Identifier}
+                WHERE Timestamp > now()  - toIntervalMinute({window:UInt32} + 1)
+                  AND ParentSpanId != ''
+                  AND ResourceAttributes['service.namespace'] = {ns:String}
+                  AND if(ResourceAttributes['deployment.environment.name']  != '', ResourceAttributes['deployment.environment.name'], ResourceAttributes['deployment.environment']) = {env:String}
+                GROUP BY TraceId, ParentSpanId
+            ) AS k ON k.TraceId = e.TraceId AND  k.ParentSpanId = e.SpanId
+            GROUP BY service, endpoint
+            ORDER BY hits DESC, service, endpoint
+            LIMIT {limit:UInt32} BY service
+            FORMAT JSON
+            SETTINGS output_format_json_quote_64bit_integers = 0,  max_execution_time = 15, max_threads = 2
+          headers:
+            - name: X-ClickHouse-User
+              value: '{$CH.USER}'
+            - name: X-ClickHouse-Key
+              value: '{$CH.PASSWORD}'
+          request_method: POST
+          tags:
+            - tag: component
+              value: apm
+            - tag: component
+              value: raw
+        - uuid: a2abb3d6b72b4d4d89f32f9be828436b
+          name: 'APM: Get services and jobs'
+          type: HTTP_AGENT
+          key: apm.services.get
+          history: '0'
+          value_type: TEXT
+          description: 'One row per service (entry spans) and per job (other root spans) of this application and environment.'
+          timeout: 20s
+          url: '{$CH.URL}'
+          query_fields:
+            - name: param_db
+              value: '{$CH.DB}'
+            - name: param_tbl
+              value: '{$CH.TABLE}'
+            - name: param_window
+              value: '{$APM.WINDOW}'
+            - name: param_dwindow
+              value: '{$APM.DISCOVERY.WINDOW}'
+            - name: param_apdex_t
+              value: '{$APM.APDEX.T}'
+            - name: param_ns
+              value: '{$APM.NAMESPACE}'
+            - name: param_env
+              value: '{$APM.ENV}'
+          posts: |
+            WITH
+                Timestamp > now() - toIntervalMinute({window:UInt32}) AS recent,
+                toUInt64({apdex_t:UInt32}) * 1000000 AS t_ns
+            SELECT
+                service,
+                type,
+                countIf(recent) AS requests,
+                 countIf(recent AND StatusCode = 'Error') AS errors,
+                if(requests = 0, 0, round(errors / requests * 100, 3)) AS error_rate,
+                round(requests / {window:UInt32}, 3) AS rpm,
+                if(requests  = 0, -1, round((quantilesIf(0.50, 0.95, 0.99)(Duration, recent) AS q)[1] / 1e6, 3)) AS p50_ms,
+                if(requests = 0, -1, round(q[2] / 1e6, 3)) AS p95_ms,
+                if(requests = 0, -1, round(q[3] /  1e6, 3)) AS p99_ms,
+                countIf(recent AND StatusCode != 'Error' AND Duration <= t_ns) AS apdex_satisfied,
+                countIf(recent AND StatusCode != 'Error' AND Duration > t_ns AND Duration <= 4  * t_ns) AS apdex_tolerated,
+                requests - apdex_satisfied - apdex_tolerated AS apdex_frustrated,
+                if(requests = 0, -1, round((apdex_satisfied + apdex_tolerated / 2) / requests, 3)) AS apdex
+             FROM
+            (
+                -- Petición: span de entrada (Server/Consumer). Tarea: span raíz que no es de entrada ni de navegador.
+                SELECT
+                    ServiceName AS service,
+                    if(SpanKind IN ('Server',  'Consumer'), 'service', 'job') AS type,
+                    Timestamp, Duration, StatusCode
+                FROM {db:Identifier}.{tbl:Identifier}
+                WHERE Timestamp > now() - toIntervalMinute({dwindow:UInt32})
+                   AND ServiceName != ''
+                  AND ResourceAttributes['service.namespace'] = {ns:String}
+                  AND if(ResourceAttributes['deployment.environment.name'] != '', ResourceAttributes['deployment.environment.name'],  ResourceAttributes['deployment.environment']) = {env:String}
+                  AND (SpanKind IN ('Server', 'Consumer')
+                       OR (ParentSpanId = '' AND ResourceAttributes['telemetry.sdk.language'] !=  'webjs'))
+            )
+            GROUP BY service, type
+            ORDER BY service, type
+            FORMAT JSON
+            SETTINGS output_format_json_quote_64bit_integers = 0, max_execution_time = 15
+          headers:
+            - name: X-ClickHouse-User
+              value: '{$CH.USER}'
+            - name: X-ClickHouse-Key
+              value: '{$CH.PASSWORD}'
+          request_method: POST
+          tags:
+            - tag: component
+              value: apm
+            - tag: component
+              value: raw
+        - uuid: 6cb1d0aca8c0460082dbbb8c097a280f
+          name: 'APM: Services and jobs found'
+          type: DEPENDENT
+          key: apm.services.rows
+          description: 'Rows returned by ClickHouse; used to detect connectivity problems.'
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.rows
+          master_item:
+            key: apm.services.get
+          tags:
+            - tag: component
+              value: apm
+          triggers:
+            - uuid: e8c3c3d378bd487b88e444cbf5e78804
+              expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+              name: 'APM: No data from ClickHouse'
+              event_name: 'APM: No data from ClickHouse for 5m'
+              priority: AVERAGE
+              description: 'The master item returned nothing for 5 minutes: check {$CH.URL}, {$CH.USER} and the error of apm.services.get. All APM triggers of this host depend on this one.'
+              tags:
+                - tag: scope
+                  value: availability
+      discovery_rules:
+        - uuid: 0503e9df40ba4fd685b3e03c18c94e1f
+          name: 'APM connections discovery'
+          type: DEPENDENT
+          key: apm.connections.discovery
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_AFTER
+          enabled_lifetime: 1d
+          description: 'Outgoing edges of this application in the last {$APM.WINDOW} minutes, including calls to services of other namespaces. Incoming calls from other namespaces belong to the host of the caller.'
+          item_prototypes:
+            - uuid: 7907e16f4e764aab8cd09690731b123a
+              name: 'APM {#SRC} -> {#DST_NS}/{#DST}: Error rate'
+              type: DEPENDENT
+              key: 'apm.conn.error_rate["{#SRC}","{#DST_NS}","{#DST}","{#TYPE}"]'
+              value_type: FLOAT
+              units: '%'
+              description: 'Calls with StatusCode=Error, %.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.src==''{#SRC}'' && @.dst==''{#DST}'' && @.dst_ns==''{#DST_NS}'' && @.type==''{#TYPE}'')].error_rate.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.connections.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: connection
+                  value: '{#TYPE}'
+                - tag: destination
+                  value: '{#DST}'
+                - tag: destination_namespace
+                  value: '{#DST_NS}'
+                - tag: source
+                  value: '{#SRC}'
+            - uuid: ef015e2a42844fd7876c65aab5cde944
+              name: 'APM {#SRC} -> {#DST_NS}/{#DST}: Latency p95'
+              type: DEPENDENT
+              key: 'apm.conn.latency.p95["{#SRC}","{#DST_NS}","{#DST}","{#TYPE}"]'
+              value_type: FLOAT
+              units: s
+              description: '95th percentile, measured by the caller (by the service for users).'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.src==''{#SRC}'' && @.dst==''{#DST}'' && @.dst_ns==''{#DST_NS}'' && @.type==''{#TYPE}'')].p95_ms.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - ''
+                  error_handler: DISCARD_VALUE
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: apm.connections.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: connection
+                  value: '{#TYPE}'
+                - tag: destination
+                  value: '{#DST}'
+                - tag: destination_namespace
+                  value: '{#DST_NS}'
+                - tag: source
+                  value: '{#SRC}'
+            - uuid: 17fa15d0e05b44c78e443fed77e8110b
+              name: 'APM {#SRC} -> {#DST_NS}/{#DST}: Calls per minute'
+              type: DEPENDENT
+              key: 'apm.conn.rate["{#SRC}","{#DST_NS}","{#DST}","{#TYPE}"]'
+              value_type: FLOAT
+              units: calls/min
+              description: 'Calls per minute.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.src==''{#SRC}'' && @.dst==''{#DST}'' && @.dst_ns==''{#DST_NS}'' && @.type==''{#TYPE}'')].cpm.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.connections.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: connection
+                  value: '{#TYPE}'
+                - tag: destination
+                  value: '{#DST}'
+                - tag: destination_namespace
+                  value: '{#DST_NS}'
+                - tag: source
+                  value: '{#SRC}'
+          master_item:
+            key: apm.connections.get
+          lld_macro_paths:
+            - lld_macro: '{#DST_NS}'
+              path: $.dst_ns
+            - lld_macro: '{#DST}'
+              path: $.dst
+            - lld_macro: '{#SRC}'
+              path: $.src
+            - lld_macro: '{#TYPE}'
+              path: $.type
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - 'return JSON.stringify(JSON.parse(value).data.map(function (r) { return {src: r.src, dst: r.dst, dst_ns: r.dst_ns, type: r.type}; }));'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+        - uuid: 32a8d8b69aa44c2f8bcf5fbc6ea0c0c2
+          name: 'APM endpoints discovery'
+          type: DEPENDENT
+          key: apm.endpoints.discovery
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#ENDPOINT}'
+                value: '{$APM.ENDPOINT.MATCHES}'
+              - macro: '{#ENDPOINT}'
+                value: '{$APM.ENDPOINT.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+              - macro: '{#SERVICE}'
+                value: '{$APM.SERVICE.MATCHES}'
+              - macro: '{#SERVICE}'
+                value: '{$APM.SERVICE.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_AFTER
+          enabled_lifetime: 1d
+          description: 'Busiest {$APM.ENDPOINT.LIMIT} endpoints per service (SpanName of entry spans).'
+          item_prototypes:
+            - uuid: 9b477d54a8ec48e187dae7bfe85fb886
+              name: 'APM {#SERVICE} {#ENDPOINT}: Apdex'
+              type: DEPENDENT
+              key: 'apm.endpoint.apdex["{#SERVICE}","{#ENDPOINT}"]'
+              value_type: FLOAT
+              description: 'Apdex with T={$APM.APDEX.T}ms.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].apdex.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - '1'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 6c719e673686415882a9c0c68318da5d
+              name: 'APM {#SERVICE} {#ENDPOINT}: Error rate'
+              type: DEPENDENT
+              key: 'apm.endpoint.error_rate["{#SERVICE}","{#ENDPOINT}"]'
+              value_type: FLOAT
+              units: '%'
+              description: 'errors / requests * 100.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].error_rate.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 36932de1e60c4c888fb5129d8714e8c5
+              name: 'APM {#SERVICE} {#ENDPOINT}: Latency avg'
+              type: DEPENDENT
+              key: 'apm.endpoint.latency.avg["{#SERVICE}","{#ENDPOINT}"]'
+              value_type: FLOAT
+              units: s
+              description: 'Average duration.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].avg_ms.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - ''
+                  error_handler: DISCARD_VALUE
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 50d87dd12d1e49be83c55d8771d0e359
+              name: 'APM {#SERVICE} {#ENDPOINT}: Latency p95'
+              type: DEPENDENT
+              key: 'apm.endpoint.latency.p95["{#SERVICE}","{#ENDPOINT}"]'
+              value_type: FLOAT
+              units: s
+              description: '95th percentile.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].p95_ms.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - ''
+                  error_handler: DISCARD_VALUE
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: ce805463a0ad4e3a80ad62583dd9bb56
+              name: 'APM {#SERVICE} {#ENDPOINT}: Requests per minute'
+              type: DEPENDENT
+              key: 'apm.endpoint.rate["{#SERVICE}","{#ENDPOINT}"]'
+              value_type: FLOAT
+              units: req/min
+              description: 'Requests per minute.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].rpm.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: e44ec2272d174e4a8df9fcdae96d1676
+              name: 'APM {#SERVICE} {#ENDPOINT}: Requests'
+              type: DEPENDENT
+              key: 'apm.endpoint.requests["{#SERVICE}","{#ENDPOINT}"]'
+              description: 'Requests in the last {$APM.WINDOW} minutes.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].requests.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: ca45ac50b4044e1882a9aa029f908583
+              name: 'APM {#SERVICE} {#ENDPOINT}: Time in databases'
+              type: DEPENDENT
+              key: 'apm.endpoint.time.db["{#SERVICE}","{#ENDPOINT}"]'
+              value_type: FLOAT
+              units: '%'
+              description: 'Share of the time in direct child spans with a database or messaging system.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].time_db_pct.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - '100'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 54ef9d2a435347958dc6b3627b846ec2
+              name: 'APM {#SERVICE} {#ENDPOINT}: Time in other services'
+              type: DEPENDENT
+              key: 'apm.endpoint.time.ext["{#SERVICE}","{#ENDPOINT}"]'
+              value_type: FLOAT
+              units: '%'
+              description: 'Share of the time in other direct Client/Producer child spans.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].time_ext_pct.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - '100'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: e2c423a08f99408e86d92f9cad990900
+              name: 'APM {#SERVICE} {#ENDPOINT}: Time in own code'
+              type: DEPENDENT
+              key: 'apm.endpoint.time.self["{#SERVICE}","{#ENDPOINT}"]'
+              value_type: FLOAT
+              units: '%'
+              description: 'Share of the time not spent in direct children below.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.endpoint==''{#ENDPOINT}'')].time_self_pct.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - '100'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.endpoints.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: endpoint
+                  value: '{#ENDPOINT}'
+                - tag: service
+                  value: '{#SERVICE}'
+          trigger_prototypes:
+            - uuid: 9fea2115aac44453891d65e8f6aca62d
+              expression: 'avg(/APM application by ClickHouse HTTP v3/apm.endpoint.error_rate["{#SERVICE}","{#ENDPOINT}"],5m)>={$APM.ENDPOINT.ERROR.MAX:"{#SERVICE}"} and last(/APM application by ClickHouse HTTP v3/apm.endpoint.requests["{#SERVICE}","{#ENDPOINT}"])>={$APM.MIN.REQUESTS:"{#SERVICE}"}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.endpoint.error_rate["{#SERVICE}","{#ENDPOINT}"],5m)<{$APM.ENDPOINT.ERROR.MAX:"{#SERVICE}"}'
+              name: 'APM {#SERVICE} {#ENDPOINT}: High error rate'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: WARNING
+              description: 'A failing endpoint can stay below the service threshold when another endpoint has much more traffic.'
+              dependencies:
+                - name: 'APM: No data from ClickHouse'
+                  expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+              tags:
+                - tag: scope
+                  value: availability
+          graph_prototypes:
+            - uuid: b2fa28e0aa764ea083114c19814511c5
+              name: 'APM {#SERVICE} {#ENDPOINT}: Where time goes'
+              type: STACKED
+              graph_items:
+                - drawtype: FILLED_REGION
+                  color: 2774A4
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.endpoint.time.self["{#SERVICE}","{#ENDPOINT}"]'
+                - sortorder: '1'
+                  drawtype: FILLED_REGION
+                  color: 9C27B0
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.endpoint.time.db["{#SERVICE}","{#ENDPOINT}"]'
+                - sortorder: '2'
+                  drawtype: FILLED_REGION
+                  color: F7941D
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.endpoint.time.ext["{#SERVICE}","{#ENDPOINT}"]'
+          master_item:
+            key: apm.endpoints.get
+          lld_macro_paths:
+            - lld_macro: '{#ENDPOINT}'
+              path: $.endpoint
+            - lld_macro: '{#SERVICE}'
+              path: $.service
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - 'return JSON.stringify(JSON.parse(value).data.map(function (r) { return {service: r.service, endpoint: r.endpoint}; }));'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+        - uuid: 0523aca93f174b2f84d089a020331bb3
+          name: 'APM jobs discovery'
+          type: DEPENDENT
+          key: apm.jobs.discovery
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#SERVICE}'
+                value: '{$APM.SERVICE.MATCHES}'
+              - macro: '{#SERVICE}'
+                value: '{$APM.SERVICE.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_AFTER
+          enabled_lifetime: 1d
+          description: 'Services with root spans that are not entry spans (scheduled jobs, batch, scripts). They are not user traffic, so they have no Apdex or no-traffic trigger.'
+          item_prototypes:
+            - uuid: 0bdc1262682247da8b43b693da2c5b9e
+              name: 'APM job {#SERVICE}: Duration p95'
+              type: DEPENDENT
+              key: 'apm.job.duration.p95[{#SERVICE}]'
+              value_type: FLOAT
+              units: s
+              description: '95th percentile of the job duration.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''job'')].p95_ms.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - ''
+                  error_handler: DISCARD_VALUE
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: kind
+                  value: job
+                - tag: service
+                  value: '{#SERVICE}'
+              trigger_prototypes:
+                - uuid: cdc2190f6dfd434b8aa89542e90eec20
+                  expression: 'avg(/APM application by ClickHouse HTTP v3/apm.job.duration.p95[{#SERVICE}],5m)*1000>={$APM.JOB.P95.MAX:"{#SERVICE}"}'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.job.duration.p95[{#SERVICE}],5m)*1000<{$APM.JOB.P95.MAX:"{#SERVICE}"}'
+                  name: 'APM job {#SERVICE}: Too slow'
+                  opdata: 'Current: {ITEM.LASTVALUE1}'
+                  priority: WARNING
+                  dependencies:
+                    - name: 'APM: No data from ClickHouse'
+                      expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+                  tags:
+                    - tag: scope
+                      value: performance
+            - uuid: 7e979867ac5f4eb08fde7f7c5388ca8c
+              name: 'APM job {#SERVICE}: Error rate'
+              type: DEPENDENT
+              key: 'apm.job.error_rate[{#SERVICE}]'
+              value_type: FLOAT
+              units: '%'
+              description: 'Executions with StatusCode=Error, %.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''job'')].error_rate.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: kind
+                  value: job
+                - tag: service
+                  value: '{#SERVICE}'
+              trigger_prototypes:
+                - uuid: 9f86eebe779549eb8690538b14a28a37
+                  expression: 'avg(/APM application by ClickHouse HTTP v3/apm.job.error_rate[{#SERVICE}],5m)>={$APM.JOB.ERROR.MAX:"{#SERVICE}"}'
+                  recovery_mode: RECOVERY_EXPRESSION
+                  recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.job.error_rate[{#SERVICE}],5m)<{$APM.JOB.ERROR.MAX:"{#SERVICE}"}'
+                  name: 'APM job {#SERVICE}: High error rate'
+                  opdata: 'Current: {ITEM.LASTVALUE1}'
+                  priority: AVERAGE
+                  dependencies:
+                    - name: 'APM: No data from ClickHouse'
+                      expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+                  tags:
+                    - tag: scope
+                      value: availability
+            - uuid: bc621cc5871448ab8243dc9e774fbd92
+              name: 'APM job {#SERVICE}: Executions'
+              type: DEPENDENT
+              key: 'apm.job.executions[{#SERVICE}]'
+              description: 'Root non-entry spans in the last {$APM.WINDOW} minutes.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''job'')].requests.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: kind
+                  value: job
+                - tag: service
+                  value: '{#SERVICE}'
+          master_item:
+            key: apm.services.get
+          lld_macro_paths:
+            - lld_macro: '{#SERVICE}'
+              path: $.service
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - 'return JSON.stringify(JSON.parse(value).data.filter(function (r) { return r.type === ''job''; }).map(function (r) { return {service: r.service}; }));'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+        - uuid: 0c9bebc2d63b469b86d4e4cf7c4990ef
+          name: 'APM services discovery'
+          type: DEPENDENT
+          key: apm.services.discovery
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#SERVICE}'
+                value: '{$APM.SERVICE.MATCHES}'
+              - macro: '{#SERVICE}'
+                value: '{$APM.SERVICE.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_AFTER
+          enabled_lifetime: 1d
+          description: 'Services of this application and environment with entry spans.'
+          item_prototypes:
+            - uuid: 40a67ed4c57640d08891b581c907e5c3
+              name: 'APM {#SERVICE}: Apdex frustrated'
+              type: DEPENDENT
+              key: 'apm.apdex.frustrated[{#SERVICE}]'
+              description: 'Requests with error or > 4T.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].apdex_frustrated.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 3259b58321b14c3c8657b2b5b1b47dd1
+              name: 'APM {#SERVICE}: Apdex satisfied'
+              type: DEPENDENT
+              key: 'apm.apdex.satisfied[{#SERVICE}]'
+              description: 'Requests without error and <= T.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].apdex_satisfied.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 109bf4b4234f4876869ea53cf4c778f7
+              name: 'APM {#SERVICE}: Apdex tolerated'
+              type: DEPENDENT
+              key: 'apm.apdex.tolerated[{#SERVICE}]'
+              description: 'Requests without error, > T and <= 4T.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].apdex_tolerated.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: b84941599bce4d178c74b6a112fd8b9e
+              name: 'APM {#SERVICE}: Apdex'
+              type: DEPENDENT
+              key: 'apm.apdex[{#SERVICE}]'
+              value_type: FLOAT
+              description: 'Apdex with T={$APM.APDEX.T}ms; errors count as frustrated.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].apdex.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - '1'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 0d9052d1501d48918113385d5ffecd85
+              name: 'APM {#SERVICE}: Errors'
+              type: DEPENDENT
+              key: 'apm.errors[{#SERVICE}]'
+              description: 'Entry spans with StatusCode=Error.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].errors.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 7645c7fb645b482e86f3ebedde8f2800
+              name: 'APM {#SERVICE}: Error rate'
+              type: DEPENDENT
+              key: 'apm.error_rate[{#SERVICE}]'
+              value_type: FLOAT
+              units: '%'
+              description: 'errors / requests * 100 (0 without requests).'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].error_rate.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 43f2cc0a18f046c480f9a4794363bb7e
+              name: 'APM {#SERVICE}: Health'
+              type: DEPENDENT
+              key: 'apm.health[{#SERVICE}]'
+              description: '2 = problem, 1 = warning, 0 = healthy, with the same macros as the triggers.'
+              valuemap:
+                name: 'APM health'
+              preprocessing:
+                - type: JAVASCRIPT
+                  parameters:
+                    - |
+                      var d = JSON.parse(value).data;
+                      for (var i = 0; i < d.length; i++) {
+                          var r = d[i];
+                          if (r.service !== '{#SERVICE}' || r.type !== 'service') continue;
+                          if (r.requests == 0) return  0;
+                          if (r.error_rate >= {$APM.ERROR.MAX:"{#SERVICE}"} || r.p95_ms >= {$APM.P95.MAX:"{#SERVICE}"}) return 2;
+                          if (r.error_rate >= {$APM.ERROR.WARN:"{#SERVICE}"} || r.p95_ms >=  {$APM.P95.WARN:"{#SERVICE}"}) return 1;
+                          return 0;
+                      }
+                      throw 'Service {#SERVICE} not in result';
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 8f6c378b09d94c5087a6663a73b36757
+              name: 'APM {#SERVICE}: Latency p50'
+              type: DEPENDENT
+              key: 'apm.latency.p50[{#SERVICE}]'
+              value_type: FLOAT
+              units: s
+              description: 'Median duration of entry spans.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].p50_ms.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - ''
+                  error_handler: DISCARD_VALUE
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: df325448e32d40468ef2304cad645a48
+              name: 'APM {#SERVICE}: Latency p95'
+              type: DEPENDENT
+              key: 'apm.latency.p95[{#SERVICE}]'
+              value_type: FLOAT
+              units: s
+              description: '95th percentile of entry spans.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].p95_ms.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - ''
+                  error_handler: DISCARD_VALUE
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 4b584b7da3c94bc98959e3f9189bba7a
+              name: 'APM {#SERVICE}: Latency p99'
+              type: DEPENDENT
+              key: 'apm.latency.p99[{#SERVICE}]'
+              value_type: FLOAT
+              units: s
+              description: '99th percentile of entry spans.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].p99_ms.first()'
+                  error_handler: DISCARD_VALUE
+                - type: IN_RANGE
+                  parameters:
+                    - '0'
+                    - ''
+                  error_handler: DISCARD_VALUE
+                - type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: 73169f1b884a419a8524370552bd31ec
+              name: 'APM {#SERVICE}: Requests per minute'
+              type: DEPENDENT
+              key: 'apm.requests.rate[{#SERVICE}]'
+              value_type: FLOAT
+              units: req/min
+              description: 'Requests per minute over {$APM.WINDOW} minutes.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].rpm.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+            - uuid: a6c37b388f6f4b608dcdc63ee69636c9
+              name: 'APM {#SERVICE}: Requests'
+              type: DEPENDENT
+              key: 'apm.requests[{#SERVICE}]'
+              description: 'Entry spans (Server/Consumer) in the last {$APM.WINDOW} minutes.'
+              preprocessing:
+                - type: JSONPATH
+                  parameters:
+                    - '$.data[?(@.service==''{#SERVICE}'' && @.type==''service'')].requests.first()'
+                  error_handler: DISCARD_VALUE
+              master_item:
+                key: apm.services.get
+              tags:
+                - tag: component
+                  value: apm
+                - tag: service
+                  value: '{#SERVICE}'
+              trigger_prototypes:
+                - uuid: 97dd3128d6d74a768b5547dfea6774e2
+                  expression: 'max(/APM application by ClickHouse HTTP v3/apm.requests[{#SERVICE}],15m)=0 and {$APM.NOTRAFFIC.ALERT:"{#SERVICE}"}=1'
+                  name: 'APM {#SERVICE}: No traffic'
+                  event_name: 'APM {#SERVICE}: No traffic for 15m'
+                  priority: INFO
+                  description: 'Disable per service with {$APM.NOTRAFFIC.ALERT:"<service>"}=0.'
+                  dependencies:
+                    - name: 'APM: No data from ClickHouse'
+                      expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+                  tags:
+                    - tag: scope
+                      value: availability
+          trigger_prototypes:
+            - uuid: 90800a29050c4e9b8baf50f278534f4a
+              expression: 'avg(/APM application by ClickHouse HTTP v3/apm.error_rate[{#SERVICE}],5m)>={$APM.ERROR.WARN:"{#SERVICE}"} and last(/APM application by ClickHouse HTTP v3/apm.requests[{#SERVICE}])>={$APM.MIN.REQUESTS:"{#SERVICE}"}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.error_rate[{#SERVICE}],5m)<{$APM.ERROR.WARN:"{#SERVICE}"}'
+              name: 'APM {#SERVICE}: Elevated error rate'
+              event_name: 'APM {#SERVICE}: Elevated error rate (>= {$APM.ERROR.WARN:"{#SERVICE}"}% for 5m)'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: WARNING
+              description: 'Error rate of entry spans. Opens only with at least {$APM.MIN.REQUESTS} requests; closes when the value recovers, not when traffic drops.'
+              dependencies:
+                - name: 'APM: No data from ClickHouse'
+                  expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+                - name: 'APM {#SERVICE}: High error rate'
+                  expression: 'avg(/APM application by ClickHouse HTTP v3/apm.error_rate[{#SERVICE}],5m)>={$APM.ERROR.MAX:"{#SERVICE}"} and last(/APM application by ClickHouse HTTP v3/apm.requests[{#SERVICE}])>={$APM.MIN.REQUESTS:"{#SERVICE}"}'
+                  recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.error_rate[{#SERVICE}],5m)<{$APM.ERROR.MAX:"{#SERVICE}"}'
+              tags:
+                - tag: scope
+                  value: availability
+            - uuid: 3706138f8658408b80ae008841e8b11c
+              expression: 'avg(/APM application by ClickHouse HTTP v3/apm.latency.p95[{#SERVICE}],5m)*1000>={$APM.P95.WARN:"{#SERVICE}"} and last(/APM application by ClickHouse HTTP v3/apm.requests[{#SERVICE}])>={$APM.MIN.REQUESTS:"{#SERVICE}"}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.latency.p95[{#SERVICE}],5m)*1000<{$APM.P95.WARN:"{#SERVICE}"}'
+              name: 'APM {#SERVICE}: Elevated p95 latency'
+              event_name: 'APM {#SERVICE}: Elevated p95 latency (>= {$APM.P95.WARN:"{#SERVICE}"}ms for 5m)'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: WARNING
+              description: 'p95 of entry spans. Opens only with at least {$APM.MIN.REQUESTS} requests; closes when the value recovers, not when traffic drops.'
+              dependencies:
+                - name: 'APM: No data from ClickHouse'
+                  expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+                - name: 'APM {#SERVICE}: High p95 latency'
+                  expression: 'avg(/APM application by ClickHouse HTTP v3/apm.latency.p95[{#SERVICE}],5m)*1000>={$APM.P95.MAX:"{#SERVICE}"} and last(/APM application by ClickHouse HTTP v3/apm.requests[{#SERVICE}])>={$APM.MIN.REQUESTS:"{#SERVICE}"}'
+                  recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.latency.p95[{#SERVICE}],5m)*1000<{$APM.P95.MAX:"{#SERVICE}"}'
+              tags:
+                - tag: scope
+                  value: performance
+            - uuid: d8717e884f8a44858094eeccc726523a
+              expression: 'avg(/APM application by ClickHouse HTTP v3/apm.error_rate[{#SERVICE}],5m)>={$APM.ERROR.MAX:"{#SERVICE}"} and last(/APM application by ClickHouse HTTP v3/apm.requests[{#SERVICE}])>={$APM.MIN.REQUESTS:"{#SERVICE}"}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.error_rate[{#SERVICE}],5m)<{$APM.ERROR.MAX:"{#SERVICE}"}'
+              name: 'APM {#SERVICE}: High error rate'
+              event_name: 'APM {#SERVICE}: High error rate (>= {$APM.ERROR.MAX:"{#SERVICE}"}% for 5m)'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: AVERAGE
+              description: 'Error rate of entry spans. Opens only with at least {$APM.MIN.REQUESTS} requests; closes when the value recovers, not when traffic drops.'
+              dependencies:
+                - name: 'APM: No data from ClickHouse'
+                  expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+              tags:
+                - tag: scope
+                  value: availability
+            - uuid: fbf53a9a20c2420984f4149b17ad817d
+              expression: 'avg(/APM application by ClickHouse HTTP v3/apm.latency.p95[{#SERVICE}],5m)*1000>={$APM.P95.MAX:"{#SERVICE}"} and last(/APM application by ClickHouse HTTP v3/apm.requests[{#SERVICE}])>={$APM.MIN.REQUESTS:"{#SERVICE}"}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.latency.p95[{#SERVICE}],5m)*1000<{$APM.P95.MAX:"{#SERVICE}"}'
+              name: 'APM {#SERVICE}: High p95 latency'
+              event_name: 'APM {#SERVICE}: High p95 latency (>= {$APM.P95.MAX:"{#SERVICE}"}ms for 5m)'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: AVERAGE
+              description: 'p95 of entry spans. Opens only with at least {$APM.MIN.REQUESTS} requests; closes when the value recovers, not when traffic drops.'
+              dependencies:
+                - name: 'APM: No data from ClickHouse'
+                  expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+              tags:
+                - tag: scope
+                  value: performance
+            - uuid: 6af1064807b646bc831893db4f6c6dc4
+              expression: 'avg(/APM application by ClickHouse HTTP v3/apm.apdex[{#SERVICE}],5m)<{$APM.APDEX.MIN:"{#SERVICE}"} and last(/APM application by ClickHouse HTTP v3/apm.requests[{#SERVICE}])>={$APM.MIN.REQUESTS:"{#SERVICE}"}'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'avg(/APM application by ClickHouse HTTP v3/apm.apdex[{#SERVICE}],5m)>={$APM.APDEX.MIN:"{#SERVICE}"}'
+              name: 'APM {#SERVICE}: Low Apdex'
+              event_name: 'APM {#SERVICE}: Low Apdex (< {$APM.APDEX.MIN:"{#SERVICE}"} for 5m)'
+              opdata: 'Current: {ITEM.LASTVALUE1}'
+              priority: WARNING
+              dependencies:
+                - name: 'APM: No data from ClickHouse'
+                  expression: 'nodata(/APM application by ClickHouse HTTP v3/apm.services.rows,5m)=1'
+              tags:
+                - tag: scope
+                  value: performance
+          graph_prototypes:
+            - uuid: 8417888978a64d9080c0e56d1cbf9a50
+              name: 'APM {#SERVICE}: Apdex'
+              type: STACKED
+              graph_items:
+                - drawtype: FILLED_REGION
+                  color: 199C0D
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.apdex.satisfied[{#SERVICE}]'
+                - sortorder: '1'
+                  drawtype: FILLED_REGION
+                  color: F7941D
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.apdex.tolerated[{#SERVICE}]'
+                - sortorder: '2'
+                  drawtype: FILLED_REGION
+                  color: F63100
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.apdex.frustrated[{#SERVICE}]'
+            - uuid: 302f3dee4e6b496d830589bf4a3cc33c
+              name: 'APM {#SERVICE}: Latency'
+              graph_items:
+                - color: 199C0D
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.latency.p50[{#SERVICE}]'
+                - sortorder: '1'
+                  color: F7941D
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.latency.p95[{#SERVICE}]'
+                - sortorder: '2'
+                  color: F63100
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.latency.p99[{#SERVICE}]'
+            - uuid: b76f90754eb3437c847fa3a48d7c1d69
+              name: 'APM {#SERVICE}: Requests vs errors'
+              graph_items:
+                - color: 2774A4
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.requests[{#SERVICE}]'
+                - sortorder: '1'
+                  drawtype: BOLD_LINE
+                  color: F63100
+                  item:
+                    host: 'APM application by ClickHouse HTTP v3'
+                    key: 'apm.errors[{#SERVICE}]'
+          master_item:
+            key: apm.services.get
+          lld_macro_paths:
+            - lld_macro: '{#SERVICE}'
+              path: $.service
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - 'return JSON.stringify(JSON.parse(value).data.filter(function (r) { return r.type === ''service''; }).map(function (r) { return {service: r.service}; }));'
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+      tags:
+        - tag: class
+          value: application
+        - tag: target
+          value: apm
+      macros:
+        - macro: '{$APM.APDEX.MIN}'
+          value: '0.7'
+          description: 'Low Apdex threshold. Supports service context.'
+        - macro: '{$APM.APDEX.T}'
+          value: '500'
+          description: 'Apdex T, ms. Set by the discovery host.'
+        - macro: '{$APM.CONN.LIMIT}'
+          value: '100'
+          description: 'Outgoing edges of the application (busiest first).'
+        - macro: '{$APM.DISCOVERY.WINDOW}'
+          value: '60'
+          description: 'Minutes: services active in this window are discovered. Set by the discovery host.'
+        - macro: '{$APM.ENDPOINT.ERROR.MAX}'
+          value: '5'
+          description: 'Error rate % of one endpoint. Supports service context.'
+        - macro: '{$APM.ENDPOINT.LIMIT}'
+          value: '20'
+          description: 'Endpoints per service (busiest first).'
+        - macro: '{$APM.ENDPOINT.MATCHES}'
+          value: '.*'
+          description: 'Regex: endpoints to discover.'
+        - macro: '{$APM.ENDPOINT.NOT_MATCHES}'
+          value: CHANGE_IF_NEEDED
+          description: 'Regex: endpoints to ignore.'
+        - macro: '{$APM.ENV}'
+          description: 'deployment.environment.name of this host; set by the discovery host. Empty = spans without environment.'
+        - macro: '{$APM.ERROR.MAX}'
+          value: '5'
+          description: 'Error rate %, problem. Supports service context.'
+        - macro: '{$APM.ERROR.WARN}'
+          value: '1'
+          description: 'Error rate %, warning. Supports service context.'
+        - macro: '{$APM.JOB.ERROR.MAX}'
+          value: '5'
+          description: 'Error rate % of a job. Supports service context.'
+        - macro: '{$APM.JOB.P95.MAX}'
+          value: '60000'
+          description: 'p95 ms of a job. Supports service context.'
+        - macro: '{$APM.MIN.REQUESTS}'
+          value: '10'
+          description: 'Requests in the window needed to OPEN error, p95 and Apdex problems. Supports service context.'
+        - macro: '{$APM.NAMESPACE}'
+          description: 'service.namespace of this host; set by the discovery host. Empty = spans without namespace.'
+        - macro: '{$APM.NOTRAFFIC.ALERT}'
+          value: '1'
+          description: 'Set to 0 to disable the No traffic trigger. Supports service context.'
+        - macro: '{$APM.P95.MAX}'
+          value: '3000'
+          description: 'p95 ms, problem. Supports service context.'
+        - macro: '{$APM.P95.WARN}'
+          value: '1000'
+          description: 'p95 ms, warning. Supports service context.'
+        - macro: '{$APM.SERVICE.MATCHES}'
+          value: '.*'
+          description: 'Regex: services to discover.'
+        - macro: '{$APM.SERVICE.NOT_MATCHES}'
+          value: CHANGE_IF_NEEDED
+          description: 'Regex: services to ignore.'
+        - macro: '{$APM.WINDOW}'
+          value: '5'
+          description: 'Minutes aggregated by the metrics. Set by the discovery host.'
+        - macro: '{$CH.DB}'
+          value: zabbix
+          description: 'Set by the discovery host.'
+        - macro: '{$CH.PASSWORD}'
+          type: SECRET_TEXT
+          description: 'ClickHouse password. Set it HERE, in this template: discovered hosts inherit it and it never travels through LLD.'
+        - macro: '{$CH.TABLE}'
+          value: otel_traces
+          description: 'Set by the discovery host.'
+        - macro: '{$CH.URL}'
+          value: 'http://localhost:8123/'
+          description: 'Set by the discovery host.'
+        - macro: '{$CH.USER}'
+          value: zabbix_ro
+          description: 'Set by the discovery host.'
+      valuemaps:
+        - uuid: 2d3cb03e20d547218490f63f2180ed1b
+          name: 'APM health'
+          mappings:
+            - value: '0'
+              newvalue: Healthy
+            - value: '1'
+              newvalue: Warning
+            - value: '2'
+              newvalue: Problem
+    - uuid: 234fbe931ddd4d688061b0bb8dc3b075
+      template: 'APM applications discovery by ClickHouse HTTP v3'
+      name: 'APM applications discovery by ClickHouse HTTP v3'
+      description: |
+        Version 3. Link it to ONE host. It discovers each service.namespace and deployment.environment.name in ClickHouse and creates a host apm-<namespace>-<environment> with "APM application by ClickHouse HTTP v3" and its macros.
+        Author: fvilarnovo. License: MIT.
+      groups:
+        - name: Templates/Applications
+      items:
+        - uuid: 07326e1481bd465188621f386cd5721e
+          name: 'APM: Get applications'
+          type: HTTP_AGENT
+          key: apm.applications.get
+          delay: 5m
+          history: '0'
+          value_type: TEXT
+          description: 'One row per application and environment.'
+          timeout: 20s
+          url: '{$CH.URL}'
+          query_fields:
+            - name: param_db
+              value: '{$CH.DB}'
+            - name: param_tbl
+              value: '{$CH.TABLE}'
+            - name: param_dwindow
+              value: '{$APM.DISCOVERY.WINDOW}'
+          posts: |
+            SELECT
+                namespace,
+                environment,
+                uniqExact(ServiceName) AS services,
+                count() AS spans
+            FROM
+            (
+                SELECT ResourceAttributes['service.namespace'] AS namespace, if(ResourceAttributes['deployment.environment.name']  != '', ResourceAttributes['deployment.environment.name'], ResourceAttributes['deployment.environment']) AS environment, ServiceName
+                FROM {db:Identifier}.{tbl:Identifier}
+                WHERE Timestamp  > now() - toIntervalMinute({dwindow:UInt32})
+                  AND ServiceName != ''
+            )
+            GROUP BY namespace, environment
+            ORDER BY namespace, environment
+            FORMAT JSON
+            SETTINGS output_format_json_quote_64bit_integers  = 0, max_execution_time = 15
+          headers:
+            - name: X-ClickHouse-User
+              value: '{$CH.USER}'
+            - name: X-ClickHouse-Key
+              value: '{$CH.PASSWORD}'
+          request_method: POST
+          tags:
+            - tag: component
+              value: apm
+            - tag: component
+              value: raw
+        - uuid: 3f399f39832047bd85348b85e8c6291a
+          name: 'APM: Applications found'
+          type: DEPENDENT
+          key: apm.applications.rows
+          description: 'Application and environment pairs with recent spans.'
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.rows
+          master_item:
+            key: apm.applications.get
+          tags:
+            - tag: component
+              value: apm
+          triggers:
+            - uuid: 617c5099cdee4f668a83a61b72441ff9
+              expression: 'nodata(/APM applications discovery by ClickHouse HTTP v3/apm.applications.rows,20m)=1'
+              name: 'APM: Discovery cannot read ClickHouse'
+              priority: AVERAGE
+              description: 'New applications are not being discovered: check {$CH.URL}, {$CH.USER} and {$CH.PASSWORD} of this host.'
+              tags:
+                - tag: scope
+                  value: availability
+      discovery_rules:
+        - uuid: 217a1b33ee7d4dfc81f9c49b06c36a36
+          name: 'APM applications discovery'
+          type: DEPENDENT
+          key: apm.applications.discovery
+          filter:
+            evaltype: AND
+            conditions:
+              - macro: '{#ENV}'
+                value: '{$APM.ENV.MATCHES}'
+              - macro: '{#ENV}'
+                value: '{$APM.ENV.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+              - macro: '{#NAMESPACE}'
+                value: '{$APM.NAMESPACE.MATCHES}'
+              - macro: '{#NAMESPACE}'
+                value: '{$APM.NAMESPACE.NOT_MATCHES}'
+                operator: NOT_MATCHES_REGEX
+          lifetime: 30d
+          enabled_lifetime_type: DISABLE_AFTER
+          enabled_lifetime: 1d
+          description: 'One host per service.namespace and deployment.environment.name with spans in the last {$APM.DISCOVERY.WINDOW} minutes. A host that stops reporting is disabled after 1 day and deleted, with its history, after 30 days.'
+          host_prototypes:
+            - uuid: 43ce4f13bbfc49e08b509d820b5c80da
+              host: '{#HOST}'
+              name: 'APM {#NS_LABEL} ({#ENV_LABEL})'
+              group_links:
+                - group:
+                    name: Applications
+              group_prototypes:
+                - name: 'Applications/APM/{#NS_LABEL}'
+              templates:
+                - name: 'APM application by ClickHouse HTTP v3'
+              macros:
+                - macro: '{$APM.APDEX.T}'
+                  value: '{#APDEX_T}'
+                  description: 'From the discovery host.'
+                - macro: '{$APM.DISCOVERY.WINDOW}'
+                  value: '{#DWINDOW}'
+                  description: 'From the discovery host.'
+                - macro: '{$APM.ENV}'
+                  value: '{#ENV}'
+                  description: 'From the discovery host.'
+                - macro: '{$APM.NAMESPACE}'
+                  value: '{#NAMESPACE}'
+                  description: 'From the discovery host.'
+                - macro: '{$APM.WINDOW}'
+                  value: '{#WINDOW}'
+                  description: 'From the discovery host.'
+                - macro: '{$CH.DB}'
+                  value: '{#CH_DB}'
+                  description: 'From the discovery host.'
+                - macro: '{$CH.TABLE}'
+                  value: '{#CH_TABLE}'
+                  description: 'From the discovery host.'
+                - macro: '{$CH.URL}'
+                  value: '{#CH_URL}'
+                  description: 'From the discovery host.'
+                - macro: '{$CH.USER}'
+                  value: '{#CH_USER}'
+                  description: 'From the discovery host.'
+              tags:
+                - tag: component
+                  value: apm
+                - tag: environment
+                  value: '{#ENV_LABEL}'
+                - tag: namespace
+                  value: '{#NS_LABEL}'
+          master_item:
+            key: apm.applications.get
+          lld_macro_paths:
+            - lld_macro: '{#APDEX_T}'
+              path: $.apdex_t
+            - lld_macro: '{#CH_DB}'
+              path: $.db
+            - lld_macro: '{#CH_TABLE}'
+              path: $.table
+            - lld_macro: '{#CH_URL}'
+              path: $.url
+            - lld_macro: '{#CH_USER}'
+              path: $.user
+            - lld_macro: '{#DWINDOW}'
+              path: $.dwindow
+            - lld_macro: '{#ENV_LABEL}'
+              path: $.env_label
+            - lld_macro: '{#ENV}'
+              path: $.environment
+            - lld_macro: '{#HOST}'
+              path: $.host
+            - lld_macro: '{#NAMESPACE}'
+              path: $.namespace
+            - lld_macro: '{#NS_LABEL}'
+              path: $.ns_label
+            - lld_macro: '{#WINDOW}'
+              path: $.window
+          preprocessing:
+            - type: JAVASCRIPT
+              parameters:
+                - |
+                  function label(s, empty) {
+                      return s === '' ? empty : s.replace(/[^0-9A-Za-z._-]/g, '-');
+                  }
+                  return JSON.stringify(JSON.parse(value).data.map(function (r) {
+                      var ns = label(r.namespace,  'no-namespace'), env = label(r.environment, 'no-env');
+                      return {
+                          namespace: r.namespace, environment: r.environment, ns_label: ns, env_label: env,
+                          host: 'apm-' + ns + '-'  + env,
+                          url: '{$CH.URL}', db: '{$CH.DB}', table: '{$CH.TABLE}', user: '{$CH.USER}',
+                          window: '{$APM.WINDOW}', dwindow: '{$APM.DISCOVERY.WINDOW}', apdex_t: '{$APM.APDEX.T}'
+                       };
+                  }));
+            - type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+      tags:
+        - tag: class
+          value: application
+        - tag: target
+          value: apm
+      macros:
+        - macro: '{$APM.APDEX.T}'
+          value: '500'
+          description: 'Apdex T, ms; passed to the discovered hosts.'
+        - macro: '{$APM.DISCOVERY.WINDOW}'
+          value: '60'
+          description: 'Minutes of activity to discover applications and services; passed to the discovered hosts.'
+        - macro: '{$APM.ENV.MATCHES}'
+          value: '.*'
+          description: 'Regex: environments to discover.'
+        - macro: '{$APM.ENV.NOT_MATCHES}'
+          value: CHANGE_IF_NEEDED
+          description: 'Regex: environments to ignore.'
+        - macro: '{$APM.NAMESPACE.MATCHES}'
+          value: '.*'
+          description: 'Regex: namespaces to discover.'
+        - macro: '{$APM.NAMESPACE.NOT_MATCHES}'
+          value: CHANGE_IF_NEEDED
+          description: 'Regex: namespaces to ignore.'
+        - macro: '{$APM.WINDOW}'
+          value: '5'
+          description: 'Minutes aggregated by the metrics; passed to the discovered hosts.'
+        - macro: '{$CH.DB}'
+          value: zabbix
+          description: 'Database; passed to the discovered hosts.'
+        - macro: '{$CH.PASSWORD}'
+          type: SECRET_TEXT
+          description: 'Password for discovery only. Discovered hosts read it from "APM application by ClickHouse HTTP v3".'
+        - macro: '{$CH.TABLE}'
+          value: otel_traces
+          description: 'Spans table; passed to the discovered hosts.'
+        - macro: '{$CH.URL}'
+          value: 'http://localhost:8123/'
+          description: 'ClickHouse HTTP interface; passed to the discovered hosts.'
+        - macro: '{$CH.USER}'
+          value: zabbix_ro
+          description: 'Read-only user with readonly=2 (the queries set max_execution_time); passed to the discovered hosts.'
+    - uuid: 7d2d933af38349d7b470969054d6362d
+      template: 'Estadio Accesos'
+      name: 'Estadio Accesos'
+      description: 'Molinetes de las cuatro puertas, fila de espera y asistencia, por trapper.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: 64b3cfa090b34d87a297d1d411ccce88
+          name: 'Accesos: espera en la fila'
+          type: TRAP
+          key: est.acceso.fila_min
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!min'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 0f38f417f1d8486fa19a21889e4663aa
+              expression: 'last(/Estadio Accesos/est.acceso.fila_min)>10'
+              name: 'Accesos: fila larga en las puertas'
+              priority: HIGH
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: flujo
+                  value: ingreso
+                - tag: recurso
+                  value: fila
+        - uuid: 0129e3b15f544e8c932c71cfded269b7
+          name: 'Accesos: lectores en línea'
+          type: TRAP
+          key: est.acceso.lectores_ok
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: d6f4af6a3cc34ee5bd21570130f42434
+          name: 'Puerta este: ingresos por minuto'
+          type: TRAP
+          key: 'est.acceso.por_min[este]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: b83c06ba1c144dd3bed2b0a036a8f191
+          name: 'Puerta norte: ingresos por minuto'
+          type: TRAP
+          key: 'est.acceso.por_min[norte]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 44ba65d517114bad9e2e566e0cf6b1b7
+          name: 'Puerta oeste: ingresos por minuto'
+          type: TRAP
+          key: 'est.acceso.por_min[oeste]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 94c6e6ac1cd944ec8c8f10ecbaf33c55
+          name: 'Puerta sur: ingresos por minuto'
+          type: TRAP
+          key: 'est.acceso.por_min[sur]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 9f2d07b13c244e2aafebc6536da5aab4
+          name: 'Accesos: entradas rechazadas'
+          type: TRAP
+          key: est.acceso.rechazo_pct
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: fc570c23b980423dabb625e7d95e6f13
+              expression: 'last(/Estadio Accesos/est.acceso.rechazo_pct)>30'
+              name: 'Accesos: molinetes rechazando entradas'
+              priority: AVERAGE
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: flujo
+                  value: ingreso
+                - tag: recurso
+                  value: rechazo
+        - uuid: 5d0d8d430e234f008851af1fdaf83cd1
+          name: 'Accesos: ingresos por minuto'
+          type: TRAP
+          key: est.acceso.total_min
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 0124928fd2224f2fac3bdc4c75d01831
+              expression: 'last(/Estadio Accesos/est.acceso.total_min)<80'
+              name: 'Accesos: ingreso de público detenido'
+              priority: AVERAGE
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: flujo
+                  value: ingreso
+                - tag: recurso
+                  value: ingreso
+        - uuid: 72c55b3598e14efbb8d551ef02dfabfd
+          name: 'Público: asistencia'
+          type: TRAP
+          key: est.publico.asistencia
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: 5ce53a32f5d1494c978da8afd9f06881
+          name: 'Público: ocupación'
+          type: TRAP
+          key: est.publico.ocupacion_pct
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: component
+              value: negocio
+      tags:
+        - tag: demo
+          value: estadio
+    - uuid: f0a80de477b64d3cb2313588b37eda75
+      template: 'Estadio APM by Telemetry query'
+      name: 'Estadio APM by Telemetry query'
+      description: 'Latencia y errores de los molinetes, la boletería y la tienda, con ítems Telemetry query de Zabbix 8.0.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: ad1265d150d2478384598524c1e59fa3
+          name: 'APM accesos: errores por minuto'
+          type: TELEMETRY_QUERY
+          key: est.apm.accesos.errores
+          delay: 30s
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].errores'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - alias: errores
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: accesos
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /validar'
+                - column: StatusCode
+                  value: Error
+          tags:
+            - tag: component
+              value: apm
+        - uuid: 643171b0c74748a7abc4b1faca78ca69
+          name: 'APM accesos: tasa de errores'
+          type: CALCULATED
+          key: est.apm.accesos.error_pct
+          delay: 30s
+          value_type: FLOAT
+          units: '%'
+          params: '100*last(//est.apm.accesos.errores)/max(last(//est.apm.accesos.total),1)'
+          tags:
+            - tag: component
+              value: apm
+          triggers:
+            - uuid: f7c33d8c05d54438b23c6211cef6fecf
+              expression: 'last(/Estadio APM by Telemetry query/est.apm.accesos.error_pct)>{$EST.ERROR.MAX}'
+              name: 'APM accesos: tasa de errores alta'
+              priority: AVERAGE
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: flujo
+                  value: ingreso
+                - tag: recurso
+                  value: apm-accesos
+        - uuid: e9874689cb7c4026bdba611956a76497
+          name: 'APM accesos: p95 de la validación del molinete'
+          type: TELEMETRY_QUERY
+          key: est.apm.accesos.p95
+          delay: 30s
+          value_type: FLOAT
+          units: s
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].p95'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+            - type: MULTIPLIER
+              parameters:
+                - '1.0E-9'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - function: PERCENTILE
+                column: Duration
+                parameters:
+                  - '95'
+                alias: p95
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: accesos
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /validar'
+          tags:
+            - tag: component
+              value: apm
+        - uuid: dd444197eec54d098269a8181e7ffd8b
+          name: 'APM accesos: operaciones por minuto'
+          type: TELEMETRY_QUERY
+          key: est.apm.accesos.total
+          delay: 30s
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].total'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - alias: total
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: accesos
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /validar'
+          tags:
+            - tag: component
+              value: apm
+        - uuid: e310b56e4bd04a6487592d1bc0343f0c
+          name: 'APM boletería: errores por minuto'
+          type: TELEMETRY_QUERY
+          key: est.apm.boleteria.errores
+          delay: 30s
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].errores'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - alias: errores
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: boleteria
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /entrada'
+                - column: StatusCode
+                  value: Error
+          tags:
+            - tag: component
+              value: apm
+        - uuid: fb2ac6c9c9024c4db96808b755c9cb63
+          name: 'APM boletería: tasa de errores'
+          type: CALCULATED
+          key: est.apm.boleteria.error_pct
+          delay: 30s
+          value_type: FLOAT
+          units: '%'
+          params: '100*last(//est.apm.boleteria.errores)/max(last(//est.apm.boleteria.total),1)'
+          tags:
+            - tag: component
+              value: apm
+          triggers:
+            - uuid: 2126c9b8c1804e13a0fe217514bcfab1
+              expression: 'last(/Estadio APM by Telemetry query/est.apm.boleteria.error_pct)>{$EST.ERROR.MAX}'
+              name: 'APM boletería: tasa de errores alta'
+              priority: AVERAGE
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: flujo
+                  value: ingreso
+                - tag: recurso
+                  value: apm-boleteria
+        - uuid: 8073c9e926374c1baf79ba3f24d48e73
+          name: 'APM boletería: p95 de la venta de entrada'
+          type: TELEMETRY_QUERY
+          key: est.apm.boleteria.p95
+          delay: 30s
+          value_type: FLOAT
+          units: s
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].p95'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+            - type: MULTIPLIER
+              parameters:
+                - '1.0E-9'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - function: PERCENTILE
+                column: Duration
+                parameters:
+                  - '95'
+                alias: p95
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: boleteria
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /entrada'
+          tags:
+            - tag: component
+              value: apm
+        - uuid: 5c662a48156a456aa77ca5a0f2b5a2c9
+          name: 'APM boletería: operaciones por minuto'
+          type: TELEMETRY_QUERY
+          key: est.apm.boleteria.total
+          delay: 30s
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].total'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - alias: total
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: boleteria
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /entrada'
+          tags:
+            - tag: component
+              value: apm
+        - uuid: 775b30db41144f79a66821d8462634cd
+          name: 'APM tienda: errores por minuto'
+          type: TELEMETRY_QUERY
+          key: est.apm.tienda.errores
+          delay: 30s
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].errores'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - alias: errores
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: tienda
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /compra'
+                - column: StatusCode
+                  value: Error
+          tags:
+            - tag: component
+              value: apm
+        - uuid: 28a37af6b5374317afcb45b7421b8f55
+          name: 'APM tienda: tasa de errores'
+          type: CALCULATED
+          key: est.apm.tienda.error_pct
+          delay: 30s
+          value_type: FLOAT
+          units: '%'
+          params: '100*last(//est.apm.tienda.errores)/max(last(//est.apm.tienda.total),1)'
+          tags:
+            - tag: component
+              value: apm
+          triggers:
+            - uuid: 8796cc96cbf347849bcfeed6bae43661
+              expression: 'last(/Estadio APM by Telemetry query/est.apm.tienda.error_pct)>{$EST.ERROR.MAX}'
+              name: 'APM tienda: tasa de errores alta'
+              priority: AVERAGE
+              tags:
+                - tag: circuito
+                  value: comercial
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: apm-tienda
+        - uuid: 46103c38efad41daaeec25ab51023e02
+          name: 'APM tienda: p95 de la venta de la tienda'
+          type: TELEMETRY_QUERY
+          key: est.apm.tienda.p95
+          delay: 30s
+          value_type: FLOAT
+          units: s
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].p95'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+            - type: MULTIPLIER
+              parameters:
+                - '1.0E-9'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - function: PERCENTILE
+                column: Duration
+                parameters:
+                  - '95'
+                alias: p95
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: tienda
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /compra'
+          tags:
+            - tag: component
+              value: apm
+        - uuid: ddb7d07b1de44e7eb7880274a51d41f2
+          name: 'APM tienda: operaciones por minuto'
+          type: TELEMETRY_QUERY
+          key: est.apm.tienda.total
+          delay: 30s
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - '$[0].total'
+              error_handler: CUSTOM_VALUE
+              error_handler_params: '0'
+          timeout: 5s
+          time_shift: 15s
+          lookback_limit: 1m
+          granularity: 1m
+          query:
+            columns:
+              - column: ServiceName
+            aggregated_columns:
+              - alias: total
+            filter:
+              conditions:
+                - column: ResourceAttributes
+                  attribute_key: service.namespace
+                  value: '{$EST.NS}'
+                - column: ServiceName
+                  value: tienda
+                - column: SpanKind
+                  value: Server
+                - column: SpanName
+                  value: 'POST /compra'
+          tags:
+            - tag: component
+              value: apm
+      tags:
+        - tag: demo
+          value: estadio
+      macros:
+        - macro: '{$EST.ERROR.MAX}'
+          value: '20'
+        - macro: '{$EST.NS}'
+          value: estadio
+    - uuid: f094b2f6fa034d4e8e584fc4c8c44175
+      template: 'Estadio Boleteria'
+      name: 'Estadio Boleteria'
+      description: 'Base de datos de entradas de la boletería, por trapper.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: e28eb3d3104842d48dea1f34c3de957f
+          name: 'Boletería: base de datos de entradas disponible'
+          type: TRAP
+          key: est.boleteria.bd
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: a14cf95f48c249ad9b56845075ac7576
+              expression: 'last(/Estadio Boleteria/est.boleteria.bd)=0'
+              name: 'Boletería: base de datos de entradas sin respuesta'
+              priority: HIGH
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: flujo
+                  value: ingreso
+                - tag: recurso
+                  value: bd-entradas
+        - uuid: 44ac7b27347c45688cdd4fa3b9d5fae6
+          name: 'Boletería: tiempo de respuesta de la base'
+          type: TRAP
+          key: est.boleteria.bd_ms
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!ms'
+          tags:
+            - tag: component
+              value: ot
+      tags:
+        - tag: demo
+          value: estadio
+    - uuid: ccfdc62d52ae4240a94f43425d738e60
+      template: 'Estadio Energia'
+      name: 'Estadio Energia'
+      description: 'Acometida, UPS y generador del estadio, por trapper.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: 01a164a6a3f34d61954b83158ffaa48f
+          name: 'Energía: potencia consumida'
+          type: TRAP
+          key: est.energia.carga_kw
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: kW
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 84d1fe2a4f1047128c83408eae239909
+          name: 'Energía: suministro de la red externa'
+          type: TRAP
+          key: est.energia.red
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 8316950a9d714aa3b211022b7210052f
+              expression: 'last(/Estadio Energia/est.energia.red)=0'
+              name: 'Energía: sin suministro de la red externa'
+              priority: HIGH
+              tags:
+                - tag: alimentacion
+                  value: red
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: red
+        - uuid: 0f1a7e0b0db64c6b937a50fb7d86610d
+          name: 'Energía: tensión de la acometida'
+          type: TRAP
+          key: est.energia.tension
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: kV
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 0ccefe931e5847619f633a788c13756d
+          name: 'Generador: combustible'
+          type: TRAP
+          key: est.gen.combustible_pct
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 61b258f49c3c4c829d646934c8fe0d0f
+              expression: 'last(/Estadio Energia/est.gen.combustible_pct)<25'
+              name: 'Generador: combustible bajo'
+              priority: WARNING
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: combustible
+        - uuid: 8b34dc33363a4c7a866b8e115852eb0a
+          name: 'Generador: en marcha'
+          type: TRAP
+          key: est.gen.en_marcha
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 45ee7cdafbd54b5598d409f9bfe4ce96
+          name: 'UPS: autonomía'
+          type: TRAP
+          key: est.ups.autonomia_min
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!min'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 2916158e65724ed6b9bf66a15be8fa25
+          name: 'UPS: carga de la batería'
+          type: TRAP
+          key: est.ups.bateria_pct
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 78909ecf824046a8a18b3966cdabc121
+          name: 'UPS: carga conectada'
+          type: TRAP
+          key: est.ups.carga_pct
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 54f33a50890d4d098dfa58b705052dec
+          name: 'UPS: en batería'
+          type: TRAP
+          key: est.ups.en_bateria
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 9ab46ba5fa3a48fc993436f89d96e0c6
+              expression: 'last(/Estadio Energia/est.ups.en_bateria)=1'
+              name: 'UPS: en batería'
+              priority: AVERAGE
+              tags:
+                - tag: alimentacion
+                  value: red
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: ups
+      tags:
+        - tag: demo
+          value: estadio
+    - uuid: b041e742e971408e9d7cb9a2a811e13a
+      template: 'Estadio Iluminacion'
+      name: 'Estadio Iluminacion'
+      description: 'Reflectores de las cuatro torres y nivel de luz en la cancha, por trapper.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: 69c08501bf804a5db988c2c3feea6c4e
+          name: 'Cancha: iluminancia media'
+          type: TRAP
+          key: est.luz.cancha
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!lx'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 6283568bc0be49349aaab16efabb4942
+              expression: 'last(/Estadio Iluminacion/est.luz.cancha)<800'
+              name: 'Iluminación: nivel bajo en la cancha'
+              priority: HIGH
+              tags:
+                - tag: alimentacion
+                  value: red
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: iluminacion
+        - uuid: 456d326e3dce446eb22d92c193eebe31
+          name: 'Torre 1: iluminancia'
+          type: TRAP
+          key: 'est.luz.torre[1]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!lx'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 8cd080b75a7f428e8bea92bd323a29b1
+          name: 'Torre 2: iluminancia'
+          type: TRAP
+          key: 'est.luz.torre[2]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!lx'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 50e7159a68eb4fd4974f32dd87b30a5f
+          name: 'Torre 3: iluminancia'
+          type: TRAP
+          key: 'est.luz.torre[3]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!lx'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 4db00ea10ae5422599f5b2a6a7af67e1
+          name: 'Torre 4: iluminancia'
+          type: TRAP
+          key: 'est.luz.torre[4]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '!lx'
+          tags:
+            - tag: component
+              value: ot
+      tags:
+        - tag: demo
+          value: estadio
+    - uuid: 61b072459ad04579a5825622404c258a
+      template: 'Estadio KPIs by ClickHouse'
+      name: 'Estadio KPIs by ClickHouse'
+      description: 'Entradas, ventas de la tienda e ingresos por molinete, calculados desde las trazas en ClickHouse.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: de8fb7354b7e4259af17bfc08c60789c
+          name: 'Estadio: consulta de KPI a ClickHouse'
+          type: HTTP_AGENT
+          key: est.kpi.get
+          delay: 30s
+          history: 1h
+          value_type: TEXT
+          timeout: 15s
+          url: '{$CH.URL}'
+          posts: |
+            WITH
+                toDate(Timestamp, 'America/Mexico_City') = toDate(now(), 'America/Mexico_City') AS hoy,
+                Timestamp > now() - toIntervalMinute(15) AS ult_15m,
+                ServiceName = 'boleteria' AND SpanName = 'POST /entrada' AS es_entrada,
+                ServiceName = 'tienda' AND SpanName = 'POST /compra' AS es_venta,
+                ServiceName = 'accesos' AND SpanName = 'POST /validar' AS es_acceso,
+                StatusCode = 'Error' AS fallo,
+                toFloat64OrZero(SpanAttributes['estadio.monto']) AS monto
+             SELECT
+                countIf(hoy AND es_entrada AND NOT fallo) AS entradas_hoy,
+                round(sumIf(monto, hoy AND es_entrada AND NOT fallo)) AS recaudacion_entradas_hoy,
+                countIf(hoy AND es_venta AND NOT fallo) AS ventas_tienda_hoy,
+                round(sumIf(monto, hoy AND es_venta AND NOT fallo)) AS recaudacion_tienda_hoy,
+                countIf(ult_15m AND es_acceso AND NOT fallo) AS accesos_15m,
+                countIf(ult_15m AND es_acceso AND fallo) AS accesos_rechazados_15m,
+                countIf(ult_15m AND es_venta AND fallo) AS ventas_fallidas_15m,
+                countIf(ult_15m AND es_entrada AND fallo) AS entradas_fallidas_15m
+            FROM zabbix.otel_traces
+            WHERE Timestamp > now() - toIntervalHour(24)
+              AND ResourceAttributes['service.namespace'] = '{$EST.NS}'
+              AND SpanKind = 'Server'
+             FORMAT JSONEachRow
+          headers:
+            - name: X-ClickHouse-User
+              value: '{$CH.USER}'
+            - name: X-ClickHouse-Key
+              value: '{$CH.PASSWORD}'
+          request_method: POST
+        - uuid: 26d36c544e2444c08580c7233227cf97
+          name: 'Negocio: ingresos validados en 15 min'
+          type: DEPENDENT
+          key: 'est.kpi[accesos_15m]'
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.accesos_15m
+          master_item:
+            key: est.kpi.get
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: 67e557d4ea894853899858bb1a426d06
+          name: 'Negocio: ingresos rechazados en 15 min'
+          type: DEPENDENT
+          key: 'est.kpi[accesos_rechazados_15m]'
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.accesos_rechazados_15m
+          master_item:
+            key: est.kpi.get
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: d2cfd719da5b4842b0621f415ca8bc13
+          name: 'Negocio: ventas de entradas fallidas en 15 min'
+          type: DEPENDENT
+          key: 'est.kpi[entradas_fallidas_15m]'
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.entradas_fallidas_15m
+          master_item:
+            key: est.kpi.get
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: cbf7e2202fbe4e78a5e859794a180bf4
+          name: 'Negocio: entradas vendidas hoy'
+          type: DEPENDENT
+          key: 'est.kpi[entradas_hoy]'
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.entradas_hoy
+          master_item:
+            key: est.kpi.get
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: a0281ce58d7e416aa8d5fda073f8dd65
+          name: 'Negocio: recaudación de boletería hoy'
+          type: DEPENDENT
+          key: 'est.kpi[recaudacion_entradas_hoy]'
+          value_type: FLOAT
+          units: MXN
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.recaudacion_entradas_hoy
+          master_item:
+            key: est.kpi.get
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: b8fa27a1e8294554a1c2da9ac4c8742c
+          name: 'Negocio: recaudación de la tienda hoy'
+          type: DEPENDENT
+          key: 'est.kpi[recaudacion_tienda_hoy]'
+          value_type: FLOAT
+          units: MXN
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.recaudacion_tienda_hoy
+          master_item:
+            key: est.kpi.get
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: 71914c5bf8cc4b6c80c12991f33edff8
+          name: 'Negocio: ventas de la tienda fallidas en 15 min'
+          type: DEPENDENT
+          key: 'est.kpi[ventas_fallidas_15m]'
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.ventas_fallidas_15m
+          master_item:
+            key: est.kpi.get
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: 79718d90ba82465c9d2c9b6b2d9da13d
+          name: 'Negocio: ventas de la tienda hoy'
+          type: DEPENDENT
+          key: 'est.kpi[ventas_tienda_hoy]'
+          value_type: FLOAT
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.ventas_tienda_hoy
+          master_item:
+            key: est.kpi.get
+          tags:
+            - tag: component
+              value: negocio
+      tags:
+        - tag: demo
+          value: estadio
+      macros:
+        - macro: '{$CH.PASSWORD}'
+          type: SECRET_TEXT
+        - macro: '{$CH.URL}'
+          value: 'http://clickhouse:8123/'
+        - macro: '{$CH.USER}'
+          value: zabbix
+        - macro: '{$EST.NS}'
+          value: estadio
+    - uuid: 439eb27cf23d4c3ea34da9f2f123ca41
+      template: 'Estadio Negocio'
+      name: 'Estadio Negocio'
+      description: 'Ingresos por hora simulados y el evento de control que cierra las ventanas CEP.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: 01e103878b344bf7a1e33b7e05da6e0e
+          name: 'Control: reinicio de la ventana CEP de alimentación eléctrica'
+          type: TRAP
+          key: 'est.cep.reinicio[alimentacion]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: control
+          triggers:
+            - uuid: 92d5300bf83046ef9f1f7663045c9b78
+              expression: 'last(/Estadio Negocio/est.cep.reinicio[alimentacion])=1'
+              name: 'Control: reinicio de la ventana CEP de alimentación eléctrica'
+              tags:
+                - tag: alimentacion
+                  value: red
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: reinicio
+        - uuid: d2db572fc735480b96798fd50def91d4
+          name: 'Control: reinicio de la ventana CEP de circuito comercial'
+          type: TRAP
+          key: 'est.cep.reinicio[circuito]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: control
+          triggers:
+            - uuid: 05ec0aeec42848ad86eae08f48a3af39
+              expression: 'last(/Estadio Negocio/est.cep.reinicio[circuito])=1'
+              name: 'Control: reinicio de la ventana CEP de circuito comercial'
+              tags:
+                - tag: circuito
+                  value: comercial
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: reinicio
+        - uuid: efb00d08ae2346d0b34ec71f78a01211
+          name: 'Control: reinicio de la ventana CEP de ingreso del público'
+          type: TRAP
+          key: 'est.cep.reinicio[flujo]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: control
+          triggers:
+            - uuid: 37d6f0c0a0c2426ba2befc3228ddb271
+              expression: 'last(/Estadio Negocio/est.cep.reinicio[flujo])=1'
+              name: 'Control: reinicio de la ventana CEP de ingreso del público'
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: flujo
+                  value: ingreso
+                - tag: recurso
+                  value: reinicio
+        - uuid: 7db1dc8947354d3aba86e71b88579f57
+          name: 'Negocio: ingresos por hora'
+          type: TRAP
+          key: est.negocio.ingresos_h
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: MXN/h
+          tags:
+            - tag: component
+              value: negocio
+        - uuid: 9a47f9f6741041efbf3b0f0de5332f02
+          name: 'Negocio: partido en juego'
+          type: TRAP
+          key: est.negocio.partido_en_juego
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: negocio
+      tags:
+        - tag: demo
+          value: estadio
+    - uuid: cc3d738816e54339b0348cb4b1f14463
+      template: 'Estadio Pantallas'
+      name: 'Estadio Pantallas'
+      description: 'Pantalla gigante, cartelería LED perimetral, TVs y la publicidad que emiten, por trapper.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: 3070c5447a334bfa8fe76fe0ed505cfa
+          name: 'Cartelería LED: brillo'
+          type: TRAP
+          key: est.led.brillo
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: '%'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: c0c3e8e6532f46c69e71097222b42655
+          name: 'Cartelería LED: segmentos encendidos'
+          type: TRAP
+          key: est.led.segmentos_ok
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: e17afdc21bc34bcebd6acc1a23dda279
+              expression: 'last(/Estadio Pantallas/est.led.segmentos_ok)<40'
+              name: 'Cartelería LED: segmentos apagados'
+              priority: AVERAGE
+              tags:
+                - tag: alimentacion
+                  value: red
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: carteleria-led
+        - uuid: 22fcf1cde43e4012bafd0a33f815f468
+          name: 'Pantalla gigante: encendida'
+          type: TRAP
+          key: est.pantalla.gigante
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 25640525f20543c1b1ee55c0a2efce5a
+              expression: 'last(/Estadio Pantallas/est.pantalla.gigante)=0'
+              name: 'Pantalla gigante: apagada'
+              priority: AVERAGE
+              tags:
+                - tag: alimentacion
+                  value: red
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: pantalla-gigante
+        - uuid: f37a8aa26e874d7ea93ab67f56fa2537
+          name: 'Publicidad: ingresos por hora'
+          type: TRAP
+          key: est.pub.ingresos_h
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: MXN/h
+          tags:
+            - tag: component
+              value: negocio
+          triggers:
+            - uuid: ced06e485b424e2bb006be906789d596
+              expression: 'last(/Estadio Pantallas/est.pub.ingresos_h)<10000'
+              name: 'Publicidad: sin emisión de anuncios'
+              priority: AVERAGE
+              tags:
+                - tag: alimentacion
+                  value: red
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: publicidad
+        - uuid: 5f339dd28a514782925025968e36681f
+          name: 'TVs: en línea'
+          type: TRAP
+          key: est.tv.en_linea
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 784ac8fb2f204536bfdf8df53dee0036
+              expression: 'last(/Estadio Pantallas/est.tv.en_linea)<50'
+              name: 'TVs del estadio: fuera de línea'
+              priority: WARNING
+              tags:
+                - tag: alimentacion
+                  value: red
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: tvs
+      tags:
+        - tag: demo
+          value: estadio
+    - uuid: 7aefca582e094966931bdb3d18129532
+      template: 'Estadio Tableros'
+      name: 'Estadio Tableros'
+      description: 'Tableros eléctricos del estadio: corriente, interruptor y temperatura de cada uno, por trapper.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: d01a0312428a4c93b94c1f4849e8ccd9
+          name: 'Tablero comercial: corriente'
+          type: TRAP
+          key: 'est.tablero.corriente[comercial]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: A
+          tags:
+            - tag: component
+              value: ot
+        - uuid: a296c237d0d54c87b32816337b262cc7
+          name: 'Tablero iluminación: corriente'
+          type: TRAP
+          key: 'est.tablero.corriente[iluminacion]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: A
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 83464f217c7c42eb93f36d8e5d3402df
+          name: 'Tablero pantallas: corriente'
+          type: TRAP
+          key: 'est.tablero.corriente[pantallas]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: A
+          tags:
+            - tag: component
+              value: ot
+        - uuid: b233024f05cd41648ea94e43610c2cef
+          name: 'Tablero servicios: corriente'
+          type: TRAP
+          key: 'est.tablero.corriente[servicios]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: A
+          tags:
+            - tag: component
+              value: ot
+        - uuid: f21989943d0a44d8899387c3e6d19063
+          name: 'Tablero comercial: interruptor cerrado'
+          type: TRAP
+          key: 'est.tablero.interruptor[comercial]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: d1d58d1c900241819b0316bcb678f588
+              expression: 'last(/Estadio Tableros/est.tablero.interruptor[comercial])=0'
+              name: 'Tablero comercial: interruptor disparado'
+              priority: HIGH
+              tags:
+                - tag: circuito
+                  value: comercial
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: interruptor-comercial
+        - uuid: 6264ca7c8bc747e49ef05feeefa57dd2
+          name: 'Tablero iluminación: interruptor cerrado'
+          type: TRAP
+          key: 'est.tablero.interruptor[iluminacion]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: b76576f63df64a5baa627db7b087a94a
+              expression: 'last(/Estadio Tableros/est.tablero.interruptor[iluminacion])=0'
+              name: 'Tablero iluminación: interruptor disparado'
+              priority: HIGH
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: interruptor-iluminacion
+        - uuid: 05787fb077494d51ba8d93f6e6b69743
+          name: 'Tablero pantallas: interruptor cerrado'
+          type: TRAP
+          key: 'est.tablero.interruptor[pantallas]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: 48ed9d0288af47d5b2e8c38beeb6d214
+              expression: 'last(/Estadio Tableros/est.tablero.interruptor[pantallas])=0'
+              name: 'Tablero pantallas: interruptor disparado'
+              priority: HIGH
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: interruptor-pantallas
+        - uuid: f723ab48243a4ee0ab7aebba9d0d106e
+          name: 'Tablero servicios: interruptor cerrado'
+          type: TRAP
+          key: 'est.tablero.interruptor[servicios]'
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: e3c008c019934bce854ac52399de410e
+              expression: 'last(/Estadio Tableros/est.tablero.interruptor[servicios])=0'
+              name: 'Tablero servicios: interruptor disparado'
+              priority: HIGH
+              tags:
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: interruptor-servicios
+        - uuid: b250d22a07534c05bfcc40692d1b4e4c
+          name: 'Tablero comercial: temperatura'
+          type: TRAP
+          key: 'est.tablero.temperatura[comercial]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: °C
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 6594b8923e37485280f24eb83f099495
+          name: 'Tablero iluminación: temperatura'
+          type: TRAP
+          key: 'est.tablero.temperatura[iluminacion]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: °C
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 2dfec2f5da0c4dd9ac109b92bb6581ec
+          name: 'Tablero pantallas: temperatura'
+          type: TRAP
+          key: 'est.tablero.temperatura[pantallas]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: °C
+          tags:
+            - tag: component
+              value: ot
+        - uuid: 98e43e39e4884aa386c2142b95352cf6
+          name: 'Tablero servicios: temperatura'
+          type: TRAP
+          key: 'est.tablero.temperatura[servicios]'
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: °C
+          tags:
+            - tag: component
+              value: ot
+      tags:
+        - tag: demo
+          value: estadio
+    - uuid: c671b3106e804d5e86c74ae03c21e71f
+      template: 'Estadio Tienda'
+      name: 'Estadio Tienda'
+      description: 'Tienda oficial de Zabbix FC: terminales de cobro y ventas, por trapper.'
+      groups:
+        - name: Templates/Estadio
+      items:
+        - uuid: 2437103aed2140bfbd441557631c3f00
+          name: 'Tienda: clientes en el local'
+          type: TRAP
+          key: est.tienda.clientes
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+        - uuid: fcf9dd9231be433f8775e5bf79eff9f4
+          name: 'Tienda: terminales de cobro en línea'
+          type: TRAP
+          key: est.tienda.pos_ok
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          tags:
+            - tag: component
+              value: ot
+          triggers:
+            - uuid: e3de51211fff404f85c1a34cd9e5a8fc
+              expression: 'last(/Estadio Tienda/est.tienda.pos_ok)<3'
+              name: 'Tienda: terminales de cobro fuera de línea'
+              priority: AVERAGE
+              tags:
+                - tag: circuito
+                  value: comercial
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: terminales
+        - uuid: 1c213acbbcd04b419e5ae6a66ac22ee4
+          name: 'Tienda: ventas por hora'
+          type: TRAP
+          key: est.tienda.ventas_h
+          value_type: FLOAT
+          allowed_hosts: '{$TRAPPER.ALLOWED_HOSTS}'
+          units: MXN/h
+          tags:
+            - tag: component
+              value: negocio
+          triggers:
+            - uuid: d982eab92414452b93b57b3fd35e83a9
+              expression: 'last(/Estadio Tienda/est.tienda.ventas_h)<20000'
+              name: 'Tienda: ventas detenidas'
+              priority: WARNING
+              tags:
+                - tag: circuito
+                  value: comercial
+                - tag: demo
+                  value: estadio
+                - tag: recurso
+                  value: ventas
+      tags:
+        - tag: demo
+          value: estadio
