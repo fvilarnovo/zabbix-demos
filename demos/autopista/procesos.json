@@ -1,0 +1,11 @@
+[
+  {"nombre": "peaje-gateway", "cmd": ["python3", "-m", "uvicorn", "app.recaudo.gateway:app", "--host", "127.0.0.1", "--port", "8111", "--no-access-log"]},
+  {"nombre": "validacion-tag", "cmd": ["python3", "-m", "uvicorn", "app.recaudo.validacion:app", "--host", "127.0.0.1", "--port", "8112", "--no-access-log"]},
+  {"nombre": "operador-tag", "cmd": ["python3", "-m", "uvicorn", "app.recaudo.operador:app", "--host", "127.0.0.1", "--port", "8113", "--no-access-log"]},
+  {"nombre": "tarifas", "cmd": ["python3", "-m", "uvicorn", "app.recaudo.tarifas:app", "--host", "127.0.0.1", "--port", "8114", "--no-access-log"]},
+  {"nombre": "transacciones", "cmd": ["python3", "-m", "uvicorn", "app.recaudo.transacciones:app", "--host", "127.0.0.1", "--port", "8115", "--no-access-log"]},
+  {"nombre": "simulador", "cmd": ["python3", "-u", "sim/simulador.py"]},
+  {"nombre": "control", "cmd": ["python3", "-u", "control/control.py"]},
+  {"nombre": "discovery", "cmd": ["python3", "-u", "provision/disparar_discovery.py"]},
+  {"nombre": "web", "cmd": ["python3", "-m", "uvicorn", "web.servidor:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]}
+]

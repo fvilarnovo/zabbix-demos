@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autopista · Zabbix 8.0</title>
+<link rel="stylesheet" href="/static/css/hud.css">
+<script type="importmap">
+{ "imports": { "three": "/static/vendor/three.module.js", "three/addons/": "/static/vendor/addons/" } }
+</script>
+</head>
+<body>
+<div id="escena"></div>
+<div id="etiquetas"></div>
+
+<header id="kpis">
+  <div class="marca"><b>ZABBIX</b> 8.0 · Autopista demo<small><span id="reloj">--:--</span> · <span id="conexion">conectando…</span></small></div>
+  <div class="kpi" data-k="vehiculos"><span>Vehículos en el corredor</span><strong>—</strong></div>
+  <div class="kpi" data-k="flujo_h"><span>Ingreso (veh/h)</span><strong>—</strong></div>
+  <div class="kpi" data-k="velocidad"><span>Velocidad media</span><strong>—</strong></div>
+  <div class="kpi" data-k="cola_km"><span>Cola máxima en vía</span><strong>—</strong></div>
+  <div class="kpi" data-k="recaudo_hoy"><span id="fuente-recaudo">Recaudo hoy</span><strong>—</strong></div>
+  <div class="kpi" data-k="tag_pct"><span>Pagos con TAG</span><strong>—</strong></div>
+  <div class="kpi" data-k="latencia_ms"><span>Recaudo p95 (APM)</span><strong>—</strong></div>
+</header>
+
+<aside id="problemas" class="panel">
+  <h2>Problemas en Zabbix <em id="n-problemas">0</em></h2>
+  <ul id="lista-problemas"></ul>
+</aside>
+
+<aside id="lateral">
+  <section id="plazas" class="panel"><h2>Peajes <em id="modo-plazas"></em></h2><div id="lista-plazas"></div></section>
+  <section id="bitacora" class="panel"><h2>Bitácora del CCO</h2><ul id="lista-bitacora"></ul></section>
+</aside>
+
+<div id="aviso"></div>
+
+<footer id="barra">
+  <div class="grupo" id="escenarios"><b>FALLAS</b></div>
+  <div class="grupo derecha">
+    <select id="ir" title="Ir a"></select>
+    <div id="enlaces"><a href="/cco" target="_blank">Centro de mando ↗</a><a href="/peaje" target="_blank">App de peajes ↗</a></div>
+    <a id="dashboard" target="_blank" rel="noopener" hidden>Dashboard en Zabbix ↗</a>
+    <div id="velocidad"></div>
+  </div>
+</footer>
+<script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

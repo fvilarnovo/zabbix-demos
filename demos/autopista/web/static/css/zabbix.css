@@ -1,0 +1,26 @@
+/* Paneles con el estilo de Zabbix 8.0 (tema oscuro) */
+.zbx { background: #2b2b2b; color: #f2f2f2; font: 12px/1.4 Arial, Tahoma, Verdana, sans-serif; border: 1px solid #383838; border-radius: 2px; display: flex; flex-direction: column; min-height: 0; }
+.zbx-cab { display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: #383838; border-bottom: 1px solid #4f4f4f; font-size: 13px; font-weight: bold; }
+.zbx-cab .logo { background: #d40000; color: #fff; padding: 1px 6px; font-weight: bold; letter-spacing: .5px; font-size: 12px; }
+.zbx-cab .der { margin-left: auto; font-weight: normal; color: #a9a9a9; font-size: 11px; }
+.zbx-cab a { color: #4f9fde; text-decoration: none; }
+.zbx-cuerpo { padding: 6px; overflow: auto; flex: 1; min-height: 0; }
+.zbx-tabla { width: 100%; border-collapse: collapse; }
+.zbx-tabla th { text-align: left; color: #a9a9a9; font-weight: normal; padding: 3px 6px; border-bottom: 2px solid #4f4f4f; white-space: nowrap; }
+.zbx-tabla td { padding: 4px 6px; border-bottom: 1px solid #383838; vertical-align: top; }
+.zbx-tabla tr:hover td { background: #333; }
+.zbx-tabla tr.sint td { background: #262626; }
+.zbx-sev { width: 6px; padding: 0 !important; }
+.zbx-hora, .zbx-dur { color: #a9a9a9; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.zbx-nombre { color: #f2f2f2; } .zbx-flecha { color: #768d99; margin: 0 6px 0 4px; }
+.zbx-tag { display: inline-block; margin: 0 3px 2px 0; padding: 0 5px; border-radius: 2px; background: #4f4f4f; color: #f2f2f2; font-size: 11px; white-space: nowrap; }
+.zbx-tag.causa { background: #e45959; } .zbx-tag.inc { background: #b5179e; } .zbx-tag.raiz { background: #7a3f8f; }
+.zbx-vacio { padding: 16px; color: #59db8f; }
+.zbx-sevs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.zbx-sevbox { padding: 6px 8px; background: #383838; border-top: 3px solid var(--c); color: #a9a9a9; }
+.zbx-sevbox.con { background: var(--c); color: #1f1f1f; }
+.zbx-sevbox b { display: block; font-size: 22px; line-height: 1.1; } .zbx-sevbox span { font-size: 11px; }
+.zbx-graf { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px; }
+.zbx-graf .g { background: #2f2f2f; border: 1px solid #3c3c3c; padding: 4px 6px 2px; }
+.zbx-graf .g h4 { margin: 0; font-size: 11.5px; font-weight: normal; color: #d5d5d5; display: flex; justify-content: space-between; }
+.zbx-graf .g h4 b { color: #fff; } .zbx-graf canvas { width: 100%; height: 64px; display: block; }

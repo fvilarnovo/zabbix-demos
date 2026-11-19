@@ -1,0 +1,103 @@
+:root {
+  --vidrio: rgba(9, 16, 28, .66); --borde: rgba(148, 178, 216, .2); --texto: #eaf1fb; --suave: #93a7c0;
+  --rojo: #ff3b47; --ambar: #ffb020; --verde: #38d996; --cian: #49c6ff; --marca: #d40000;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #060b14; color: var(--texto);
+  font: 14px/1.35 ui-sans-serif, -apple-system, "SF Pro Text", "Segoe UI", Roboto, sans-serif; }
+#escena, #escena canvas { position: fixed; inset: 0; display: block; }
+#etiquetas { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+
+.etq { position: absolute; left: 0; top: 0; padding: 3px 9px 4px; border-radius: 7px; white-space: nowrap; font-weight: 600;
+  font-size: 12px; background: rgba(8, 14, 26, .78); border: 1px solid var(--borde); backdrop-filter: blur(4px);
+  transform-origin: 50% 100%; transition: border-color .2s, background .2s; will-change: transform; }
+.etq small { color: var(--suave); font-weight: 500; margin-right: 6px; }
+.etq.falla { background: rgba(120, 12, 24, .9); border-color: var(--rojo); box-shadow: 0 0 18px rgba(255, 59, 71, .6); }
+.etq.foco { border-color: var(--cian); }
+.etq.pax { background: rgba(9, 44, 78, .92); border-color: var(--cian); font-weight: 500; }
+.etq.pax.mal { background: rgba(120, 12, 24, .92); border-color: var(--rojo); }
+
+#kpis { position: fixed; top: 14px; left: 16px; right: 16px; display: flex; gap: 10px; align-items: stretch; pointer-events: none; }
+.marca { display: flex; flex-direction: column; justify-content: center; padding: 8px 16px; border-radius: 12px; background: var(--marca);
+  font-size: 15px; letter-spacing: .4px; min-width: 128px; }
+.marca small { font-size: 11px; opacity: .85; letter-spacing: 0; }
+.kpi { flex: 1; min-width: 0; padding: 9px 14px; border-radius: 12px; background: var(--vidrio); border: 1px solid var(--borde);
+  backdrop-filter: blur(10px); transition: border-color .3s, box-shadow .3s; }
+.kpi span { display: block; color: var(--suave); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kpi strong { display: block; font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.15; }
+.kpi.alto { border-color: var(--ambar); } .kpi.alto strong { color: var(--ambar); }
+.kpi.critico { border-color: var(--rojo); box-shadow: 0 0 22px rgba(255, 59, 71, .35); } .kpi.critico strong { color: var(--rojo); }
+
+.panel { position: fixed; width: 330px; padding: 12px 14px; border-radius: 12px; background: var(--vidrio); border: 1px solid var(--borde);
+  backdrop-filter: blur(10px); }
+.panel h2 { margin: 0 0 8px; font-size: 13px; font-weight: 600; color: var(--suave); display: flex; justify-content: space-between; }
+.panel h2 em { font-style: normal; color: var(--texto); font-variant-numeric: tabular-nums; }
+.panel ul { list-style: none; margin: 0; padding: 0; }
+#problemas { top: 104px; left: 16px; width: 380px; max-height: calc(100vh - 200px); overflow: hidden; }
+#lateral { position: fixed; top: 104px; right: 16px; width: 330px; display: flex; flex-direction: column; gap: 10px; max-height: calc(100vh - 190px); }
+#lateral .panel { position: static; } #bitacora { overflow: hidden; flex: 1; min-height: 120px; }
+
+#lista-problemas li { padding: 6px 8px 6px 10px; margin-bottom: 5px; border-left: 3px solid var(--ambar); background: rgba(255,255,255,.04);
+  border-radius: 0 6px 6px 0; font-size: 13px; animation: entra .35s ease-out; }
+#lista-problemas li.s5, #lista-problemas li.s4 { border-left-color: var(--rojo); }
+#lista-problemas li.s2 { border-left-color: var(--cian); }
+#lista-problemas li.sintoma { margin-left: 16px; opacity: .85; }
+#lista-problemas .causa { display: inline-block; margin-right: 6px; padding: 0 5px; border-radius: 4px; background: var(--rojo); color: #fff; font-size: 10px; font-weight: 700; }
+#lista-problemas .vacio { border-left-color: var(--verde); color: var(--verde); }
+
+#lista-bitacora li { padding: 3px 0; font-size: 12.5px; color: #cdd9e8; border-bottom: 1px solid rgba(148,178,216,.08); animation: entra .35s ease-out; }
+#lista-bitacora time { color: var(--suave); margin-right: 6px; font-variant-numeric: tabular-nums; }
+#lista-bitacora .alerta { color: #ffc2c7; } #lista-bitacora .ok { color: #a9f0cf; } #lista-bitacora .escenario { color: #a7e0ff; font-weight: 600; }
+@keyframes entra { from { opacity: 0; transform: translateY(-5px); } }
+
+#aviso { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); padding: 8px 16px; border-radius: 10px; background: var(--vidrio);
+  border: 1px solid var(--borde); backdrop-filter: blur(10px); opacity: 0; transition: opacity .25s; pointer-events: none; }
+#aviso.ver { opacity: 1; }
+
+#barra { position: fixed; left: 16px; right: 16px; bottom: 14px; display: flex; justify-content: space-between; gap: 12px; padding: 8px 10px;
+  border-radius: 12px; background: var(--vidrio); border: 1px solid var(--borde); backdrop-filter: blur(10px); }
+.grupo { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.grupo > b { color: var(--suave); font-size: 12px; margin: 0 6px 0 4px; letter-spacing: 1px; }
+.grupo.derecha { flex-wrap: nowrap; gap: 14px; }
+#vista, #velocidad { display: flex; gap: 4px; }
+button { font: inherit; font-size: 12.5px; color: var(--texto); background: rgba(255,255,255,.07); border: 1px solid transparent; border-radius: 8px; padding: 5px 10px; cursor: pointer; white-space: nowrap; }
+button:hover { background: rgba(255,255,255,.15); }
+button kbd { font: inherit; font-size: 11px; color: var(--suave); margin-right: 5px; }
+button.activo { background: rgba(255, 59, 71, .25); border-color: var(--rojo); }
+button.sel { background: rgba(73, 198, 255, .2); border-color: var(--cian); }
+button.reset { background: rgba(56, 217, 150, .16); }
+button:disabled { opacity: .4; cursor: default; }
+
+@media (max-width: 900px) {
+  #problemas, #bitacora { display: none; }
+  #kpis { flex-wrap: wrap; } .kpi { flex: 1 1 40%; } .kpi strong { font-size: 20px; }
+  #barra { overflow-x: auto; }
+}
+
+/* Autopista */
+.marca { min-width: 240px; background: linear-gradient(135deg, #d40000, #8a0000); }
+.kpi strong small { font-size: 13px; color: var(--suave); font-weight: 600; margin-left: 3px; }
+#lista-problemas li .zona { float: right; margin-left: 6px; padding: 0 6px; border-radius: 4px; background: rgba(73,198,255,.16); color: #a7e0ff; font-size: 10.5px; }
+#lista-problemas li.incidente { border-left-color: #ff00a8; background: rgba(255, 0, 168, .12); }
+#lista-problemas .inc { display: inline-block; margin-right: 6px; padding: 0 5px; border-radius: 4px; background: #ff00a8; color: #fff; font-size: 10px; font-weight: 700; }
+#lista-problemas .raiz { display: block; margin-top: 2px; color: #ffb3e6; font-size: 11px; }
+#lista-problemas .resp { display: block; color: var(--suave); font-size: 11px; }
+.plaza { display: grid; grid-template-columns: 92px 1fr; gap: 4px 8px; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(148,178,216,.08); font-size: 12px; }
+.plaza b { font-weight: 600; } .plaza small { display: block; color: var(--suave); font-size: 10.5px; }
+.plaza.contingencia b, .plaza.sin_sistema b { color: var(--ambar); }
+.carriles { display: flex; gap: 3px; }
+.carril { flex: 1; text-align: center; padding: 2px 0; border-radius: 4px; font-size: 10.5px; background: rgba(56,217,150,.18); color: #bdf5dc; font-variant-numeric: tabular-nums; }
+.carril.cerrado { background: rgba(255,59,71,.3); color: #ffc2c7; } .carril.contingencia { background: rgba(255,176,32,.25); color: #ffe2a8; }
+.carril.cola { box-shadow: inset 0 0 0 1px var(--ambar); } .carril.sep { flex: 0 0 6px; background: none; }
+#ir { font: inherit; font-size: 12.5px; color: var(--texto); background: rgba(255,255,255,.07); border: 1px solid var(--borde); border-radius: 8px; padding: 5px 8px; }
+#ir option { background: #0b1220; }
+#dashboard { color: #a7e0ff; font-size: 12.5px; text-decoration: none; white-space: nowrap; }
+.etq.peaje { background: rgba(15, 90, 168, .85); } .etq.uf { background: rgba(212, 0, 0, .75); font-size: 11px; }
+.etq.pueblo { background: rgba(8, 14, 26, .55); font-weight: 500; }
+.etq.unidad { background: rgba(242, 169, 0, .85); color: #111; font-size: 11px; }
+.etq.its { font-size: 11px; font-weight: 500; }
+.etq.ok-its { border-color: rgba(56,217,150,.6); }
+@media (max-width: 900px) { #lateral { display: none; } }
+/* modo centro de mando: solo la escena */
+body.modo-cco #kpis, body.modo-cco #problemas, body.modo-cco #lateral, body.modo-cco #barra, body.modo-cco #aviso { display: none; }
+#enlaces { display: flex; gap: 10px; } #enlaces a { color: #a7e0ff; font-size: 12.5px; text-decoration: none; white-space: nowrap; }

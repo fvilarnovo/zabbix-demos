@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centro de Control · Zabbix 8.0</title>
+<link rel="stylesheet" href="/static/css/zabbix.css">
+<style>
+  :root { --borde: #22324a; --suave: #8ea3bb; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #05080d; color: #e6eef7; font: 13px/1.4 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; overflow: hidden; }
+  header { height: 44px; display: flex; align-items: center; gap: 14px; padding: 0 14px; background: linear-gradient(90deg, #4a0000, #0b111a 40%); border-bottom: 1px solid #3a1010; }
+  header b { letter-spacing: 2px; font-size: 14px; } header .z { background: #d40000; padding: 2px 7px; font-weight: 700; }
+  header .der { margin-left: auto; display: flex; gap: 14px; align-items: center; color: var(--suave); }
+  header a { color: #4f9fde; text-decoration: none; }
+  .muro { position: absolute; inset: 44px 0 0 0; display: grid; gap: 6px; padding: 6px;
+    grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: 1.15fr 1fr; }
+  .tile { position: relative; border: 1px solid var(--borde); border-radius: 6px; overflow: hidden; background: #0b111a; min-height: 0; display: flex; flex-direction: column; }
+  .tile > h3 { margin: 0; padding: 5px 10px; font-size: 11.5px; letter-spacing: 1px; text-transform: uppercase; color: var(--suave); background: #0f1824; border-bottom: 1px solid var(--borde); display: flex; justify-content: space-between; }
+  .tile iframe { border: 0; width: 100%; flex: 1; background: #000; }
+  #t-3d { grid-column: 1 / 3; } #t-zbx { grid-row: 1 / 3; grid-column: 3; }
+  #t-zbx .zbx { flex: 1; border: 0; border-radius: 0; }
+  .ops { padding: 8px; overflow: auto; display: flex; flex-direction: column; gap: 8px; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .kpi { background: #121b27; border: 1px solid var(--borde); border-radius: 6px; padding: 5px 8px; }
+  .kpi span { display: block; color: var(--suave); font-size: 10.5px; } .kpi b { font-size: 18px; font-variant-numeric: tabular-nums; }
+  .kpi.mal b { color: #ff4d5a; } .kpi.alto b { color: #ffb020; }
+  .fallas { display: flex; flex-wrap: wrap; gap: 4px; }
+  .fallas button { font: inherit; font-size: 11.5px; color: #e6eef7; background: #16243a; border: 1px solid var(--borde); border-radius: 6px; padding: 4px 8px; cursor: pointer; }
+  .fallas button.activo { background: #3a141a; border-color: #ff4d5a; } .fallas button.reset { background: #123324; }
+  ul.bit { list-style: none; margin: 0; padding: 0; font-size: 11.5px; } ul.bit li { padding: 2px 0; border-bottom: 1px solid #142033; color: #cdd9e8; }
+  ul.bit time { color: var(--suave); margin-right: 6px; } ul.bit .alerta { color: #ffc2c7; } ul.bit .ok { color: #a9f0cf; } ul.bit .escenario { color: #a7e0ff; }
+  .zbx-cuerpo h5 { margin: 8px 0 4px; font-size: 11px; color: #a9a9a9; font-weight: normal; text-transform: uppercase; letter-spacing: .5px; }
+</style>
+</head>
+<body>
+<header>
+  <span class="z">ZABBIX</span><b>CENTRO DE CONTROL DE OPERACIONES</b><span style="color:var(--suave)">Autopista · demo Zabbix 8.0</span>
+  <div class="der"><span id="reloj">—</span><span id="estado">—</span><a id="dash" target="_blank" rel="noopener" hidden>Abrir dashboard en Zabbix ↗</a>
+    <a href="/">Escena 3D</a><a href="/peaje">App de peajes</a></div>
+</header>
+<div class="muro">
+  <div class="tile" id="t-3d"><h3>Corredor en vivo · recorrido automático <span id="lugar"></span></h3><iframe src="/?modo=cco" title="Corredor 3D"></iframe></div>
+  <div class="tile" id="t-zbx"><div class="zbx">
+    <div class="zbx-cab"><span class="logo">ZABBIX</span> Problemas y CEP <span class="der" id="zbx-t"></span></div>
+    <div class="zbx-cuerpo">
+      <div class="zbx-sevs" id="sevs"></div>
+      <h5>Incidentes y causas con sus síntomas (CEP)</h5><div id="problemas"></div>
+      <h5>Historial (30 min)</h5><div class="zbx-graf" id="graf"></div>
+    </div></div></div>
+  <div class="tile"><h3>App de control de peajes</h3><iframe src="/peaje?compacto=1" title="App de peajes"></iframe></div>
+  <div class="tile"><h3>Operación <span id="activos"></span></h3><div class="ops">
+    <div class="kpis" id="kpis"></div>
+    <div class="fallas" id="fallas"></div>
+    <ul class="bit" id="bit"></ul>
+  </div></div>
+</div>
+<script type="module" src="/static/js/cco.js"></script>
+</body>
+</html>

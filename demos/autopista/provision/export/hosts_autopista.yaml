@@ -1,0 +1,340 @@
+zabbix_export:
+  version: '8.0'
+  host_groups:
+    - uuid: '2dcf32e1a3204e2a8edbdc91b5265865'
+      name: 'Autopista/APM'
+    - uuid: 'f48b5d0f78da49a48ffa9d44b7935ddb'
+      name: 'Autopista/Corredor'
+    - uuid: '079df4f3362c43369cae621b8d0ab4aa'
+      name: 'Autopista/ITS'
+    - uuid: '018406634d2b4370862c3ee7abdd7abe'
+      name: 'Autopista/Peajes'
+    - uuid: '4c1e564345a04483a395ba4f0f3c9549'
+      name: 'Autopista/Recaudo'
+  hosts:
+    - host: 'Autopista - APM discovery'
+      name: 'Autopista - APM discovery'
+      templates:
+        - name: 'APM applications discovery by ClickHouse HTTP v3'
+      groups:
+        - name: 'Autopista/APM'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+      macros:
+        - macro: '{$APM.NAMESPACE.MATCHES}'
+          value: '^autopista$'
+        - macro: '{$CH.PASSWORD}'
+          type: 'SECRET_TEXT'
+        - macro: '{$CH.URL}'
+          value: 'http://clickhouse:8123/'
+        - macro: '{$CH.USER}'
+          value: 'zabbix'
+    - host: 'Autopista - Corredor'
+      name: 'Autopista - Corredor'
+      templates:
+        - name: 'Autopista Corredor'
+      groups:
+        - name: 'Autopista/Corredor'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+    - host: 'Autopista - ITS dai-k014'
+      name: 'Autopista - Cámara DAI km 14'
+      templates:
+        - name: 'Autopista ITS Camara DAI'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'dai'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF1'
+    - host: 'Autopista - ITS dai-k044'
+      name: 'Autopista - Cámara DAI km 44'
+      templates:
+        - name: 'Autopista ITS Camara DAI'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'dai'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF2'
+    - host: 'Autopista - ITS dai-k099'
+      name: 'Autopista - Cámara DAI km 99'
+      templates:
+        - name: 'Autopista ITS Camara DAI'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'dai'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF3'
+    - host: 'Autopista - ITS dai-k135'
+      name: 'Autopista - Cámara DAI km 135'
+      templates:
+        - name: 'Autopista ITS Camara DAI'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'dai'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF4'
+    - host: 'Autopista - ITS gal-k120'
+      name: 'Autopista - Gálibo electrónico km 119,9'
+      templates:
+        - name: 'Autopista ITS Galibo'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'galibo'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF4'
+    - host: 'Autopista - ITS met-k071'
+      name: 'Autopista - Estación meteorológica Alto de Dolores'
+      templates:
+        - name: 'Autopista ITS Estacion meteorologica'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'meteo'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF3'
+    - host: 'Autopista - ITS met-k122'
+      name: 'Autopista - Estación meteorológica Puerto Berrío'
+      templates:
+        - name: 'Autopista ITS Estacion meteorologica'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'meteo'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF4'
+    - host: 'Autopista - ITS nod-uf1'
+      name: 'Autopista - Nodo de fibra UF-1'
+      templates:
+        - name: 'Autopista ITS Nodo de fibra'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'nodo'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF1'
+    - host: 'Autopista - ITS nod-uf2'
+      name: 'Autopista - Nodo de fibra UF-2'
+      templates:
+        - name: 'Autopista ITS Nodo de fibra'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'nodo'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF2'
+    - host: 'Autopista - ITS nod-uf3'
+      name: 'Autopista - Nodo de fibra UF-3'
+      templates:
+        - name: 'Autopista ITS Nodo de fibra'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'nodo'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF3'
+    - host: 'Autopista - ITS nod-uf4'
+      name: 'Autopista - Nodo de fibra UF-4'
+      templates:
+        - name: 'Autopista ITS Nodo de fibra'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'nodo'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF4'
+    - host: 'Autopista - ITS pmv-k030'
+      name: 'Autopista - PMV km 30'
+      templates:
+        - name: 'Autopista ITS PMV'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'pmv'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF1'
+    - host: 'Autopista - ITS pmv-k064'
+      name: 'Autopista - PMV km 64'
+      templates:
+        - name: 'Autopista ITS PMV'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'pmv'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF2'
+    - host: 'Autopista - ITS pmv-k092'
+      name: 'Autopista - PMV km 92'
+      templates:
+        - name: 'Autopista ITS PMV'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'pmv'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF3'
+    - host: 'Autopista - ITS pmv-k150'
+      name: 'Autopista - PMV km 150'
+      templates:
+        - name: 'Autopista ITS PMV'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'pmv'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF4'
+    - host: 'Autopista - ITS rad-k056'
+      name: 'Autopista - Radar de velocidad km 56'
+      templates:
+        - name: 'Autopista ITS Radar'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'radar'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF2'
+    - host: 'Autopista - ITS rad-k086'
+      name: 'Autopista - Radar de velocidad km 86'
+      templates:
+        - name: 'Autopista ITS Radar'
+      groups:
+        - name: 'Autopista/ITS'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'equipo'
+          value: 'radar'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF3'
+    - host: 'Autopista - Peaje Puerto Berrio'
+      name: 'Autopista - Peaje Puerto Berrío'
+      templates:
+        - name: 'Autopista OT Peaje'
+      groups:
+        - name: 'Autopista/Peajes'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'plaza'
+          value: 'PBE'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF4'
+    - host: 'Autopista - Peaje Santa Isabel'
+      name: 'Autopista - Peaje Santa Isabel'
+      templates:
+        - name: 'Autopista OT Peaje'
+      groups:
+        - name: 'Autopista/Peajes'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'plaza'
+          value: 'SIS'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF3'
+    - host: 'Autopista - Peaje Vegachi'
+      name: 'Autopista - Peaje Vegachí'
+      templates:
+        - name: 'Autopista OT Peaje'
+      groups:
+        - name: 'Autopista/Peajes'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+        - tag: 'plaza'
+          value: 'VEG'
+      macros:
+        - macro: '{$ARM.ZONA}'
+          value: 'UF2'
+    - host: 'Autopista - Plataforma de recaudo'
+      name: 'Autopista - Plataforma de recaudo'
+      templates:
+        - name: 'Autopista Plataforma recaudo'
+      groups:
+        - name: 'Autopista/Recaudo'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'
+    - host: 'Autopista - Recaudo'
+      name: 'Autopista - Recaudo'
+      templates:
+        - name: 'Autopista APM by Telemetry query'
+        - name: 'Autopista KPIs by ClickHouse'
+      groups:
+        - name: 'Autopista/Recaudo'
+      tags:
+        - tag: 'demo'
+          value: 'autopista'

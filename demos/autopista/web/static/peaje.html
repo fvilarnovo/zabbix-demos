@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Control de peajes · Plataforma de recaudo</title>
+<link rel="stylesheet" href="/static/css/peaje.css">
+<link rel="stylesheet" href="/static/css/zabbix.css">
+</head>
+<body>
+<header>
+  <h1>Control de peajes<small>Plataforma de recaudo · carriles TAG y manuales · <span id="reloj">—</span></small></h1>
+  <div class="kpis">
+    <div class="k" id="k-recaudo"><span>Recaudo hoy</span><b>—</b></div>
+    <div class="k" id="k-tx"><span>Transacciones hoy</span><b>—</b></div>
+    <div class="k" id="k-lat"><span>Autorización p95</span><b>—</b></div>
+    <div class="k" id="k-tag"><span>Pagos con TAG</span><b>—</b></div>
+    <div class="k" id="k-fallidas"><span>Fallidas 15 min</span><b>—</b></div>
+    <div class="k" id="k-rech"><span>TAG rechazados 15 min</span><b>—</b></div>
+  </div>
+</header>
+<main>
+  <div class="col">
+    <section><h2>Plazas y carriles <span id="modo"></span></h2><div id="plazas"></div></section>
+    <section><h2>Transacciones en vivo <span class="nota">cada fila es una transacción real con su traza en el APM de Zabbix</span></h2>
+      <table class="tx"><thead><tr><th>Hora</th><th>Plaza</th><th>Carril</th><th>Placa</th><th>Cat.</th><th>Medio</th><th>Valor</th><th>Latencia</th><th>Estado</th><th>Traza</th></tr></thead>
+      <tbody id="tx"></tbody></table></section>
+  </div>
+  <div class="col">
+    <section><h2>Mapa de servicios (APM) <span class="nota">p95 · errores · solicitudes/min, según Zabbix</span></h2>
+      <svg class="mapa" viewBox="0 0 560 300" id="mapa"></svg></section>
+    <section id="panel-fallas"><h2>Simular problemas <span class="nota">se activan y apagan uno por uno</span></h2><div class="fallas" id="fallas"></div>
+      <p class="nota" id="aviso"></p></section>
+    <section id="panel-zabbix" class="zbx"><div class="zbx-cab"><span class="logo">ZABBIX</span> Lo que ve Zabbix de la app y las plazas
+      <span class="der" id="zbx-estado"></span></div><div class="zbx-cuerpo" id="zbx"></div></section>
+  </div>
+</main>
+<script type="module" src="/static/js/peaje.js"></script>
+</body>
+</html>
